@@ -706,6 +706,139 @@
             background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%) !important;
         }
 
+        .grpc-ua-wrapper {
+            position: relative;
+            display: block;
+            width: 100%;
+        }
+
+        .grpc-ua-wrapper input {
+            width: 100%;
+            padding-left: 86px !important;
+        }
+
+        html[dir="rtl"] .grpc-ua-wrapper input {
+            padding-left: 16px !important;
+            padding-right: 86px !important;
+        }
+
+        .grpc-ua-action {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            padding: 0;
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-decoration: underline;
+            white-space: nowrap;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        html[dir="rtl"] .grpc-ua-action {
+            left: auto;
+            right: 10px;
+        }
+
+        .grpc-ua-action:hover,
+        .grpc-ua-action:focus-visible {
+            color: #3b82f6;
+        }
+
+        .readonly-wrapper {
+            position: relative;
+        }
+
+        .proxy-input-wrapper {
+            flex: 1;
+        }
+
+        .proxy-protocol-wrapper {
+            flex-wrap: nowrap;
+        }
+
+        .proxy-protocol-wrapper select {
+            flex: 0 0 100px;
+            min-width: 92px;
+        }
+
+        .grpc-modal-path {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: #f0f4f8;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            direction: ltr;
+        }
+
+        html.dark-mode .grpc-modal-path {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .grpc-modal-path-icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            fill: #3b82f6;
+        }
+
+        .grpc-modal-confirm-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .grpc-modal-confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        html.dark-mode .grpc-modal-confirm-btn {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+        }
+
+        .sstls-modal-requirements {
+            text-align: left;
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 12px;
+            margin: 12px 0;
+        }
+
+        html.dark-mode .sstls-modal-requirements {
+            background: #1e293b;
+        }
+
+        .sstls-modal-requirements ol {
+            margin: 12px 0 0 20px;
+            padding: 0;
+        }
+
+        .sstls-modal-requirements li {
+            margin-bottom: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .sstls-modal-path {
+            margin-top: 8px;
+        }
+
         /* اعلان Toast */
         .toast {
             position: fixed;
@@ -961,10 +1094,34 @@
         @media (max-width: 768px) {
 
             #getMoreProxyIPModal .modal,
+        #exploreSocks5Modal .modal,
+        #exploreHTTPModal .modal,
+        #exploreHTTPSModal .modal {
+            flex-direction: row;
+            width: 700px;
+            max-width: 90vw;
+            padding: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            height: 480px;
+            max-height: 85vh;
+        }
+
             #exploreSocks5Modal .modal,
-            #exploreHTTPModal .modal {
+            #exploreHTTPModal .modal,
+            #exploreHTTPSModal .modal {
+                width: 90vw;
+                height: 95vh;
+                max-height: 95vh;
                 flex-direction: column;
-                max-width: 550px;
+                max-width: 500px;
+            }
+
+            #exploreSocks5Modal .modal,
+            #exploreHTTPModal .modal,
+            #exploreHTTPSModal .modal {
+                height: auto;
+                max-height: 90vh;
             }
 
             .modal-map-side {
@@ -2064,7 +2221,8 @@
             }
 
             .module-footer .btn-online-optimize:not(.hidden-section),
-            .module-footer .btn-api-optimize:not(.hidden-section) {
+            .module-footer .btn-api-optimize:not(.hidden-section),
+            .module-footer .btn-chain-proxy:not(.hidden-section) {
                 flex: 1;
                 min-width: calc(50% - 5px);
             }
@@ -2260,6 +2418,76 @@
         .btn-api-optimize:active {
             transform: translateY(0);
             box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4);
+        }
+
+        .proxy-protocol-separator { flex: 0 0 auto; font-weight: 600; color: var(--text-secondary); white-space: nowrap; }
+
+        .btn-chain-proxy {
+            background: linear-gradient(135deg, #7c3aed 0, #6d28d9 100%) !important;
+            color: #fff !important;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .25s ease;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, .25);
+        }
+        .btn-chain-proxy:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, .35);
+        }
+        .btn-chain-proxy:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(124, 58, 237, .2);
+        }
+        .chain-proxy-modal .api-form-row-item { grid-template-columns: 110px 1fr; }
+        .chain-proxy-preferred-wrapper, .chain-proxy-input-wrapper { display: grid; gap: 6px; align-items: center; min-width: 0; }
+        .chain-proxy-preferred-wrapper { grid-template-columns: minmax(0, 1fr) auto minmax(72px, 96px); }
+        .chain-proxy-input-wrapper { grid-template-columns: minmax(84px, 104px) auto minmax(0, 1fr); }
+        .chain-proxy-preferred-wrapper input, .chain-proxy-input-wrapper select, .chain-proxy-input-wrapper input {
+            width: 100%; min-width: 0; padding: 8px 12px; border-radius: 8px; border: 2px solid #e5e7eb; font-size: 14px;
+        }
+        .chain-proxy-status { display: none; margin: 8px 0 20px; padding: 14px 16px; border-radius: 8px; color: #fff; font-size: 14px; line-height: 1.5; }
+        .chain-proxy-buttons { gap: 10px; justify-content: space-between; }
+        .chain-proxy-buttons .btn { flex: 1; }
+        .chain-proxy-modal .btn-verify-api:disabled, .chain-proxy-modal .btn-chain-add:disabled {
+            background: linear-gradient(135deg, #d1d5db 0, #9ca3af 100%) !important;
+            box-shadow: none; cursor: not-allowed; opacity: 0.72; pointer-events: none;
+        }
+        .btn-chain-add { flex: 1; background: linear-gradient(135deg, #d1d5db 0, #9ca3af 100%); color: #fff; opacity: 0.72; pointer-events: none; }
+        .btn-chain-add:not([disabled]) { background: linear-gradient(135deg, #8b5cf6 0, #6d28d9 100%); opacity: 1; pointer-events: all; }
+        .btn-chain-add:hover:not([disabled]) { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5); }
+        .chain-verify-card { overflow: hidden; border: 1px solid rgba(16, 185, 129, 0.28); border-radius: 10px; background: linear-gradient(180deg, #f8fffc 0%, #ecfdf5 100%); color: #064e3b; box-shadow: 0 12px 30px rgba(16, 185, 129, 0.12); }
+        .chain-verify-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 12px 14px; border-bottom: 1px solid rgba(16, 185, 129, 0.18); background: rgba(255, 255, 255, 0.72); }
+        .chain-verify-title { display: flex; gap: 8px; align-items: center; min-width: 0; font-weight: 700; color: #065f46; }
+        .chain-verify-dot { width: 8px; height: 8px; border-radius: 999px; background: #10b981; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); flex-shrink: 0; }
+        .chain-verify-badge { flex-shrink: 1; max-width: 60%; min-width: 0; overflow: hidden; padding: 4px 8px; border-radius: 999px; background: rgba(16, 185, 129, 0.13); color: #047857; font-size: 12px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+        .chain-verify-body { display: flex; flex-direction: column; gap: 12px; padding: 14px; }
+        .chain-route { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: stretch; }
+        .chain-route-node { min-width: 0; padding: 10px; border: 1px solid rgba(5, 150, 105, 0.16); border-radius: 8px; background: rgba(255, 255, 255, 0.82); }
+        .chain-route-label { margin-bottom: 5px; font-size: 11px; font-weight: 700; color: #047857; text-transform: uppercase; }
+        .chain-route-value { overflow: hidden; color: #064e3b; font-family: 'Fira Code', 'Monaco', monospace; font-size: 12px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+        .chain-route-arrow { display: flex; align-items: center; color: #10b981; font-weight: 800; opacity: 0.88; }
+        .chain-ip-link { cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+        html.dark-mode .chain-verify-card { background: linear-gradient(180deg, #0a2e1f 0%, #064e3b 100%); color: #d1fae5; border-color: rgba(16, 185, 129, 0.2); }
+        html.dark-mode .chain-verify-head { background: rgba(0, 0, 0, 0.25); border-bottom-color: rgba(16, 185, 129, 0.12); }
+        html.dark-mode .chain-verify-title { color: #6ee7b7; }
+        html.dark-mode .chain-verify-badge { background: rgba(16, 185, 129, 0.1); color: #6ee7b7; }
+        html.dark-mode .chain-route-node { background: rgba(0, 0, 0, 0.2); border-color: rgba(5, 150, 105, 0.12); }
+        html.dark-mode .chain-route-label { color: #6ee7b7; }
+        html.dark-mode .chain-route-value { color: #d1fae5; }
+        html.dark-mode .chain-route-arrow { color: #34d399; }
+        html.dark-mode .chain-proxy-preferred-wrapper input,
+        html.dark-mode .chain-proxy-input-wrapper select,
+        html.dark-mode .chain-proxy-input-wrapper input { background: #1e293b; border-color: #334155; color: #e5e5e5; }
+        html.dark-mode .chain-proxy-modal .btn-verify-api:disabled,
+        html.dark-mode .chain-proxy-modal .btn-chain-add:disabled { background: linear-gradient(135deg, #374151 0, #4b5563 100%) !important; }
+        @media (max-width: 768px) {
+            .chain-proxy-modal .api-form-row-item { grid-template-columns: 1fr; }
+            .chain-proxy-preferred-wrapper { grid-template-columns: minmax(0, 1fr) auto minmax(68px, 0.45fr); }
+            .chain-proxy-input-wrapper { grid-template-columns: minmax(78px, 0.6fr) auto minmax(0, 1.4fr); }
         }
 
         /* استایل مودال بهینه‌سازی API */
@@ -5753,6 +5981,7 @@
             border-color: rgba(239, 68, 68, 0.2);
             color: #ef4444;
         }
+        #versionBadge:hover { color: #667eea !important; }
         html.dark-mode .sidebar-footer-btn.logout-btn:hover {
             background: rgba(239, 68, 68, 0.2);
             border-color: rgba(239, 68, 68, 0.35);
@@ -6504,6 +6733,9 @@
                 <i class="ri-logout-box-r-line"></i>
                 خروج
             </button>
+            <div id="versionBadge" style="display:none;padding:6px 16px;font-size:11px;font-family:'Fira Code',monospace;color:#94a3b8;border-top:1px solid rgba(255,255,255,0.06);margin-top:4px;text-align:center;cursor:pointer;" onclick="showVersionInfoModal()" title="نسخه هسته">
+                <i class="ri-code-s-slash-line" style="font-size:12px;"></i> <span id="versionValue">...</span>
+            </div>
         </div>
     </nav>
 
@@ -6875,6 +7107,8 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                             onclick="openOnlineOptimizeModal()">بهینه‌سازی آنلاین</button>
                         <button type="button" class="btn btn-api-optimize hidden-section" id="apiOptimizeBtn"
                             onclick="openAPIOptimizeModal()">رابط اشتراک</button>
+                        <button type="button" class="btn btn-chain-proxy hidden-section" id="chainProxyBtn"
+                            onclick="openChainProxyModal()">پراکسی زنجیره‌ای</button>
                         <div class="btn-group">
                             <button type="button" class="btn btn-secondary" onclick="cancelEdit('sub')" disabled
                                 id="cancelSubBtn">انصراف</button>
@@ -6928,6 +7162,22 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                         </select>
                     </div>
 
+                    <div class="form-group" id="ssMethodGroup" style="display: none;" title="روش رمزنگاری Shadowsocks، توصیه می‌شود از aes-128-gcm برای عملکرد و سازگاری بهتر استفاده کنید.">
+                        <label for="ssMethod">روش رمزنگاری</label>
+                        <select id="ssMethod" onchange="markModified('config')">
+                            <option value="aes-128-gcm">aes-128-gcm (مصرف CPU کم و سرعت بالا)</option>
+                            <option value="aes-256-gcm">aes-256-gcm (در دستگاه‌های قدیمی،速度 رمزگشایی کاهش می‌یابد)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="ssTLSGroup" style="display: none;" title="رمزنگاری لایه انتقال TLS">
+                        <label for="ssTLS">TLS</label>
+                        <select id="ssTLS" onchange="handleSSTLSChange(event)">
+                            <option value="true">فعال (فعال‌سازی TLS، سرعت از VLESS/Trojan سریع‌تر نخواهد بود زیرا Shadowsocks رمزنگاری AEAD خود را دارد)</option>
+                            <option value="false">غیرفعال</option>
+                        </select>
+                    </div>
+
                     <div class="form-group" id="fingerprintGroup">
                         <label for="fingerprint">استتار اثر انگشت</label>
                         <select id="fingerprint" title="اثر انگشت مرورگر"
@@ -6945,15 +7195,33 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                         </select>
                     </div>
 
-                    <!--- پیکربندی نود 
-                <div class="form-group">
-                    <label>پروتکل انتقال</label>
-                    <select id="transport" onchange="markModified('config')">
-                        <option value="ws">WebSocket</option>
-                        <option value="xhttp">XHTTP</option>
-                    </select>
-                </div>
-                --->
+                    <div class="form-group" id="transportGroup" style="display: none;">
+                        <label>پروتکل انتقال</label>
+                        <select id="transport" title="پروتکل انتقال" onchange="handleTransportChange()">
+                            <option value="ws">WebSocket</option>
+                            <option value="xhttp">XHTTP (مصرف زیاد تعداد درخواست‌ها! [اخطار مسدودیت، درخواست توسط CDN شناسایی شده!])</option>
+                            <option value="grpc">gRPC</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="grpcModeGroup" style="display: none;">
+                        <label for="grpcMode">حالت gRPC</label>
+                        <select id="grpcMode" title="حالت gRPC" onchange="markModified('config')">
+                            <option value="gun">gun حالت عادی</option>
+                            <option value="multi">multi حالت هم‌روند</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="grpcUserAgentGroup" style="display: none;">
+                        <label for="grpcUserAgent"
+                            title="User-Agent مورد استفاده در درخواست‌های gRPC کلاینت.&#10;هسته Clash/Mihomo در استفاده از UA پیش‌فرض ممکن است توسط Cloudflare به عنوان ترافیک غیرعادی DDoS تشخیص داده و مسدود شود.&#10;در صورت استفاده از کلاینت Clash/Mihomo، حتماً این مورد را تنظیم کنید.">gRPC UA</label>
+                        <div class="input-wrapper grpc-ua-wrapper">
+                            <input type="text" id="grpcUserAgent"
+                                title="User-Agent مورد استفاده در درخواست‌های gRPC کلاینت.&#10;هسته Clash/Mihomo در استفاده از UA پیش‌فرض ممکن است توسط Cloudflare به عنوان ترافیک غیرعادی DDoS تشخیص داده و مسدود شود.&#10;در صورت استفاده از کلاینت Clash/Mihomo، حتماً این مورد را تنظیم کنید."
+                                onchange="markModified('config')">
+                            <button type="button" class="grpc-ua-action" onclick="fillCurrentGrpcUA()">دریافت UA فعلی</button>
+                        </div>
+                    </div>
                     <div class="checkbox-row">
                         <div class="form-group" id="skipVerifyGroup" style="display: none;">
                             <div class="input-wrapper">
@@ -6976,13 +7244,24 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                             </div>
                         </div>
 
+                        <div class="form-group" id="dualProtocolGroup" style="display: none;">
+                            <div class="input-wrapper">
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="dualProtocol" title="خروجی هم‌زمان VLESS و Trojan برای هر آدرس"
+                                        onchange="markModified('config')">
+                                    <label for="dualProtocol" class="checkbox-label"
+                                        title="خروجی هم‌زمان VLESS و Trojan برای هر آدرس">پروتکل دوگانه (VLESS + Trojan)</label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group" id="enable0RTTGroup" style="display: none;">
                             <div class="input-wrapper">
                                 <div class="checkbox-group">
-                                    <input type="checkbox" id="enable0RTT" title="فعال‌سازی 0-RTT (مبتدی‌ها استفاده نکنند)"
+                                    <input type="checkbox" id="enable0RTT" title="فعال‌سازی 0-RTT (فقط کاربران حرفه‌ای)"
                                         onchange="markModified('config')">
                                     <label for="enable0RTT" class="checkbox-label"
-                                        title="فعال‌سازی 0-RTT (مبتدی‌ها استفاده نکنند)">فعال‌سازی 0-RTT (ed=2560)</label>
+                                        title="فعال‌سازی 0-RTT (فقط کاربران حرفه‌ای)">فعال‌سازی 0-RTT (ed=2560)</label>
                                 </div>
                             </div>
                         </div>
@@ -6991,10 +7270,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                             <div class="input-wrapper">
                                 <div class="checkbox-group">
                                     <input type="checkbox" id="tlsFragmentShadowrocket"
-                                        title="قابلیت تکه‌تکه کردن TLS مخصوص Shadowrocket"
+                                        title="ویژگی TLS Fragment مخصوص کلاینت Shadowrocket"
                                         onchange="handleTLSFragmentChange('Shadowrocket'); markModified('config')">
                                     <label for="tlsFragmentShadowrocket" class="checkbox-label"
-                                        title="قابلیت تکه‌تکه کردن TLS مخصوص Shadowrocket">فعال‌سازی تکه‌تکه کردن (Shadowrocket)</label>
+                                        title="ویژگی TLS Fragment مخصوص کلاینت Shadowrocket">فعال‌سازی TLS Fragment (Shadowrocket)</label>
                                 </div>
                             </div>
                         </div>
@@ -7002,10 +7281,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                         <div class="form-group" id="tlsFragmentHappGroup" style="display: none;">
                             <div class="input-wrapper">
                                 <div class="checkbox-group">
-                                    <input type="checkbox" id="tlsFragmentHapp" title="قابلیت تکه‌تکه کردن TLS مخصوص Happ"
+                                    <input type="checkbox" id="tlsFragmentHapp" title="ویژگی TLS Fragment مخصوص کلاینت Happ"
                                         onchange="handleTLSFragmentChange('Happ'); markModified('config')">
                                     <label for="tlsFragmentHapp" class="checkbox-label"
-                                        title="قابلیت تکه‌تکه کردن TLS مخصوص Happ">فعال‌سازی تکه‌تکه کردن (Happ)</label>
+                                        title="ویژگی TLS Fragment مخصوص کلاینت Happ">فعال‌سازی TLS Fragment (Happ)</label>
                                 </div>
                             </div>
                         </div>
@@ -7144,6 +7423,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                             <option value="auto">PROXYIP</option>
                             <option value="socks5">SOCKS5</option>
                             <option value="http">HTTP</option>
+                            <option value="https">HTTPS</option>
+                            <option value="turn">TURN</option>
+                            <option value="sstp">SSTP</option>
                         </select>
                     </div>
 
@@ -7202,6 +7484,63 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                         </div>
                     </div>
 
+                    <div id="httpsSection" class="hidden-section">
+                        <div class="form-group">
+                            <label for="httpsAddr">HTTPS</label>
+                            <div class="input-wrapper">
+                                <div class="readonly-wrapper proxy-input-wrapper"
+                                    onclick="openProxyVerificationModal('https')">
+                                    <input type="text" id="httpsAddr" title="HTTPS"
+                                        placeholder="user:password@127.0.0.1:443" readonly class="subapi-input">
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="globalHTTPS" title="فعال‌سازی پروکسی سراسری: ترافیک سایت‌های غیر CFCDN نیز از HTTPS عبور کند"
+                                        onchange="markModified('proxy')">
+                                    <label for="globalHTTPS" class="checkbox-label"
+                                        title="فعال‌سازی پروکسی سراسری: ترافیک سایت‌های غیر CFCDN نیز از HTTPS عبور کند">فعال‌سازی پروکسی سراسری</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="turnSection" class="hidden-section">
+                        <div class="form-group">
+                            <label for="turnAddr">TURN</label>
+                            <div class="input-wrapper">
+                                <div class="readonly-wrapper proxy-input-wrapper"
+                                    onclick="openProxyVerificationModal('turn')">
+                                    <input type="text" id="turnAddr" title="TURN"
+                                        placeholder="user:password@127.0.0.1:3478" readonly class="subapi-input">
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="globalTURN" title="فعال‌سازی پروکسی سراسری: ترافیک سایت‌های غیر CFCDN نیز از TURN عبور کند"
+                                        onchange="markModified('proxy')">
+                                    <label for="globalTURN" class="checkbox-label"
+                                        title="فعال‌سازی پروکسی سراسری: ترافیک سایت‌های غیر CFCDN نیز از TURN عبور کند">فعال‌سازی پروکسی سراسری</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="sstpSection" class="hidden-section">
+                        <div class="form-group">
+                            <label for="sstpAddr">SSTP</label>
+                            <div class="input-wrapper">
+                                <div class="readonly-wrapper proxy-input-wrapper"
+                                    onclick="openProxyVerificationModal('sstp')">
+                                    <input type="text" id="sstpAddr" title="SSTP"
+                                        placeholder="user:password@127.0.0.1:443" readonly class="subapi-input">
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="globalSSTP" title="فعال‌سازی پروکسی سراسری: ترافیک سایت‌های غیر CFCDN نیز از SSTP عبور کند"
+                                        onchange="markModified('proxy')">
+                                    <label for="globalSSTP" class="checkbox-label"
+                                        title="فعال‌سازی پروکسی سراسری: ترافیک سایت‌های غیر CFCDN نیز از SSTP عبور کند">فعال‌سازی پروکسی سراسری</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="module-footer">
                         <button type="button" class="btn btn-proxyip-help" onclick="showProxyIPHelpModal()"
                             title="اطلاعات مربوط به ProxyIP">
@@ -7226,6 +7565,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                             onclick="showExploreHTTPModal()" style="display: none; padding: 10px 16px;"
                             title="انتخاب پروکسی از لیست HTTP">
                             <i class="ri-global-line"></i> دریافت HTTP بیشتر
+                        </button>
+                        <button type="button" class="btn btn-search-proxy" id="exploreHTTPSBtn"
+                            onclick="showExploreHTTPSModal()" style="display: none; padding: 10px 16px;"
+                            title="انتخاب پروکسی از لیست HTTPS">
+                            <i class="ri-lock-2-line"></i> دریافت HTTPS بیشتر
                         </button>
                         <div class="btn-group">
                             <button type="button" class="btn btn-secondary" onclick="cancelEdit('proxy')" disabled
@@ -7627,6 +7971,79 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
         </div>
     </div>
 
+    <!-- مودال هشدار gRPC -->
+    <div class="modal-overlay" id="transportGrpcModal" onclick="closeTransportGrpcModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <button type="button" class="modal-close" onclick="hideTransportGrpcTooltip()">×</button>
+            <div style="text-align: center; padding: 20px 0;">
+                <h2 style="color: #f44336; margin: 0 0 16px 0; font-size: 22px; font-weight: 700;"><i class="ri-alert-line"></i> نکته مهم درباره gRPC</h2>
+                <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.6; text-align: left;">
+                    شما پروتکل انتقال <strong>XHTTP</strong> یا <strong>gRPC</strong> را انتخاب کرده‌اید.
+                </p>
+                <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.6; text-align: left; color: #f44336;">
+                    لطفاً به <a href="https://dash.cloudflare.com/" target="_blank" rel="noopener noreferrer">پنل Cloudflare</a> رفته و gRPC را برای دامنه فعلی <strong>فعال</strong> کنید، در غیر این صورت نود قابل اتصال نخواهد بود.
+                </p>
+                <div class="grpc-modal-path">
+                    <svg class="grpc-modal-path-icon" role="presentation" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                        <path
+                            d="M8 1.363A5.083 5.083 0 002.922 6.44c0 3.5 4.448 9.25 4.638 9.48h.785c.195-.25 4.732-6 4.732-9.485A5.083 5.083 0 008 1.363zm-.043 13.42c-1.08-1.478-4.035-5.75-4.035-8.343a4.078 4.078 0 118.155 0c0 2.588-3.017 6.867-4.12 8.343z">
+                        </path>
+                        <path
+                            d="M7.98 4.25a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm0 3.5A1.25 1.25 0 119.23 6.5a1.25 1.25 0 01-1.25 1.268V7.75z">
+                        </path>
+                    </svg>
+                    <span>Network &gt; gRPC &gt; فعال ✅</span>
+                </div>
+            </div>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button type="button" class="btn grpc-modal-confirm-btn" onclick="hideTransportGrpcTooltip()">gRPC را فعال کردم</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال تأیید غیرفعال‌سازی TLS Shadowsocks -->
+    <div class="modal-overlay" id="ssTLSDisableModal" onclick="closeSSTLSDisableModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <button type="button" class="modal-close" onclick="cancelDisableSSTLS()">×</button>
+            <div style="text-align: center; padding: 20px 0;">
+                <h2 style="color: #f44336; margin: 0 0 16px 0; font-size: 22px; font-weight: 700;"><i class="ri-alert-line"></i> غیرفعال‌سازی رمزنگاری لایه انتقال TLS</h2>
+                <p style="margin: 0 0 12px 0; font-size: 14px; line-height: 1.6; text-align: left;">
+                    🔒 شما در حال غیرفعال‌سازی رمزنگاری لایه انتقال TLS برای <strong>Shadowsocks</strong> هستید. برای جلوگیری از قطع ارتباط نود، لطفاً ابتدا از رعایت شرایط محیط استقرار اطمینان حاصل کنید.
+                </p>
+                <div class="sstls-modal-requirements">
+                    <strong>☁️ قبل از غیرفعال‌سازی TLS، لطفاً موارد زیر را تأیید کنید:</strong>
+                    <ol>
+                        <li>پروژه باید در <strong>Workers</strong> (نه Pages) مستقر شده باشد.</li>
+                        <li>
+                            در Cloudflare گزینه "همیشه از HTTPS استفاده کن" را غیرفعال کنید:
+                            <div class="grpc-modal-path sstls-modal-path">
+                                <svg class="grpc-modal-path-icon" role="presentation" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 16 16" aria-hidden="true" focusable="false" style="opacity: 0.55;">
+                                    <path
+                                        d="M12.39 6.902h-1.193V4.705a3.197 3.197 0 10-6.394 0v2.197H3.61l-.5.5V14l.5.5h8.78l.5-.5V7.402l-.5-.5zM5.803 4.705a2.197 2.197 0 014.394 0v2.197H5.803V4.705zM11.89 13.5H4.11V7.902h7.78V13.5z">
+                                    </path>
+                                    <path d="M8 8.95a.965.965 0 00-.43 1.83v1.57h.86v-1.57A.965.965 0 008 8.95z">
+                                    </path>
+                                </svg>
+                                <span>SSL/TLS &gt; گواهی لبه &gt; همیشه از HTTPS استفاده کن &gt; <strong>غیرفعال</strong></span>
+                            </div>
+                            یا HOST مستقیماً از دامنه <strong>*.workers.dev</strong> اختصاص داده شده استفاده کند.
+                        </li>
+                        <li>
+                            پورت‌های优选IP/دامنه استفاده شده باید از نوع <strong>HTTP</strong> باشند، مانند:
+                            <strong>80، 8080، 8880، 2052، 2082، 2086، 2095</strong>.
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button type="button" class="btn grpc-modal-confirm-btn" onclick="confirmDisableSSTLS()">شرایط را رعایت کرده‌ام، تأیید می‌کنم</button>
+                <button type="button" class="btn btn-secondary" onclick="cancelDisableSSTLS()">انصراف</button>
+            </div>
+        </div>
+    </div>
+
     <!-- مودال تأیید بازنشانی پیکربندی -->
     <div class="modal-overlay" id="resetModal" onclick="closeResetModal(event)">
         <div class="modal" onclick="event.stopPropagation()">
@@ -7912,6 +8329,59 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                 <button type="button" class="btn btn-append-results" id="btnAppendResults"
                     onclick="appendResultsToCustom()" disabled>افزودن نتایج</button>
                 <button type="button" class="btn btn-close-api" onclick="closeAPIOptimizeModal()">بستن</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال پراکسی زنجیره‌ای -->
+    <div class="modal-overlay" id="chainProxyModal">
+        <div class="modal api-optimize-modal chain-proxy-modal">
+            <button type="button" class="modal-close" onclick="closeChainProxyModal()" style="cursor:pointer;">×</button>
+            <h2 class="api-optimize-modal-title"><i class="ri-link-m"></i> افزودن نود پراکسی زنجیره‌ای</h2>
+
+            <div class="api-form-group chain-proxy-form">
+                <div class="api-form-row-item">
+                    <label for="chainProxyNodeName">نام نود:</label>
+                    <input type="text" id="chainProxyNodeName" title="نام نود" placeholder="پراکسی زنجیره‌ای">
+                </div>
+
+                <div class="api-form-row-item">
+                    <label for="chainProxyHost">بهینه:</label>
+                    <div class="chain-proxy-preferred-wrapper">
+                        <input type="text" id="chainProxyHost" title="دامنه/IP بهینه" placeholder="دامنه فعلی">
+                        <span class="proxy-protocol-separator">:</span>
+                        <input type="text" id="chainProxyPort" title="پورت بهینه 1~65535، می‌تواند خالی بماند" inputmode="numeric"
+                            placeholder="اختیاری" oninput="normalizeChainProxyPortInput()">
+                    </div>
+                </div>
+
+                <div class="api-form-row-item chain-proxy-protocol-row">
+                    <label for="chainProxyProtocol">پراکسی زنجیره‌ای:</label>
+                    <div class="chain-proxy-input-wrapper">
+                        <select id="chainProxyProtocol" title="پروتکل پراکسی زنجیره‌ای" onchange="resetChainProxyValidation()">
+                            <option value="socks5">socks5</option>
+                            <option value="http">http</option>
+                            <option value="https">https</option>
+                            <option value="turn">turn</option>
+                            <option value="sstp">sstp</option>
+                        </select>
+                        <span class="proxy-protocol-separator">://</span>
+                        <input type="text" id="chainProxyAddress" title="آدرس پراکسی زنجیره‌ای"
+                            placeholder="user:pass@127.0.0.1:1080"
+                            oninput="sanitizeChainProxyAddressInput(); updateChainProxyVerifyState()"
+                            onchange="sanitizeChainProxyAddressInput(); updateChainProxyVerifyState()">
+                    </div>
+                </div>
+            </div>
+
+            <div id="chainProxyStatus" class="chain-proxy-status"></div>
+
+            <div class="api-buttons chain-proxy-buttons">
+                <button type="button" class="btn btn-verify-api" id="btnVerifyChainProxy"
+                    onclick="verifyChainProxyAvailability()" disabled>تأیید در دسترس بودن</button>
+                <button type="button" class="btn btn-chain-add" id="btnAddChainProxy" onclick="addChainProxyNode()"
+                    disabled>افزودن</button>
+                <button type="button" class="btn btn-close-api" onclick="closeChainProxyModal()">انصراف</button>
             </div>
         </div>
     </div>
@@ -8666,6 +9136,56 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
         </div>
     </div>
 
+    <!-- مودال دریافت HTTPS بیشتر -->
+    <div class="modal-overlay" id="exploreHTTPSModal">
+        <div class="modal">
+            <div class="modal-map-side">
+                <div id="proxy-map-https" class="proxy-map-container"></div>
+            </div>
+            <div class="modal-content-side">
+                <button type="button" class="modal-close" onclick="closeExploreHTTPSModal(event)"
+                    style="cursor: pointer;">×</button>
+                <h2 class="section-title" style="margin-bottom: 10px; text-align: center;"><i class="ri-global-line"></i> دریافت HTTPS بیشتر</h2>
+                <p style="text-align: center; color: #666; font-size: 13px; margin-bottom: 20px;">
+                    منابع پروکسی از Github، کانال <a href="https://t.me/Enkelte_notif" target="_blank" rel="noopener noreferrer">Notif
+                        💬</a> و سایر جوامع متن‌باز.
+                </p>
+                <div class="http-list-container">
+                    <div class="form-group">
+                        <label for="httpsRegionSelect"><i class="ri-rainbow-line"></i> انتخاب منطقه هدف</label>
+                        <div class="input-wrapper">
+                            <select id="httpsRegionSelect" onchange="onHTTPSRegionChange()" style="padding-left: 16px;">
+                                <option value="">در حال بارگذاری...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="httpsProxySelectGroup">
+                        <label for="httpsProxySelect"><i class="ri-global-line"></i> انتخاب پروکسی هدف</label>
+                        <div class="input-wrapper">
+                            <select id="httpsProxySelect"
+                                onchange="updateHTTPSConfirmButton(); updateProxyMap('https');"
+                                style="padding-left: 16px; font-family: 'Fira Code', monospace; font-size: 12px;">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group"
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: auto; padding-top: 20px;">
+                    <button type="button" class="btn btn-primary" id="httpsConfirmBtn" onclick="confirmSelectHTTPS()"
+                        disabled>
+                        تأیید
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeExploreHTTPSModal(event)">
+                        انصراف
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- مودال هشدار عدم تطابق HOSTS -->
     <div class="modal-overlay" id="hostsMismatchModal" onclick="closeHostsMismatchModal(event)">
         <div class="modal" onclick="event.stopPropagation()" style="max-width: 500px;">
@@ -9126,6 +9646,27 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
             render();
         }
 
+        // بارگذاری نسخه هسته از سرور
+        async function loadVersionBadge() {
+            try {
+                const uuid = currentConfig?.UUID;
+                if (!uuid || !document.getElementById('versionBadge')) return;
+                const resp = await fetch(`/version?uuid=${uuid}&_t=${Date.now()}`);
+                if (!resp.ok) return;
+                const data = await resp.json();
+                if (data && data.Version) {
+                    const v = String(data.Version);
+                    const datePart = v.length >= 8 ? `${v.slice(0,4)}/${v.slice(4,6)}/${v.slice(6,8)}` : v;
+                    document.getElementById('versionValue').textContent = datePart;
+                    document.getElementById('versionBadge').style.display = 'block';
+                }
+            } catch (e) { console.log('version fetch failed', e); }
+        }
+
+        function showVersionInfoModal() {
+            switchPage('about');
+        }
+
         async function loadConfig(redirectOnFail) {
             try {
                 const response = await fetch('/admin/config.json?_t=' + Date.now(), {
@@ -9286,6 +9827,16 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                 enable0RTTGroup.style.setProperty('display', 'none', 'important');
             }
 
+            // بررسی وجود فیلد پروتکل دوگانه
+            const dualProtocolGroup = document.getElementById('dualProtocolGroup');
+            const dualProtocolCheckbox = document.getElementById('dualProtocol');
+            if (currentConfig['双协议'] !== undefined) {
+                dualProtocolGroup.style.setProperty('display', 'flex', 'important');
+                dualProtocolCheckbox.checked = currentConfig['双协议'] || false;
+            } else {
+                dualProtocolGroup.style.setProperty('display', 'none', 'important');
+            }
+
             // بررسی وجود فیلد TLS Fragment
             const tlsFragmentGroup = document.getElementById('tlsFragmentGroup');
             const tlsFragmentHappGroup = document.getElementById('tlsFragmentHappGroup');
@@ -9337,6 +9888,18 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                 document.getElementById('proxyMode').value = 'http';
                 document.getElementById('httpAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
                 document.getElementById('globalHTTP').checked = currentConfig.反代?.SOCKS5?.全局 || false;
+            } else if (socksEnabled === 'https') {
+                document.getElementById('proxyMode').value = 'https';
+                document.getElementById('httpsAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
+                document.getElementById('globalHTTPS').checked = currentConfig.反代?.SOCKS5?.全局 || false;
+            } else if (socksEnabled === 'turn') {
+                document.getElementById('proxyMode').value = 'turn';
+                document.getElementById('turnAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
+                document.getElementById('globalTURN').checked = currentConfig.反代?.SOCKS5?.全局 || false;
+            } else if (socksEnabled === 'sstp') {
+                document.getElementById('proxyMode').value = 'sstp';
+                document.getElementById('sstpAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
+                document.getElementById('globalSSTP').checked = currentConfig.反代?.SOCKS5?.全局 || false;
             }
             updateProxyMode();
 
@@ -9376,6 +9939,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                 // دکمه "پاک کردن پیکربندی" خاکستری، و غیرقابل کلیک
             }
 
+            // همگام‌سازی تنظیمات Shadowsocks و gRPC
+            syncSSProtocolSettingsFromConfig();
+            syncTransportSettingsFromConfig();
+
             modifiedSections.clear();
             resetAllButtons();
 
@@ -9387,6 +9954,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
 
             // بررسی اینکه آیا دامنه فعلی در آرایه HOSTS است
             checkHostsMismatch();
+
+            // بارگذاری نسخه هسته
+            loadVersionBadge();
         }
 
         // تابع نمایش میزان استفاده CF
@@ -9668,6 +10238,14 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                     apiOptimizeBtn.classList.add('hidden-section');
                 }
             }
+            const chainProxyBtn = document.getElementById('chainProxyBtn');
+            if (chainProxyBtn) {
+                if (mode === 'custom' && chainProxyFeatureEnabled) {
+                    chainProxyBtn.classList.remove('hidden-section');
+                } else {
+                    chainProxyBtn.classList.add('hidden-section');
+                }
+            }
 
             // هنگام تغییر به حالت بهینه سفارشی، محتوای ADD.txt موجود را به صورت خودکار بارگذاری کن
             if (mode === 'custom') {
@@ -9743,16 +10321,32 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
         }
 
         function updateProtocol() {
-            const protocol = document.getElementById('protocol').value;
-            /*
+            const protocolSelect = document.getElementById('protocol');
+            const ssMethodGroup = document.getElementById('ssMethodGroup');
+            const ssTLSGroup = document.getElementById('ssTLSGroup');
+            if (!protocolSelect || !ssMethodGroup || !ssTLSGroup) return;
+
+            const hasSSConfig = !!(currentConfig && currentConfig.SS && typeof currentConfig.SS === 'object');
+            const showSSFields = hasSSConfig && protocolSelect.value === 'ss';
+            ssMethodGroup.style.display = showSSFields ? '' : 'none';
+            ssTLSGroup.style.display = showSSFields ? '' : 'none';
+
+            const protocol = protocolSelect.value;
+            updateSpecifiedPortLabelsByProtocol(protocol);
+            updateProtocolOptionAvailability(protocol);
             const transport = document.getElementById('transport');
-            if (protocol === 'trojan') {
-                transport.value = 'ws';
-                transport.disabled = true;
-            } else {
-                transport.disabled = false;
+            if (transport) {
+                const shouldLockTransport = protocol === 'ss';
+                if (shouldLockTransport) {
+                    transport.value = 'ws';
+                }
+                transport.disabled = shouldLockTransport;
+                updateGrpcModeVisibility();
+                updateTransportGrpcTooltipVisibility(false);
             }
-            */
+
+            // تغییرات پروتکل/TLS بر روی ECH تأثیر می‌گذارد
+            updateECHOptionState();
         }
 
         // پردازش تغییرات fingerprint مرورگر، مرتبط با گزینه‌های ECH
@@ -10018,9 +10612,10 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
             return input;
         }
 
-        // پردازش آدرس پروکسی SOCKS5 و HTTP
+        // پردازش آدرس پروکسی
         function processProxyAddress(type) {
-            const fieldId = type === 'socks5' ? 'socks5Addr' : 'httpAddr';
+            const fieldMap = { socks5: 'socks5Addr', http: 'httpAddr', https: 'httpsAddr', turn: 'turnAddr', sstp: 'sstpAddr' };
+            const fieldId = fieldMap[type] || 'httpAddr';
             const input = document.getElementById(fieldId).value.trim();
             let cleanAddress = '';
 
@@ -10045,17 +10640,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
             }
 
             // تشخیص و حذف پیشوند پروتکل
-            const socks5Prefixes = ['socks5://', 'socks5=', 'socks5://'];
-            const httpPrefixes = ['http://', 'http=', 'https://'];
+            const allPrefixes = ['socks5://', 'socks5=', 'http://', 'http=', 'https://', 'https=', 'turn://', 'turn=', 'sstp://', 'sstp='];
 
-            for (const prefix of socks5Prefixes) {
-                if (input.toLowerCase().startsWith(prefix)) {
-                    input = input.substring(prefix.length).trim();
-                    break;
-                }
-            }
-
-            for (const prefix of httpPrefixes) {
+            for (const prefix of allPrefixes) {
                 if (input.toLowerCase().startsWith(prefix)) {
                     input = input.substring(prefix.length).trim();
                     break;
@@ -10083,13 +10670,14 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                 document.getElementById('proxyIP').value = '';
                 document.getElementById('socks5Addr').value = cleanAddress;
                 document.getElementById('httpAddr').value = '';
+                document.getElementById('httpsAddr').value = '';
 
                 updateProxyMode();
                 return;
             }
 
             // بررسی شامل پروتکل http
-            if (lowerInput.includes('http://') || lowerInput.includes('http=') || lowerInput.includes('https://') || lowerInput.startsWith('/http')) {
+            if (lowerInput.includes('http://') || lowerInput.includes('http=') || lowerInput.startsWith('/http')) {
                 // تغییر به حالت HTTP
                 document.getElementById('proxyMode').value = 'http';
 
@@ -10097,16 +10685,60 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                 document.getElementById('proxyIP').value = '';
                 document.getElementById('socks5Addr').value = '';
                 document.getElementById('httpAddr').value = cleanAddress;
+                document.getElementById('httpsAddr').value = '';
 
                 updateProxyMode();
                 return;
             }
+
+            // بررسی شامل پروتکل https
+            if (lowerInput.includes('https://') || lowerInput.includes('https=') || lowerInput.startsWith('/https')) {
+                document.getElementById('proxyMode').value = 'https';
+                document.getElementById('proxyIP').value = '';
+                document.getElementById('socks5Addr').value = '';
+                document.getElementById('httpAddr').value = '';
+                document.getElementById('httpsAddr').value = cleanAddress;
+                document.getElementById('turnAddr').value = '';
+                document.getElementById('sstpAddr').value = '';
+                updateProxyMode();
+                return;
+            }
+
+            // بررسی شامل پروتکل turn
+            if (lowerInput.includes('turn://') || lowerInput.includes('turn=') || lowerInput.startsWith('/turn')) {
+                document.getElementById('proxyMode').value = 'turn';
+                document.getElementById('proxyIP').value = '';
+                document.getElementById('socks5Addr').value = '';
+                document.getElementById('httpAddr').value = '';
+                document.getElementById('httpsAddr').value = '';
+                document.getElementById('turnAddr').value = cleanAddress;
+                document.getElementById('sstpAddr').value = '';
+                updateProxyMode();
+                return;
+            }
+
+            // بررسی شامل پروتکل sstp
+            if (lowerInput.includes('sstp://') || lowerInput.includes('sstp=') || lowerInput.startsWith('/sstp')) {
+                document.getElementById('proxyMode').value = 'sstp';
+                document.getElementById('proxyIP').value = '';
+                document.getElementById('socks5Addr').value = '';
+                document.getElementById('httpAddr').value = '';
+                document.getElementById('httpsAddr').value = '';
+                document.getElementById('turnAddr').value = '';
+                document.getElementById('sstpAddr').value = cleanAddress;
+                updateProxyMode();
+                return;
+            }
         }
-		        function updateProxyMode() {
+
+        function updateProxyMode() {
             const mode = document.getElementById('proxyMode').value;
             document.getElementById('proxyIPSection').style.display = mode === 'auto' ? 'block' : 'none';
             document.getElementById('socks5Section').style.display = mode === 'socks5' ? 'block' : 'none';
             document.getElementById('httpSection').style.display = mode === 'http' ? 'block' : 'none';
+            document.getElementById('httpsSection').style.display = mode === 'https' ? 'block' : 'none';
+            document.getElementById('turnSection').style.display = mode === 'turn' ? 'block' : 'none';
+            document.getElementById('sstpSection').style.display = mode === 'sstp' ? 'block' : 'none';
 
             // بر اساس حالت انتخاب شده داده‌های مربوطه را پر کن
             if (mode === 'auto') {
@@ -10123,6 +10755,15 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
             } else if (mode === 'http') {
                 document.getElementById('httpAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
                 document.getElementById('globalHTTP').checked = currentConfig.反代?.SOCKS5?.全局 || false;
+            } else if (mode === 'https') {
+                document.getElementById('httpsAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
+                document.getElementById('globalHTTPS').checked = currentConfig.反代?.SOCKS5?.全局 || false;
+            } else if (mode === 'turn') {
+                document.getElementById('turnAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
+                document.getElementById('globalTURN').checked = currentConfig.反代?.SOCKS5?.全局 || false;
+            } else if (mode === 'sstp') {
+                document.getElementById('sstpAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
+                document.getElementById('globalSSTP').checked = currentConfig.反代?.SOCKS5?.全局 || false;
             }
 
             // بروزرسانی وضعیت نمایش دکمه "دریافت PROXYIP بیشتر"
@@ -10141,6 +10782,12 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
             const exploreHTTPBtn = document.getElementById('exploreHTTPBtn');
             if (exploreHTTPBtn) {
                 exploreHTTPBtn.style.display = mode === 'http' ? 'inline-block' : 'none';
+            }
+
+            // بروزرسانی وضعیت نمایش دکمه "کشف HTTPS بیشتر"
+            const exploreHTTPSBtn = document.getElementById('exploreHTTPSBtn');
+            if (exploreHTTPSBtn) {
+                exploreHTTPSBtn.style.display = mode === 'https' ? 'inline-block' : 'none';
             }
 
             markModified('proxy');
@@ -10652,7 +11299,26 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
         async function saveConfig() {
             currentConfig.优选订阅生成.SUBNAME = document.getElementById('subName').value;
             currentConfig.协议类型 = document.getElementById('protocol').value;
-            //currentConfig.传输协议 = currentConfig.协议类型 === 'trojan' ? 'ws' : document.getElementById('transport').value;
+            const ssMethodSelect = document.getElementById('ssMethod');
+            const ssTLSSelect = document.getElementById('ssTLS');
+            if (currentConfig.SS && typeof currentConfig.SS === 'object' && ssMethodSelect && ssTLSSelect) {
+                const ssMethodKey = '\u52a0\u5bc6\u65b9\u5f0f';
+                currentConfig.SS[ssMethodKey] = ssMethodSelect.value || 'aes-128-gcm';
+                currentConfig.SS.TLS = ssTLSSelect.value === 'true';
+            }
+            if (currentConfig['gRPC模式'] !== undefined) {
+                currentConfig['传输协议'] = document.getElementById('transport').value;
+                currentConfig['gRPC模式'] = document.getElementById('grpcMode').value || 'gun';
+            }
+            if (currentConfig['gRPCUserAgent'] !== undefined) {
+                const grpcUserAgentInput = document.getElementById('grpcUserAgent');
+                if (grpcUserAgentInput) {
+                    if (!grpcUserAgentInput.value.replace(/\s+/g, '')) {
+                        grpcUserAgentInput.value = navigator.userAgent || '';
+                    }
+                    currentConfig['gRPCUserAgent'] = grpcUserAgentInput.value || '';
+                }
+            }
             currentConfig.跳过证书验证 = document.getElementById('skipVerify').checked;
 
             // ذخیره PATH (اگر فیلد "مسیر کامل نود" وجود دارد، به معنای پشتیبانیbackend از ویرایش PATH)
@@ -10673,6 +11339,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
             // ذخیره فعال‌سازی 0RTT (اگر فیلد وجود دارد)
             if (currentConfig['启用0RTT'] !== undefined) {
                 currentConfig['启用0RTT'] = document.getElementById('enable0RTT').checked;
+            }
+
+            // ذخیره پروتکل دوگانه (اگر فیلد وجود دارد)
+            if (currentConfig['双协议'] !== undefined) {
+                currentConfig['双协议'] = document.getElementById('dualProtocol').checked;
             }
 
             // ذخیره TLS Fragmentation (اگر فیلد وجود دارد)
@@ -10750,6 +11421,33 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
 
                 if (!socksAccount) {
                     showToast('آدرس HTTP نمی‌تواند خالی باشد', 'error');
+                    return;
+                }
+            } else if (mode === 'https') {
+                socksEnabled = 'https';
+                socksAccount = document.getElementById('httpsAddr').value.trim();
+                globalProxy = document.getElementById('globalHTTPS').checked;
+
+                if (!socksAccount) {
+                    showToast('آدرس HTTPS نمی‌تواند خالی باشد', 'error');
+                    return;
+                }
+            } else if (mode === 'turn') {
+                socksEnabled = 'turn';
+                socksAccount = document.getElementById('turnAddr').value.trim();
+                globalProxy = document.getElementById('globalTURN').checked;
+
+                if (!socksAccount) {
+                    showToast('آدرس TURN نمی‌تواند خالی باشد', 'error');
+                    return;
+                }
+            } else if (mode === 'sstp') {
+                socksEnabled = 'sstp';
+                socksAccount = document.getElementById('sstpAddr').value.trim();
+                globalProxy = document.getElementById('globalSSTP').checked;
+
+                if (!socksAccount) {
+                    showToast('آدرس SSTP نمی‌تواند خالی باشد', 'error');
                     return;
                 }
             }
@@ -10946,11 +11644,22 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                     document.getElementById('enable0RTT').checked = currentConfig['启用0RTT'] || false;
                 }
 
+                // بازنشانی پروتکل دوگانه (اگر فیلد وجود دارد)
+                if (currentConfig['双协议'] !== undefined) {
+                    document.getElementById('dualProtocol').checked = currentConfig['双协议'] || false;
+                }
+
                 // بازنشانی TLS Fragmentation (اگر فیلد وجود دارد)
                 if (currentConfig['TLS分片'] !== undefined) {
                     document.getElementById('tlsFragmentShadowrocket').checked = currentConfig['TLS分片'] === 'Shadowrocket';
                     document.getElementById('tlsFragmentHapp').checked = currentConfig['TLS分片'] === 'Happ';
                 }
+
+                // بازنشانی تنظیمات Shadowsocks
+                syncSSProtocolSettingsFromConfig();
+
+                // بازنشانی تنظیمات gRPC
+                syncTransportSettingsFromConfig();
 
                 // بازنشانی ECH (اگر فیلد وجود دارد)
                 if (currentConfig['ECH'] !== undefined) {
@@ -10988,6 +11697,18 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                     document.getElementById('proxyMode').value = 'http';
                     document.getElementById('httpAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
                     document.getElementById('globalHTTP').checked = currentConfig.反代?.SOCKS5?.全局 || false;
+                } else if (socksEnabled === 'https') {
+                    document.getElementById('proxyMode').value = 'https';
+                    document.getElementById('httpsAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
+                    document.getElementById('globalHTTPS').checked = currentConfig.反代?.SOCKS5?.全局 || false;
+                } else if (socksEnabled === 'turn') {
+                    document.getElementById('proxyMode').value = 'turn';
+                    document.getElementById('turnAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
+                    document.getElementById('globalTURN').checked = currentConfig.反代?.SOCKS5?.全局 || false;
+                } else if (socksEnabled === 'sstp') {
+                    document.getElementById('proxyMode').value = 'sstp';
+                    document.getElementById('sstpAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
+                    document.getElementById('globalSSTP').checked = currentConfig.反代?.SOCKS5?.全局 || false;
                 }
                 updateProxyMode();
             } else if (section === 'convert') {
@@ -11277,20 +11998,29 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
         // متغیرهای سراسری برای ذخیره نوع پروکسی در حال تایید
         let currentProxyType = null;
         let currentProxyFieldId = null;
+        const PROXY_PROTOCOLS = ['socks5', 'http', 'https', 'turn', 'sstp'];
+        let chainProxyFeatureEnabled = true;
+        let proxyFeatureAvailabilityInitialized = true;
 
         function openProxyVerificationModal(proxyType) {
             currentProxyType = proxyType;
-            currentProxyFieldId = proxyType === 'socks5' ? 'socks5Addr' : 'httpAddr';
+            const fieldMap = { socks5: 'socks5Addr', http: 'httpAddr', https: 'httpsAddr', turn: 'turnAddr', sstp: 'sstpAddr' };
+            currentProxyFieldId = fieldMap[proxyType] || 'httpAddr';
 
             // تنظیم عنوان و برچسب کادر
-            const title = proxyType === 'socks5' ? '<i class="ri-lock-line"></i> تایید پروکسی SOCKS5' : '<i class="ri-global-line"></i> تایید پروکسی HTTP';
-            const label = proxyType === 'socks5' ? 'پروکسی SOCKS5:' : 'پروکسی HTTP:';
+            const titles = {
+                socks5: '<i class="ri-lock-line"></i> تایید پروکسی SOCKS5',
+                http: '<i class="ri-global-line"></i> تایید پروکسی HTTP',
+                https: '<i class="ri-lock-2-line"></i> تایید پروکسی HTTPS',
+                turn: '<i class="ri-exchange-2-line"></i> تایید پروکسی TURN',
+                sstp: '<i class="ri-shield-keyhole-line"></i> تایید پروکسی SSTP'
+            };
+            const labels = { socks5: 'پروکسی SOCKS5:', http: 'پروکسی HTTP:', https: 'پروکسی HTTPS:', turn: 'پروکسی TURN:', sstp: 'پروکسی SSTP:' };
+            const placeholders = { socks5: 'user:password@127.0.0.1:1080', http: 'user:password@127.0.0.1:8080', https: 'user:password@127.0.0.1:443', turn: 'user:password@127.0.0.1:3478', sstp: 'user:password@127.0.0.1:443' };
 
-            document.getElementById('proxyVerificationTitle').textContent = title;
-            document.getElementById('proxyVerificationLabel').textContent = label;
-            document.getElementById('proxyVerificationInput').placeholder = proxyType === 'socks5'
-                ? 'user:password@127.0.0.1:1080'
-                : 'user:password@127.0.0.1:8080';
+            document.getElementById('proxyVerificationTitle').innerHTML = titles[proxyType] || titles.http;
+            document.getElementById('proxyVerificationLabel').textContent = labels[proxyType] || labels.http;
+            document.getElementById('proxyVerificationInput').placeholder = placeholders[proxyType] || placeholders.http;
 
             // تنظیم مقدار فعلی کادر ورودی
             const currentValue = document.getElementById(currentProxyFieldId).value;
@@ -11342,11 +12072,11 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
 
                 // ساخت پارامترهای درخواست
                 const params = new URLSearchParams();
-                if (currentProxyType === 'socks5') {
-                    params.append('socks5', processedAddress);
-                } else {
-                    params.append('http', processedAddress);
-                }
+                if (currentProxyType === 'socks5') params.append('socks5', processedAddress);
+                else if (currentProxyType === 'https') params.append('https', processedAddress);
+                else if (currentProxyType === 'turn') params.append('turn', processedAddress);
+                else if (currentProxyType === 'sstp') params.append('sstp', processedAddress);
+                else params.append('http', processedAddress);
 
                 // ایجاد AbortController برای تایم‌اوت 5 ثانیه‌ای
                 const controller = new AbortController();
@@ -11459,17 +12189,9 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
             }
 
             // تشخیص و حذف پیشوند پروتکل
-            const socks5Prefixes = ['socks5://', 'socks5=', 'socks5://'];
-            const httpPrefixes = ['http://', 'http=', 'https://'];
+            const allPrefixes = ['socks5://', 'socks5=', 'http://', 'http=', 'https://', 'https=', 'turn://', 'turn=', 'sstp://', 'sstp='];
 
-            for (const prefix of socks5Prefixes) {
-                if (input.toLowerCase().startsWith(prefix)) {
-                    input = input.substring(prefix.length).trim();
-                    break;
-                }
-            }
-
-            for (const prefix of httpPrefixes) {
+            for (const prefix of allPrefixes) {
                 if (input.toLowerCase().startsWith(prefix)) {
                     input = input.substring(prefix.length).trim();
                     break;
@@ -11555,6 +12277,373 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
             document.getElementById(currentProxyFieldId).value = validAddress;
             markModified('proxy');
             closeProxyVerificationModal();
+        }
+
+        function escapeMarkdownHtml(str) {
+            return escapeHtml(str);
+        }
+
+        function normalizeProxyProtocol(protocol) {
+            if (!PROXY_PROTOCOLS.includes(protocol)) return 'socks5';
+            return protocol;
+        }
+
+        function openChainProxyModal() {
+            if (!chainProxyFeatureEnabled) {
+                showToast('نسخه کنونی هسته از پراکسی زنجیره‌ای پشتیبانی نمی‌کند', 'error');
+                return;
+            }
+            const modal = document.getElementById('chainProxyModal');
+            const nodeNameInput = document.getElementById('chainProxyNodeName');
+            const hostInput = document.getElementById('chainProxyHost');
+            const portInput = document.getElementById('chainProxyPort');
+            const protocolSelect = document.getElementById('chainProxyProtocol');
+            const addressInput = document.getElementById('chainProxyAddress');
+            const statusEl = document.getElementById('chainProxyStatus');
+            const addBtn = document.getElementById('btnAddChainProxy');
+            if (!modal || !nodeNameInput || !hostInput || !portInput || !protocolSelect || !addressInput) return;
+            nodeNameInput.value = '';
+            nodeNameInput.placeholder = 'پراکسی زنجیره‌ای';
+            hostInput.value = getDefaultChainProxyHost();
+            hostInput.placeholder = getDefaultChainProxyHost() || 'دامنه فعلی';
+            portInput.value = '';
+            protocolSelect.value = 'socks5';
+            addressInput.value = '';
+            if (statusEl) { statusEl.style.display = 'none'; statusEl.textContent = ''; }
+            if (addBtn) {
+                addBtn.disabled = true;
+                delete addBtn.dataset.validProtocol;
+                delete addBtn.dataset.validAddress;
+                delete addBtn.dataset.validKey;
+                delete addBtn.dataset.defaultNodeName;
+            }
+            updateChainProxyVerifyState(false);
+            modal.classList.add('show');
+            setTimeout(() => addressInput.focus(), 0);
+        }
+
+        function closeChainProxyModal() {
+            document.getElementById('chainProxyModal')?.classList.remove('show');
+        }
+
+        function resetChainProxyValidation() {
+            const addBtn = document.getElementById('btnAddChainProxy');
+            const nodeNameInput = document.getElementById('chainProxyNodeName');
+            const statusEl = document.getElementById('chainProxyStatus');
+            if (addBtn) {
+                addBtn.disabled = true;
+                delete addBtn.dataset.validProtocol;
+                delete addBtn.dataset.validAddress;
+                delete addBtn.dataset.validKey;
+                delete addBtn.dataset.defaultNodeName;
+            }
+            if (nodeNameInput && !String(nodeNameInput.value || '').trim()) {
+                nodeNameInput.placeholder = 'پراکسی زنجیره‌ای';
+            }
+            if (statusEl) { statusEl.style.display = 'none'; statusEl.textContent = ''; }
+            updateChainProxyVerifyState(false);
+        }
+
+        function updateChainProxyVerifyState(resetValidation = true) {
+            if (resetValidation) {
+                const addBtn = document.getElementById('btnAddChainProxy');
+                const nodeNameInput = document.getElementById('chainProxyNodeName');
+                const statusEl = document.getElementById('chainProxyStatus');
+                if (addBtn) {
+                    addBtn.disabled = true;
+                    delete addBtn.dataset.validProtocol;
+                    delete addBtn.dataset.validAddress;
+                    delete addBtn.dataset.validKey;
+                    delete addBtn.dataset.defaultNodeName;
+                }
+                if (nodeNameInput && !String(nodeNameInput.value || '').trim()) {
+                    nodeNameInput.placeholder = 'پراکسی زنجیره‌ای';
+                }
+                if (statusEl) { statusEl.style.display = 'none'; statusEl.textContent = ''; }
+            }
+            const addressInput = document.getElementById('chainProxyAddress');
+            const verifyBtn = document.getElementById('btnVerifyChainProxy');
+            if (!verifyBtn) return;
+            verifyBtn.disabled = !String(addressInput?.value || '').trim();
+        }
+
+        function normalizeChainProxyNodeName(value) {
+            const cleanValue = String(value || '').replace(/[\r\n]+/g, ' ').trim();
+            if (!cleanValue) return '';
+            try { return decodeURIComponent(cleanValue); } catch (e) { return cleanValue; }
+        }
+
+        function sanitizeChainProxyAddressInput() {
+            const addressInput = document.getElementById('chainProxyAddress');
+            const protocolSelect = document.getElementById('chainProxyProtocol');
+            const nodeNameInput = document.getElementById('chainProxyNodeName');
+            if (!addressInput || !protocolSelect) return;
+            let value = addressInput.value.trimStart();
+            const lowerValue = value.toLowerCase();
+            for (const protocol of PROXY_PROTOCOLS) {
+                const protocolPrefix = `${protocol}://`;
+                const legacyPrefix = `${protocol}=`;
+                if (lowerValue.startsWith(protocolPrefix)) {
+                    protocolSelect.value = protocol;
+                    value = value.slice(protocolPrefix.length).trimStart();
+                    break;
+                }
+                if (lowerValue.startsWith(legacyPrefix)) {
+                    protocolSelect.value = protocol;
+                    value = value.slice(legacyPrefix.length).trimStart();
+                    break;
+                }
+            }
+            const hashIndex = value.indexOf('#');
+            if (hashIndex >= 0) {
+                const nodeName = normalizeChainProxyNodeName(value.slice(hashIndex + 1));
+                if (nodeName && nodeNameInput) { nodeNameInput.value = nodeName; }
+                value = value.slice(0, hashIndex).trimEnd();
+            }
+            if (addressInput.value !== value) { addressInput.value = value; }
+        }
+
+        function normalizeChainProxyPortInput() {
+            const portInput = document.getElementById('chainProxyPort');
+            if (!portInput) return;
+            let value = portInput.value.replace(/\D/g, '');
+            if (value) {
+                const numberValue = Number(value);
+                if (numberValue < 1) value = '1';
+                if (numberValue > 65535) value = '65535';
+            }
+            portInput.value = value;
+        }
+
+        function showChainProxyStatus(message, type = 'info', asHtml = false) {
+            const statusEl = document.getElementById('chainProxyStatus');
+            if (!statusEl) return;
+            if (asHtml) { statusEl.innerHTML = message; } else { statusEl.textContent = message; }
+            statusEl.style.display = 'block';
+            statusEl.style.padding = type === 'chain-success' ? '0' : '14px 16px';
+            statusEl.style.color = type === 'chain-success' ? '' : '#fff';
+            statusEl.style.background = type === 'chain-success'
+                ? 'transparent'
+                : type === 'success'
+                    ? 'linear-gradient(135deg, #10b981 0, #059669 100%)'
+                    : type === 'error'
+                        ? 'linear-gradient(135deg, #ef4444 0, #dc2626 100%)'
+                        : 'linear-gradient(135deg, #3b82f6 0, #1d4ed8 100%)';
+        }
+
+        function maskChainProxyAddressForDisplay(address) {
+            const raw = String(address || '').trim();
+            const atIndex = raw.lastIndexOf('@');
+            if (atIndex <= 0) return raw;
+            const userInfo = raw.slice(0, atIndex);
+            const target = raw.slice(atIndex + 1);
+            const colonIndex = userInfo.indexOf(':');
+            if (colonIndex < 0) return `***@${target}`;
+            return `${userInfo.slice(0, colonIndex)}:***@${target}`;
+        }
+
+        function extractChainProxyCountryCode(loc) {
+            const value = String(loc || '').trim().toUpperCase();
+            if (!value || value === 'ناشناخته') return '';
+            const bracketMatch = value.match(/\[([A-Z]{2})\]/);
+            if (bracketMatch) return bracketMatch[1];
+            const codeMatch = value.match(/\b[A-Z]{2}\b/);
+            if (codeMatch) return codeMatch[0];
+            return '';
+        }
+
+        function buildChainProxyDefaultNodeName(loc, protocol) {
+            const countryCode = extractChainProxyCountryCode(loc);
+            const protocolLabel = normalizeProxyProtocol(protocol || 'socks5').toUpperCase();
+            return `${countryCode ? `${countryCode} ` : ''}پراکسی زنجیره‌ای ${protocolLabel}`;
+        }
+
+        function buildChainProxyPreferredEndpoint(host, port) {
+            const cleanHost = String(host || '').trim() || 'پرنشده';
+            const cleanPort = String(port || '').trim();
+            return cleanPort ? `${cleanHost}:${cleanPort}` : cleanHost;
+        }
+
+        function renderChainProxyAvailabilitySuccessCard(options) {
+            const { ip, loc, responseTimeDisplay, preferredHost, preferredPort, protocol, proxyAddress } = options || {};
+            const safeIp = escapeMarkdownHtml(ip || 'ناشناخته');
+            const safeLoc = escapeMarkdownHtml(loc || 'ناشناخته');
+            const safeResponseTime = escapeMarkdownHtml(responseTimeDisplay || 'ناشناخته');
+            const safeBadgeRegion = escapeMarkdownHtml(extractChainProxyCountryCode(loc) || loc || 'ناشناخته');
+            const safePreferred = escapeMarkdownHtml(buildChainProxyPreferredEndpoint(preferredHost, preferredPort));
+            const safeProtocol = escapeMarkdownHtml(protocol || 'socks5');
+            const safeProtocolLabel = escapeMarkdownHtml(`${protocol || 'socks5'}代理`);
+            const safeProxyAddress = escapeMarkdownHtml(maskChainProxyAddressForDisplay(proxyAddress || ''));
+            return `
+                <div class="chain-verify-card">
+                    <div class="chain-verify-head">
+                        <div class="chain-verify-title">
+                            <span class="chain-verify-dot"></span>
+                            <span>تأیید شد</span>
+                        </div>
+                        <span class="chain-verify-badge" title="منطقه: ${safeLoc} ${safeResponseTime}">منطقه: ${safeBadgeRegion} ${safeResponseTime}</span>
+                    </div>
+                    <div class="chain-verify-body">
+                        <div class="chain-route">
+                            <div class="chain-route-node">
+                                <div class="chain-route-label">ورودی بهینه</div>
+                                <div class="chain-route-value" title="${safePreferred}">${safePreferred}</div>
+                            </div>
+                            <div class="chain-route-arrow">→</div>
+                            <div class="chain-route-node">
+                                <div class="chain-route-label">${safeProtocolLabel}</div>
+                                <div class="chain-route-value" title="${safeProtocol}://${safeProxyAddress}">${safeProtocol}://${safeProxyAddress}</div>
+                            </div>
+                            <div class="chain-route-arrow">→</div>
+                            <div class="chain-route-node">
+                                <div class="chain-route-label">آدرس نهایی</div>
+                                <div class="chain-route-value chain-ip-link" data-raw-value="${safeIp}" onclick="showIpDetailForProxy(this.dataset.rawValue, this)" title="${safeIp}">${safeIp} 🔍</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        function getChainProxyValidationKey(protocol, address) {
+            return `${protocol}://${address}`;
+        }
+
+        function getDefaultChainProxyHost() {
+            const hostname = String(window.location.hostname || '').trim();
+            return hostname || String(document.getElementById('nodeHost')?.value || '').trim();
+        }
+
+        function normalizeChainProxyPreferredHost(host) {
+            const cleanHost = String(host || '').replace(/[\r\n]+/g, '').trim();
+            const colonCount = (cleanHost.match(/:/g) || []).length;
+            if (colonCount > 1 && !cleanHost.startsWith('[') && !cleanHost.endsWith(']')) {
+                return `[${cleanHost}]`;
+            }
+            return cleanHost;
+        }
+
+        async function verifyChainProxyAvailability() {
+            const protocolSelect = document.getElementById('chainProxyProtocol');
+            const addressInput = document.getElementById('chainProxyAddress');
+            const verifyBtn = document.getElementById('btnVerifyChainProxy');
+            const addBtn = document.getElementById('btnAddChainProxy');
+            const protocol = normalizeProxyProtocol(protocolSelect?.value || 'socks5');
+            const input = String(addressInput?.value || '').trim();
+            if (!input) {
+                showChainProxyStatus('❌ لطفاً آدرس پراکسی زنجیره‌ای را وارد کنید', 'error');
+                updateChainProxyVerifyState(false);
+                return;
+            }
+            const processedAddress = processProxyAddressForValidation(input, protocol);
+            if (!processedAddress) {
+                showChainProxyStatus('❌ فرمت آدرس پراکسی زنجیره‌ای نامعتبر است', 'error');
+                updateChainProxyVerifyState(false);
+                return;
+            }
+            const validationKey = getChainProxyValidationKey(protocol, processedAddress);
+            if (addBtn) {
+                addBtn.disabled = true;
+                delete addBtn.dataset.validProtocol;
+                delete addBtn.dataset.validAddress;
+                delete addBtn.dataset.validKey;
+                delete addBtn.dataset.defaultNodeName;
+            }
+            try {
+                if (verifyBtn) verifyBtn.disabled = true;
+                showChainProxyStatus('⏳ در حال تأیید...', 'info');
+                const params = new URLSearchParams();
+                params.append(protocol, processedAddress);
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 12000);
+                const response = await fetch(`/admin/check?${params}&_t=${Date.now()}`, { method: 'GET', signal: controller.signal });
+                clearTimeout(timeoutId);
+                const data = await response.json();
+                if (!Object.prototype.hasOwnProperty.call(data, 'success')) {
+                    showChainProxyStatus('❌ <strong>نسخه هسته قدیمی است</strong><br><small style="opacity: 0.9;">لطفاً کد edgetunnel را به‌روز کنید</small>', 'error', true);
+                    return;
+                }
+                if (data.success === false) {
+                    showChainProxyStatus(`❌ <strong>پروکسی نامعتبر</strong><br><small style="opacity: 0.9;">${escapeMarkdownHtml(data.error || 'خطای ناشناخته')}</small>`, 'error', true);
+                    return;
+                }
+                const currentProtocol = normalizeProxyProtocol(protocolSelect?.value || 'socks5');
+                const currentProcessedAddress = processProxyAddressForValidation(String(addressInput?.value || '').trim(), currentProtocol);
+                if (validationKey !== getChainProxyValidationKey(currentProtocol, currentProcessedAddress)) {
+                    showChainProxyStatus('ℹ️ محتوای پراکسی زنجیره‌ای تغییر کرده، لطفاً دوباره تأیید کنید', 'info');
+                    return;
+                }
+                const ip = data.ip || 'ناشناخته';
+                const loc = data.loc || 'ناشناخته';
+                const responseTime = data.responseTime || 0;
+                const responseTimeDisplay = responseTime > 0 ? `${responseTime}ms` : 'ناشناخته';
+                const defaultNodeName = buildChainProxyDefaultNodeName(loc, protocol);
+                const nodeNameInput = document.getElementById('chainProxyNodeName');
+                if (nodeNameInput && !String(nodeNameInput.value || '').trim()) {
+                    nodeNameInput.placeholder = defaultNodeName;
+                }
+                const previewHost = normalizeChainProxyPreferredHost(document.getElementById('chainProxyHost')?.value || getDefaultChainProxyHost());
+                const previewPort = String(document.getElementById('chainProxyPort')?.value || '').trim();
+                showChainProxyStatus(renderChainProxyAvailabilitySuccessCard({ ip, loc, responseTimeDisplay, preferredHost: previewHost, preferredPort: previewPort, protocol, proxyAddress: processedAddress }), 'chain-success', true);
+                if (addBtn) {
+                    addBtn.disabled = false;
+                    addBtn.dataset.validProtocol = protocol;
+                    addBtn.dataset.validAddress = processedAddress;
+                    addBtn.dataset.validKey = validationKey;
+                    addBtn.dataset.defaultNodeName = defaultNodeName;
+                }
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    showChainProxyStatus('❌ <strong>تایم‌اوت تأیید</strong><br><small style="opacity: 0.9;">درخواست بیش از ۱۰ ثانیه بدون پاسخ ماند</small>', 'error', true);
+                } else {
+                    showChainProxyStatus(`❌ <strong>تأیید ناموفق</strong><br><small style="opacity: 0.9;">${escapeMarkdownHtml(error.message)}</small>`, 'error', true);
+                }
+            } finally {
+                if (verifyBtn) { verifyBtn.disabled = !String(addressInput?.value || '').trim(); }
+            }
+        }
+
+        function addChainProxyNode() {
+            const addBtn = document.getElementById('btnAddChainProxy');
+            const validProtocol = addBtn?.dataset.validProtocol || '';
+            const validAddress = addBtn?.dataset.validAddress || '';
+            const protocolSelect = document.getElementById('chainProxyProtocol');
+            const addressInput = document.getElementById('chainProxyAddress');
+            const currentProtocol = normalizeProxyProtocol(protocolSelect?.value || 'socks5');
+            const currentAddress = processProxyAddressForValidation(String(addressInput?.value || '').trim(), currentProtocol);
+            const currentKey = getChainProxyValidationKey(currentProtocol, currentAddress);
+            if (!validProtocol || !validAddress) {
+                showToast('لطفاً ابتدا دکمه "تأیید در دسترس بودن" را بزنید', 'error');
+                return;
+            }
+            if (addBtn?.dataset.validKey !== currentKey) {
+                showToast('محتوای پراکسی زنجیره‌ای تغییر کرده، لطفاً دوباره تأیید کنید', 'error');
+                resetChainProxyValidation();
+                return;
+            }
+            const nodeName = String(document.getElementById('chainProxyNodeName')?.value || '')
+                .replace(/[\r\n]+/g, ' ').trim() || addBtn?.dataset.defaultNodeName || buildChainProxyDefaultNodeName('', validProtocol);
+            const preferredHost = normalizeChainProxyPreferredHost(document.getElementById('chainProxyHost')?.value || getDefaultChainProxyHost());
+            const portValue = String(document.getElementById('chainProxyPort')?.value || '').trim();
+            const portNumber = portValue ? Number(portValue) : null;
+            if (!preferredHost) {
+                showChainProxyStatus('❌ دامنه/IP بهینه نمی‌تواند خالی باشد', 'error');
+                return;
+            }
+            if (portValue && (!Number.isInteger(portNumber) || portNumber < 1 || portNumber > 65535)) {
+                showChainProxyStatus('❌ پورت بهینه فقط عدد ۱ تا ۶۵۵۳۵ می‌تواند باشد', 'error');
+                return;
+            }
+            const chainProxyURL = `${validProtocol}://${validAddress}`;
+            const preferredEndpoint = buildChainProxyPreferredEndpoint(preferredHost, portNumber);
+            const line = `${preferredEndpoint}#${nodeName}$${chainProxyURL}`;
+            const customIPsTextarea = document.getElementById('customIPs');
+            if (!customIPsTextarea) return;
+            const currentValue = customIPsTextarea.value.trim();
+            customIPsTextarea.value = currentValue ? `${currentValue}\n${line}` : line;
+            if (customIPsTextarea._refreshLineEditor) { customIPsTextarea._refreshLineEditor(); }
+            markModified('sub');
+            closeChainProxyModal();
+            showToast('✅ نود پراکسی زنجیره‌ای به آدرس‌های بهینه سفارشی اضافه شد', 'success');
         }
 
         function openSubAPIModal() {
@@ -12828,6 +13917,8 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                     document.getElementById('nodePATH').value = currentConfig.PATH || '';
                     document.getElementById('protocol').value = currentConfig.协议类型 || 'vless';
                     document.getElementById('skipVerify').checked = currentConfig.跳过证书验证 || false;
+                    syncSSProtocolSettingsFromConfig();
+                    syncTransportSettingsFromConfig();
                     updateProtocol();
                 } else if (section === 'proxy') {
                     const socksEnabled = currentConfig.反代?.SOCKS5?.启用;
@@ -12846,6 +13937,18 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                         document.getElementById('proxyMode').value = 'http';
                         document.getElementById('httpAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
                         document.getElementById('globalHTTP').checked = currentConfig.反代?.SOCKS5?.全局 || false;
+                    } else if (socksEnabled === 'https') {
+                        document.getElementById('proxyMode').value = 'https';
+                        document.getElementById('httpsAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
+                        document.getElementById('globalHTTPS').checked = currentConfig.反代?.SOCKS5?.全局 || false;
+                    } else if (socksEnabled === 'turn') {
+                        document.getElementById('proxyMode').value = 'turn';
+                        document.getElementById('turnAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
+                        document.getElementById('globalTURN').checked = currentConfig.反代?.SOCKS5?.全局 || false;
+                    } else if (socksEnabled === 'sstp') {
+                        document.getElementById('proxyMode').value = 'sstp';
+                        document.getElementById('sstpAddr').value = currentConfig.反代?.SOCKS5?.账号 || '';
+                        document.getElementById('globalSSTP').checked = currentConfig.反代?.SOCKS5?.全局 || false;
                     }
                     updateProxyMode();
                 } else if (section === 'convert') {
@@ -14895,6 +15998,22 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
                 inputId: 'proxyIP',
                 abortController: null,
                 verifySingleFunction: (proxy, signal) => verifySingleProxyIP(proxy, signal)
+            },
+            https: {
+                modalId: 'exploreHTTPSModal',
+                regionSelectId: 'httpsRegionSelect',
+                proxySelectId: 'httpsProxySelect',
+                proxySelectGroupId: 'httpsProxySelectGroup',
+                confirmBtnId: 'httpsConfirmBtn',
+                listData: 'httpsListData',
+                countryMap: 'httpsCountryMap',
+                verificationStatus: 'httpsVerificationStatus',
+                verificationTimeouts: 'httpsVerificationTimeouts',
+                url: 'https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/https.json',
+                description: 'لیست HTTPS',
+                inputId: 'httpsAddr',
+                abortController: null,
+                verifySingleFunction: (proxy, signal) => verifySingleProxy(proxy, 'https', signal)
             }
         };
 
@@ -15142,17 +16261,19 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
         const lastMappedProxy = {
             socks5: null,
             http: null,
-            proxyip: null
+            proxyip: null,
+            https: null
         };
 
         const proxyMaps = {
             socks5: { map: null, marker: null },
             http: { map: null, marker: null },
-            proxyip: { map: null, marker: null }
+            proxyip: { map: null, marker: null },
+            https: { map: null, marker: null }
         };
 
         function initProxyMap(type) {
-            const containerId = type === 'socks5' ? 'proxy-map-socks5' : (type === 'http' ? 'proxy-map-http' : 'proxy-map-proxyip');
+            const containerId = type === 'socks5' ? 'proxy-map-socks5' : (type === 'http' ? 'proxy-map-http' : (type === 'https' ? 'proxy-map-https' : 'proxy-map-proxyip'));
             const container = document.getElementById(containerId);
             if (!container) return;
 
@@ -15409,7 +16530,8 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
         const proxyDisplayUpdateState = {
             socks5:  { lastUpdate: 0, pending: false, timer: null, selectOpen: false, listenersAdded: false },
             http:    { lastUpdate: 0, pending: false, timer: null, selectOpen: false, listenersAdded: false },
-            proxyip: { lastUpdate: 0, pending: false, timer: null, selectOpen: false, listenersAdded: false }
+            proxyip: { lastUpdate: 0, pending: false, timer: null, selectOpen: false, listenersAdded: false },
+            https:   { lastUpdate: 0, pending: false, timer: null, selectOpen: false, listenersAdded: false }
         };
 
         // افزودن شنونده focus/blur برای جعبه انتخاب پروکسی، تشخیص اینکه آیا کاربر در حال کار با جعبه انتخاب است
@@ -15543,7 +16665,7 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
             // وارد کردن آدرس پروکسی
             const input = document.getElementById(config.inputId);
             if (input) {
-                input.value = selectedProxy.replace(/^socks5:\/\/|^http:\/\/|^https:\/\//, '');
+                input.value = selectedProxy.replace(/^(socks5|http|https|turn|sstp):\/\//, '');
                 input.dispatchEvent(new Event('change', { bubbles: true }));
                 markModified('proxy');
             }
@@ -15648,6 +16770,12 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
         let httpCountryMap = {};
         let httpVerificationStatus = {}; // ذخیره وضعیت تایید
         let httpVerificationTimeouts = {}; // ذخیره تایمر تایم اوت
+
+        // ذخیره داده‌های HTTPS
+        let httpsListData = [];
+        let httpsCountryMap = {};
+        let httpsVerificationStatus = {};
+        let httpsVerificationTimeouts = {};
 
         function showExploreHTTPModal() {
             showExploreProxyModal('http');
@@ -15951,6 +17079,330 @@ vless://7b102311-43fd-4e8f-977e-8090623c101d@nova-panel.github.io:443?security=t
             if (overlay) {
                 overlay.classList.toggle('show');
             }
+        }
+
+        // ==================== توابع Shadowsocks و gRPC ====================
+
+        function syncSSProtocolSettingsFromConfig() {
+            const protocolSelect = document.getElementById('protocol');
+            const ssMethodSelect = document.getElementById('ssMethod');
+            const ssTLSSelect = document.getElementById('ssTLS');
+            if (!protocolSelect || !ssMethodSelect || !ssTLSSelect) return;
+
+            const hasSSConfig = !!(currentConfig && currentConfig.SS && typeof currentConfig.SS === 'object');
+            const ssOption = protocolSelect.querySelector('option[value="ss"]');
+
+            if (hasSSConfig) {
+                if (!ssOption) {
+                    const option = document.createElement('option');
+                    option.value = 'ss';
+                    option.textContent = 'Shadowsocks';
+                    protocolSelect.appendChild(option);
+                }
+
+                const savedMethod = currentConfig.SS['\u52a0\u5bc6\u65b9\u5f0f'];
+                ssMethodSelect.value = savedMethod || 'aes-128-gcm';
+                if (!ssMethodSelect.value) {
+                    ssMethodSelect.value = 'aes-128-gcm';
+                }
+
+                ssTLSSelect.value = currentConfig.SS.TLS ? 'true' : 'false';
+                ssTLSSelect.dataset.confirmedValue = ssTLSSelect.value;
+                return;
+            }
+
+            if (ssOption) {
+                ssOption.remove();
+            }
+            if (protocolSelect.value === 'ss') {
+                protocolSelect.value = 'vless';
+            }
+
+            ssMethodSelect.value = 'aes-128-gcm';
+            ssTLSSelect.value = 'false';
+            ssTLSSelect.dataset.confirmedValue = ssTLSSelect.value;
+        }
+
+        function syncTransportSettingsFromConfig() {
+            const transportGroup = document.getElementById('transportGroup');
+            const transportSelect = document.getElementById('transport');
+            const grpcModeGroup = document.getElementById('grpcModeGroup');
+            const grpcModeSelect = document.getElementById('grpcMode');
+            const grpcUserAgentGroup = document.getElementById('grpcUserAgentGroup');
+            const grpcUserAgentInput = document.getElementById('grpcUserAgent');
+            if (!transportGroup || !transportSelect || !grpcModeGroup || !grpcModeSelect) return;
+
+            const hasGrpcModeField = currentConfig && currentConfig['gRPC模式'] !== undefined;
+            const hasGrpcUserAgentField = currentConfig && currentConfig['gRPCUserAgent'] !== undefined;
+            if (!hasGrpcModeField) {
+                transportGroup.style.display = 'none';
+                grpcModeGroup.style.display = 'none';
+                if (grpcUserAgentGroup) {
+                    grpcUserAgentGroup.style.display = 'none';
+                }
+                hideTransportGrpcTooltip();
+                return;
+            }
+
+            transportGroup.style.display = '';
+
+            transportSelect.value = currentConfig['传输协议'] || 'ws';
+            if (!transportSelect.value) {
+                transportSelect.value = 'ws';
+            }
+
+            grpcModeSelect.value = currentConfig['gRPC模式'] || 'gun';
+            if (!grpcModeSelect.value) {
+                grpcModeSelect.value = 'gun';
+            }
+
+            if (grpcUserAgentInput) {
+                grpcUserAgentInput.value = hasGrpcUserAgentField ? (currentConfig['gRPCUserAgent'] || '') : '';
+            }
+
+            updateGrpcModeVisibility();
+            updateTransportGrpcTooltipVisibility(false);
+        }
+
+        function updateGrpcModeVisibility() {
+            const transportSelect = document.getElementById('transport');
+            const grpcModeGroup = document.getElementById('grpcModeGroup');
+            const grpcUserAgentGroup = document.getElementById('grpcUserAgentGroup');
+            if (!transportSelect || !grpcModeGroup) return;
+
+            const isGrpcTransport = transportSelect.value === 'grpc';
+            const hasGrpcModeField = currentConfig && currentConfig['gRPC模式'] !== undefined;
+            const hasGrpcUserAgentField = currentConfig && currentConfig['gRPCUserAgent'] !== undefined;
+
+            grpcModeGroup.style.display = hasGrpcModeField && isGrpcTransport ? '' : 'none';
+            if (grpcUserAgentGroup) {
+                grpcUserAgentGroup.style.display = hasGrpcUserAgentField && isGrpcTransport ? '' : 'none';
+            }
+        }
+
+        function handleTransportChange() {
+            updateGrpcModeVisibility();
+            updateTransportGrpcTooltipVisibility(true);
+            const protocolSelect = document.getElementById('protocol');
+            updateProtocolOptionAvailability(protocolSelect ? protocolSelect.value : '');
+            markModified('config');
+        }
+
+        function fillCurrentGrpcUA() {
+            const grpcUserAgentInput = document.getElementById('grpcUserAgent');
+            if (!grpcUserAgentInput) return;
+
+            grpcUserAgentInput.value = navigator.userAgent || '';
+            markModified('config');
+        }
+
+        function showTransportGrpcTooltip() {
+            const modal = document.getElementById('transportGrpcModal');
+            if (!modal) return;
+            modal.classList.add('show');
+        }
+
+        function hideTransportGrpcTooltip() {
+            const modal = document.getElementById('transportGrpcModal');
+            if (!modal) return;
+            modal.classList.remove('show');
+        }
+
+        function closeTransportGrpcModal(event) {
+            if (event && event.target && event.target.id !== 'transportGrpcModal') {
+                return;
+            }
+            hideTransportGrpcTooltip();
+        }
+
+        function updateTransportGrpcTooltipVisibility(showWhenSupportedTransport = false) {
+            const transportSelect = document.getElementById('transport');
+            if (!transportSelect) return;
+
+            const needsGrpcNotice = transportSelect.value === 'xhttp' || transportSelect.value === 'grpc';
+            if (needsGrpcNotice && showWhenSupportedTransport) {
+                showTransportGrpcTooltip();
+                return;
+            }
+
+            hideTransportGrpcTooltip();
+        }
+
+        function updateSpecifiedPortLabelsByProtocol(protocol) {
+            const specifiedPortSelect = document.getElementById('specifiedPort');
+            if (!specifiedPortSelect) return;
+            const ssTLSSelect = document.getElementById('ssTLS');
+
+            const defaultLabels = {
+                '-1': '\u062A\u0635\u0627\u062F\u0641\u06CC',
+                '443': '443',
+                '2053': '2053',
+                '2083': '2083',
+                '2087': '2087',
+                '2096': '2096',
+                '8443': '8443'
+            };
+
+            const shadowsocksLabels = {
+                '-1': '\u062A\u0635\u0627\u062F\u0641\u06CC',
+                '443': '80',
+                '2053': '2052',
+                '2083': '2082',
+                '2087': '2086',
+                '2096': '2095',
+                '8443': '8080'
+            };
+
+            const useShadowsocksNoTLSLabels = protocol === 'ss' && ssTLSSelect && ssTLSSelect.value === 'false';
+            const labelMap = useShadowsocksNoTLSLabels ? shadowsocksLabels : defaultLabels;
+            Array.from(specifiedPortSelect.options).forEach((option) => {
+                const nextLabel = labelMap[option.value];
+                if (nextLabel !== undefined) {
+                    option.textContent = nextLabel;
+                }
+            });
+        }
+
+        function updateProtocolOptionAvailability(protocol) {
+            const ssTLSSelect = document.getElementById('ssTLS');
+            const transportSelect = document.getElementById('transport');
+            const enable0RTT = document.getElementById('enable0RTT');
+            const skipVerify = document.getElementById('skipVerify');
+            const tlsFragmentShadowrocket = document.getElementById('tlsFragmentShadowrocket');
+            const tlsFragmentHapp = document.getElementById('tlsFragmentHapp');
+
+            const isShadowsocks = protocol === 'ss';
+            const isShadowsocksNoTLS = isShadowsocks && ssTLSSelect && ssTLSSelect.value === 'false';
+            const isGrpcTransport = !!(transportSelect && transportSelect.value === 'grpc');
+            const shouldDisable0RTT = isShadowsocks || isGrpcTransport;
+
+            if (enable0RTT) {
+                enable0RTT.disabled = shouldDisable0RTT;
+                if (shouldDisable0RTT && enable0RTT.checked) {
+                    enable0RTT.checked = false;
+                }
+            }
+
+            [tlsFragmentShadowrocket, tlsFragmentHapp].forEach((checkbox) => {
+                if (checkbox) {
+                    checkbox.disabled = isShadowsocksNoTLS;
+                    if (isShadowsocksNoTLS && checkbox.checked) {
+                        checkbox.checked = false;
+                    }
+                }
+            });
+        }
+
+        // ==================== توابع SS TLS ====================
+
+        let pendingSSTLSPreviousValue = null;
+
+        function handleSSTLSChange(event) {
+            const ssTLSSelect = document.getElementById('ssTLS');
+            if (!ssTLSSelect) return;
+
+            const nextValue = ssTLSSelect.value;
+            const previousValue = ssTLSSelect.dataset.confirmedValue || 'true';
+            const shouldConfirmDisable = nextValue === 'false' && previousValue !== 'false' && (!event || event.isTrusted);
+
+            if (shouldConfirmDisable) {
+                showSSTLSDisableModal(previousValue);
+                return;
+            }
+
+            ssTLSSelect.dataset.confirmedValue = nextValue;
+            updateProtocol();
+            markModified('config');
+        }
+
+        function showSSTLSDisableModal(previousValue) {
+            const modal = document.getElementById('ssTLSDisableModal');
+            if (!modal) return;
+            pendingSSTLSPreviousValue = previousValue;
+            modal.classList.add('show');
+        }
+
+        function hideSSTLSDisableModal() {
+            const modal = document.getElementById('ssTLSDisableModal');
+            if (!modal) return;
+            modal.classList.remove('show');
+        }
+
+        function closeSSTLSDisableModal(event) {
+            if (event && event.target && event.target.id !== 'ssTLSDisableModal') {
+                return;
+            }
+            cancelDisableSSTLS();
+        }
+
+        function confirmDisableSSTLS() {
+            const ssTLSSelect = document.getElementById('ssTLS');
+            if (!ssTLSSelect) return;
+
+            ssTLSSelect.value = 'false';
+            ssTLSSelect.dataset.confirmedValue = 'false';
+            pendingSSTLSPreviousValue = null;
+            hideSSTLSDisableModal();
+            updateProtocol();
+            markModified('config');
+        }
+
+        function cancelDisableSSTLS() {
+            const ssTLSSelect = document.getElementById('ssTLS');
+            if (ssTLSSelect) {
+                const restoredValue = pendingSSTLSPreviousValue || ssTLSSelect.dataset.confirmedValue || 'true';
+                ssTLSSelect.value = restoredValue;
+                ssTLSSelect.dataset.confirmedValue = restoredValue;
+            }
+            pendingSSTLSPreviousValue = null;
+            hideSSTLSDisableModal();
+            updateProtocol();
+        }
+
+        // ==================== توابع HTTPS Proxy ====================
+
+        function showExploreHTTPSModal() {
+            showExploreProxyModal('https');
+        }
+
+        function closeExploreHTTPSModal(event) {
+            closeExploreProxyModal('https', event);
+        }
+
+        function loadHTTPSList() {
+            loadProxyList('https');
+        }
+
+        function populateHTTPSRegionSelect() {
+            populateProxyRegionSelect('https');
+        }
+
+        function onHTTPSRegionChange() {
+            onProxyRegionChange('https');
+        }
+
+        function populateHTTPSProxySelect(selectedCountry) {
+            populateProxySelect(selectedCountry, 'httpsProxySelect', httpsCountryMap, httpsVerificationStatus, 'https');
+        }
+
+        function verifyHTTPSProxies(proxies) {
+            verifyProxies(proxies, verifySingleHTTPS);
+        }
+
+        function verifySingleHTTPS(proxy, signal) {
+            return verifySingleProxy(proxy, 'https', signal);
+        }
+
+        function updateHTTPSDisplay() {
+            updateProxyDisplay('https');
+        }
+
+        function confirmSelectHTTPS() {
+            confirmSelectProxy('https');
+        }
+
+        function updateHTTPSConfirmButton() {
+            updateProxyConfirmButton('https');
         }
 
         // Auto-logout after 30 minutes of inactivity
