@@ -215,6 +215,8 @@ html[dir=rtl] .kpi-sub{text-align:start}
 .policy-row .meta .ds{font-size:11.5px;color:var(--mu);margin-top:1px}
 .policy-row .st{font-size:10.5px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.4px;width:60px;text-align:end}
 .policy-row.on .st{color:var(--ok)}
+.policy-row .ds.pwarn{color:var(--dg);font-weight:600;margin-top:2px}
+.policy-row.warn{background:color-mix(in srgb,var(--dg) 4%,transparent)}
 
 /* ---- Toggle switch ---- */
 .sw{width:40px;height:23px;flex:0 0 auto;border-radius:999px;background:var(--bd2);position:relative;transition:.16s;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--bd) 70%,transparent)}
@@ -948,6 +950,7 @@ const I18N = {
     /* policy */
     policy_title:'Resistance Policy', policy_profile:'Profile: Iran / High Censorship', policy_active:'Active',
     policy_apply:'Apply policy', policy_last:'Last applied', policy_summary:'{n} of {t} controls active',
+    policy_iran_warn:'Not working in Iran right now. Turning it on lowers your score (-1).',
     p_protocols:'All protocols', p_protocols_d:'VLESS, Trojan, and Shadowsocks',
     p_ports:'Port spread', p_ports_d:'Fan each node across all TLS ports',
     p_fragment:'TLS fragment', p_fragment_d:'Split the TLS hello to evade DPI',
@@ -1024,6 +1027,7 @@ const I18N = {
     healthy:'سالم', online:'آنلاین', live:'زنده',
     policy_title:'سیاست مقاومت', policy_profile:'پروفایل: ایران / سانسور بالا', policy_active:'فعال',
     policy_apply:'اعمال سیاست', policy_last:'آخرین اعمال', policy_summary:'{n} از {t} کنترل فعال',
+    policy_iran_warn:'الان در ایران کار نمی‌کند. روشن کردنش امتیاز را کم می‌کند (۱-).',
     p_protocols:'همهٔ پروتکل‌ها', p_protocols_d:'VLESS، Trojan و Shadowsocks',
     p_ports:'پخش پورت', p_ports_d:'پخش هر نود روی همهٔ پورت‌های TLS',
     p_fragment:'تکه‌تکه‌سازی TLS', p_fragment_d:'شکستن TLS hello برای عبور از DPI',
@@ -1091,8 +1095,8 @@ const MOCK = {
     { id:'traffic', icon:'pulse',   label:'kpi_traffic', traffic:{down:'4.2 GB',up:'0.9 GB'}, sub:'kpi_traffic_sub', chip:'live', chipKind:'info' },
   ],
   policy: [
-    { key:'p_ports', on:true },{ key:'p_fragment', on:true },
-    { key:'p_ech', on:true },{ key:'p_ipv6', on:true },{ key:'p_quic', on:true },
+    { key:'p_ports', on:true },{ key:'p_fragment', on:false },
+    { key:'p_ech', on:false },{ key:'p_ipv6', on:true },{ key:'p_quic', on:false },
     { key:'p_domestic', on:true },{ key:'p_adblock', on:true },{ key:'p_routing', on:false },
   ],
   clients: [
@@ -1168,15 +1172,19 @@ function renderKPIs(){
       ${val}<div class="kpi-sub">${t(k.sub)}</div>${meter}</div>`;
   }).join('');
 }
+const POLICY_WARN = ['p_fragment','p_ech','p_quic'];
 function policyToggleRow(p){
-  return `<div class="policy-row ${p.on?'on':''}" data-policy="${p.key}">
-    <div class="meta"><div class="nm">${t(p.key)}</div><div class="ds">${t(p.key+'_d')}</div></div>
-    <span class="st">${p.on?t('status_on'):t('status_off')}</span>
+  const warn = POLICY_WARN.includes(p.key);
+  const st = (warn && p.on) ? '<span class="st" style="color:var(--dg)">-1</span>' : `<span class="st">${p.on?t('status_on'):t('status_off')}</span>`;
+  const wln = warn ? `<div class="ds pwarn">⚠ ${t('policy_iran_warn')}</div>` : '';
+  return `<div class="policy-row ${p.on?'on':''} ${warn?'warn':''}" data-policy="${p.key}">
+    <div class="meta"><div class="nm">${t(p.key)}</div><div class="ds">${t(p.key+'_d')}</div>${wln}</div>
+    ${st}
     <div class="sw ${p.on?'on':''}"><span class="k"></span></div></div>`;
 }
 function renderPolicy(){
   $('#policy-rows').innerHTML = MOCK.policy.map(policyToggleRow).join('');
-  const on = MOCK.policy.filter(p=>p.on).length, total = MOCK.policy.length;
+  const on = MOCK.policy.filter(p=>POLICY_WARN.includes(p.key)?!p.on:p.on).length, total = MOCK.policy.length;
   $('#policy-summary').textContent = t('policy_summary').replace('{n}',on).replace('{t}',total);
   const allOn = on===total;
   const badge = $('#policy-badge'); badge.className = 'chip '+(allOn?'ok':'warn');
