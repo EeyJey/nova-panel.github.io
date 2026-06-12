@@ -77,6 +77,14 @@ button{font-family:inherit;cursor:pointer}
 
 .nav-group{margin-top:10px}
 .nav-label{font-size:10px;font-weight:700;letter-spacing:1.4px;color:var(--mu);text-transform:uppercase;padding:8px 12px 6px}
+.nav-toggle{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;border:none;background:transparent;cursor:pointer;color:var(--mu);font:inherit;font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:8px 12px 6px}
+.nav-toggle:hover{color:var(--tx2)}
+.nav-toggle .chev{width:14px;height:14px;flex:0 0 14px;opacity:.7;transition:transform .2s}
+.nav-group.collapsible:not(.open) .nav{display:none}
+.nav-group.collapsible.open .nav-toggle .chev{transform:rotate(180deg)}
+.app.nav-collapsed .nav-toggle span{display:none}
+.app.nav-collapsed .nav-toggle{justify-content:center}
+.app.nav-collapsed .nav-group.collapsible .nav{display:flex}
 .nav{display:flex;flex-direction:column;gap:2px}
 .nav-item{
   display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:var(--r-sm);
@@ -439,8 +447,7 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
     </div>
 
     <div class="nav-group">
-      <div class="nav-label" data-i18n="grp_ops">Operations</div>
-      <nav class="nav" id="nav-ops">
+      <nav class="nav">
         <a class="nav-item active" data-view="dashboard">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
           <span data-i18n="nav_dashboard">Dashboard</span>
@@ -449,16 +456,12 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
           <span data-i18n="nav_distribution">Subscriptions</span>
         </a>
-        <a class="nav-item" data-view="users">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <span data-i18n="nav_users">Users</span><span class="count" id="nav-users-count">3</span>
-        </a>
       </nav>
     </div>
 
-    <div class="nav-group">
-      <div class="nav-label" data-i18n="grp_network">Network</div>
-      <nav class="nav" id="nav-network">
+    <div class="nav-group collapsible" id="grp-netset">
+      <button class="nav-label nav-toggle" id="netset-toggle" type="button"><span data-i18n="grp_netset">Network Settings</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <nav class="nav" id="nav-netset">
         <a class="nav-item" data-view="network">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           <span data-i18n="nav_network">Network &amp; IPs</span>
@@ -471,15 +474,30 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/><circle cx="12" cy="11" r="2"/><path d="M12 13v3"/></svg>
           <span data-i18n="nav_wireguard">WireGuard</span>
         </a>
+        <a class="nav-item" data-view="proxy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          <span data-i18n="nav_proxy">Proxy / CDN</span>
+        </a>
+        <a class="nav-item" data-view="corenode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg>
+          <span data-i18n="nav_corenode">Core Node</span>
+        </a>
+        <a class="nav-item" data-view="users">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span data-i18n="nav_users">Users</span><span class="count" id="nav-users-count">3</span>
+        </a>
       </nav>
     </div>
 
     <div class="nav-group">
-      <div class="nav-label" data-i18n="grp_config">Configuration</div>
-      <nav class="nav" id="nav-config">
+      <nav class="nav">
         <a class="nav-item" data-view="settings">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
           <span data-i18n="nav_settings">Settings</span>
+        </a>
+        <a class="nav-item" data-view="activity">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span data-i18n="nav_activity">Activity</span>
         </a>
         <a class="nav-item" data-view="notifications">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
@@ -488,19 +506,6 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
       </nav>
     </div>
 
-    <div class="nav-group">
-      <div class="nav-label" data-i18n="grp_system">System</div>
-      <nav class="nav" id="nav-system">
-        <a class="nav-item" data-view="activity">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          <span data-i18n="nav_activity">Activity</span>
-        </a>
-        <a class="nav-item" data-view="about">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-          <span data-i18n="nav_about">About</span>
-        </a>
-      </nav>
-    </div>
     <div class="side-foot">
       <button class="nav-collapse" id="nav-collapse" type="button" aria-label="Collapse menu" title="Collapse menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg><span data-i18n="nav_collapse">Collapse</span></button>
       <div class="social">
@@ -1005,26 +1010,49 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
         </div>
       </section>
 
-      <!-- ============ ABOUT ============ -->
-      <section class="view" id="view-about">
-        <div class="card">
+
+      <!-- ============ PROXY / CDN ACCESS ============ -->
+      <section class="view" id="view-proxy">
+        <div class="card" style="border-color:var(--ac-line)">
+          <div class="card-h"><h3 data-i18n="px_h">🛡️ Cloudflare CDN access</h3></div>
           <div class="card-pad">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
-              <img src="/logo.svg" alt="Nova" style="width:42px;height:42px"/>
-              <div><div style="font-size:18px;font-weight:800">Nova Proxy</div>
-                <div style="font-size:12.5px;color:var(--mu)"><span data-i18n="ab_panel">Panel</span> <b id="ab-panel">V3.1</b> · <span data-i18n="ab_worker">Worker</span> <b id="ab-worker">…</b></div></div>
+            <p style="font-size:12.5px;color:var(--mu);margin-bottom:14px" data-i18n="px_s">How the Worker reaches Cloudflare's network. Choose a mode, enter the proxy, hit Verify to probe it, then Save. This is the single source of truth — configs pull from here.</p>
+            <div class="set-grid">
+              <div class="fg"><label data-i18n="px_mode">Mode</label><select class="inp" id="px-mode"><option value="proxyip">PROXYIP</option><option value="socks5">SOCKS5</option><option value="http">HTTP</option><option value="https">HTTPS</option><option value="turn">TURN</option><option value="sstp">SSTP</option></select></div>
             </div>
-            <p style="font-size:13px;color:var(--tx2);line-height:1.9;margin-top:8px" data-i18n="ab_desc">Nova Proxy control panel — manage subscriptions, clean IPs, routing, WARP and DNS for your Cloudflare Worker.</p>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-              <a class="btn sm" href="https://novaproxy.online" target="_blank" rel="noopener">novaproxy.online</a>
-              <a class="btn sm" href="https://t.me/irnova_proxy" target="_blank" rel="noopener">Telegram</a>
-              <a class="btn sm" href="https://github.com/Nova-Panel/nova-panel.github.io" target="_blank" rel="noopener">GitHub</a>
+            <div class="fg px-sec" id="px-sec-proxyip" style="margin-top:11px"><label data-i18n="px_proxyip">PROXYIP address</label><input class="inp" id="px-proxyip" placeholder="proxyip.example.com:443 or 1.2.3.4"></div>
+            <div class="px-sec" id="px-sec-addr" style="margin-top:11px">
+              <div class="fg"><label data-i18n="px_addr">Proxy address</label><input class="inp" id="px-addr" placeholder="user:password@host:port"></div>
             </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+              <button class="btn" id="px-verify" data-i18n="px_verify">Verify</button>
+              <button class="btn primary" id="px-save" data-i18n="btn_save">Save</button>
+            </div>
+            <div class="msg" id="px-msg" style="margin-top:8px"></div>
           </div>
         </div>
-        <div class="card" style="margin-top:14px">
-          <div class="card-h"><h3 data-i18n="ab_changelog">Changelog</h3></div>
-          <div class="card-pad" id="ab-changelog" style="font-size:13px;color:var(--tx2);line-height:1.8">…</div>
+        <div class="card">
+          <div class="card-h"><h3 data-i18n="px_more_h">Find proxies</h3><button class="btn ghost sm" id="px-more-load" data-i18n="px_more_load">Load list</button></div>
+          <div class="card-pad">
+            <p style="font-size:12.5px;color:var(--mu);margin-bottom:12px" data-i18n="px_more_s">Fetch public lists (IRNova/Tools), pick by country, then Use. The PROXYIP list is large (~10MB) — give it a moment. SOCKS5/HTTP/HTTPS lists load once their files exist in the repo.</p>
+            <div class="set-grid">
+              <div class="fg"><label data-i18n="px_country">Country</label><select class="inp" id="px-country"><option value="">—</option></select></div>
+              <div class="fg"><label data-i18n="px_pick">Proxy</label><select class="inp" id="px-pick"><option value="">—</option></select></div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn" id="px-use" data-i18n="px_use">Use selected</button></div>
+            <div class="msg" id="px-more-msg" style="margin-top:8px"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CORE NODE ============ -->
+      <section class="view" id="view-corenode">
+        <div class="card" style="border-color:var(--ac-line)">
+          <div class="card-h"><h3 data-i18n="cn_h">🧩 Core Node</h3><button class="btn ghost sm" id="cn-refresh" data-i18n="dc_refresh" style="margin-inline-start:auto">Refresh</button></div>
+          <div class="card-pad">
+            <p style="font-size:12.5px;color:var(--mu);margin-bottom:6px" data-i18n="cn_s">Your node on every Cloudflare TLS port, using the Worker domain directly — separate from the subscription. Copy or scan any port.</p>
+            <div id="cn-list" style="margin-top:12px"></div>
+          </div>
         </div>
       </section>
 
@@ -1067,8 +1095,10 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
    ========================================================================== */
 const I18N = {
   en:{
-    env_prod:'Production', grp_ops:'Operations', grp_network:'Network', grp_config:'Configuration', grp_system:'System', grp_admin:'Administration', grp_tools:'Tools', nav_collapse:'Collapse',
-    nav_wireguard:'WireGuard', nav_about:'About', sub_wireguard:'Build a WireGuard config for WARP or a custom peer.', sub_about:'Panel version, changelog and links.',
+    env_prod:'Production', grp_ops:'Operations', grp_network:'Network', grp_netset:'Network Settings', grp_config:'Configuration', grp_system:'System', grp_admin:'Administration', grp_tools:'Tools', nav_collapse:'Collapse',
+    nav_wireguard:'WireGuard', nav_about:'About', nav_proxy:'Proxy / CDN', nav_corenode:'Core Node', sub_wireguard:'Build a WireGuard config for WARP or a custom peer.', sub_about:'Panel version, changelog and links.', sub_proxy:'How the Worker reaches Cloudflare — PROXYIP / SOCKS5 / HTTP / HTTPS / TURN / SSTP.', sub_corenode:'Your node on every Cloudflare TLS port, on the domain itself.',
+    cn_h:'🧩 Core Node', cn_s:'Your node on every Cloudflare TLS port, using the Worker domain directly — separate from the subscription. Copy or scan any port.', cn_copy:'Copy',
+    px_h:'🛡️ Cloudflare CDN access', px_s:"How the Worker reaches Cloudflare's network. Choose a mode, enter the proxy, hit Verify to probe it, then Save. This is the single source of truth — configs pull from here.", px_mode:'Mode', px_proxyip:'PROXYIP address', px_addr:'Proxy address', px_verify:'Verify', px_more_h:'Find proxies', px_more_load:'Load list', px_country:'Country', px_pick:'Proxy', px_use:'Use selected', px_more_s:'Fetch public lists (IRNova/Tools), pick by country, then Use. The PROXYIP list is large (~10MB) — give it a moment. SOCKS5/HTTP/HTTPS load once their files exist in the repo.',
     wg_h:'🔐 WireGuard config', wg_s:'Build a WireGuard .conf to import into the WireGuard app. Defaults target Cloudflare WARP — edit any field as needed.', wg_loadwarp:'Load from WARP', wg_name:'Name', wg_addr:'Address', wg_dns:'DNS', wg_mtu:'MTU', wg_priv:'Private key', wg_pub:'Peer public key', wg_ep:'Endpoint', wg_port:'Port', wg_ka:'Keepalive', wg_build:'Build config', wg_copy:'Copy', wg_dl:'Download .conf', wg_qrbtn:'QR', wg_loaded:'Loaded from WARP', wg_nowarp:'No WARP config available — register WARP in Network & IPs first.',
     ab_panel:'Panel', ab_worker:'Worker', ab_desc:'Nova Proxy control panel — manage subscriptions, clean IPs, routing, WARP and DNS for your Cloudflare Worker.', ab_changelog:'Changelog', ab_links:'Links',
     nav_dashboard:'Dashboard', nav_distribution:'Subscriptions', nav_network:'Network & IPs',
@@ -1149,8 +1179,10 @@ const I18N = {
     copied:'Copied to clipboard'
   },
   fa:{
-    env_prod:'محیط عملیاتی', grp_ops:'عملیات', grp_network:'شبکه', grp_config:'پیکربندی', grp_system:'سیستم', grp_admin:'مدیریت', grp_tools:'ابزارها', nav_collapse:'جمع کردن',
-    nav_wireguard:'وایرگارد', nav_about:'درباره', sub_wireguard:'ساخت کانفیگ وایرگارد برای WARP یا پیر دلخواه.', sub_about:'نسخهٔ پنل، تغییرات و پیوندها.',
+    env_prod:'محیط عملیاتی', grp_ops:'عملیات', grp_network:'شبکه', grp_netset:'تنظیمات شبکه', grp_config:'پیکربندی', grp_system:'سیستم', grp_admin:'مدیریت', grp_tools:'ابزارها', nav_collapse:'جمع کردن',
+    nav_wireguard:'وایرگارد', nav_about:'درباره', nav_proxy:'پروکسی / CDN', nav_corenode:'نود اصلی', sub_wireguard:'ساخت کانفیگ وایرگارد برای WARP یا پیر دلخواه.', sub_about:'نسخهٔ پنل، تغییرات و پیوندها.', sub_proxy:'نحوه‌ی دسترسی ورکر به کلودفلر — PROXYIP / SOCKS5 / HTTP / HTTPS / TURN / SSTP.', sub_corenode:'نود شما روی همه‌ی پورت‌های TLS کلودفلر، روی خود دامنه.',
+    cn_h:'🧩 نود اصلی', cn_s:'نود شما روی همه‌ی پورت‌های TLS کلودفلر، با استفاده‌ی مستقیم از دامنه‌ی ورکر — جدا از اشتراک. هر پورت را کپی یا اسکن کنید.', cn_copy:'کپی',
+    px_h:'🛡️ دسترسی CDN کلودفلر', px_s:'نحوه‌ی دسترسی ورکر به شبکه‌ی کلودفلر. یک حالت را انتخاب کنید، پروکسی را وارد کنید، با Verify بررسی کنید و سپس ذخیره کنید. این تنها منبع معتبر است — کانفیگ‌ها از همین‌جا می‌خوانند.', px_mode:'حالت', px_proxyip:'آدرس PROXYIP', px_addr:'آدرس پروکسی', px_verify:'بررسی', px_more_h:'یافتن پروکسی', px_more_load:'دریافت فهرست', px_country:'کشور', px_pick:'پروکسی', px_use:'استفاده از انتخاب', px_more_s:'فهرست‌های عمومی (IRNova/Tools) را دریافت کنید، بر اساس کشور انتخاب و سپس استفاده کنید. فهرست PROXYIP بزرگ است (~۱۰مگابایت) — کمی صبر کنید. SOCKS5/HTTP/HTTPS وقتی فایل‌هایشان در مخزن باشند بارگذاری می‌شوند.',
     wg_h:'🔐 کانفیگ وایرگارد', wg_s:'یک فایل .conf وایرگارد بسازید تا در برنامهٔ WireGuard وارد کنید. مقادیر پیش‌فرض برای WARP کلودفلر تنظیم شده‌اند — در صورت نیاز ویرایش کنید.', wg_loadwarp:'دریافت از WARP', wg_name:'نام', wg_addr:'آدرس', wg_dns:'DNS', wg_mtu:'MTU', wg_priv:'کلید خصوصی', wg_pub:'کلید عمومی پیر', wg_ep:'اندپوینت', wg_port:'پورت', wg_ka:'Keepalive', wg_build:'ساخت کانفیگ', wg_copy:'کپی', wg_dl:'دانلود .conf', wg_qrbtn:'QR', wg_loaded:'از WARP بارگذاری شد', wg_nowarp:'کانفیگ WARP موجود نیست — ابتدا در شبکه و آی‌پی WARP را ثبت کنید.',
     ab_panel:'پنل', ab_worker:'ورکر', ab_desc:'پنل مدیریت Nova Proxy — مدیریت اشتراک‌ها، آی‌پی‌های تمیز، مسیریابی، WARP و DNS برای ورکر کلودفلر شما.', ab_changelog:'تغییرات', ab_links:'پیوندها',
     nav_dashboard:'داشبورد', nav_distribution:'اشتراک‌ها', nav_network:'شبکه و آی‌پی‌ها',
@@ -1612,7 +1644,7 @@ async function cfConnect(){
     const ur=await fetch('/admin/getCloudflareUsage?AccountID='+encodeURIComponent(acc)+'&APIToken='+encodeURIComponent(tok));
     const u=await ur.json().catch(()=>null);
     if(u && u.success){ STATE.config.CF=STATE.config.CF||{}; STATE.config.CF.Usage=u; renderWorker(); renderKPIs(); if(msg) msg.textContent=lang==='fa'?'وصل شد ✓':'Connected ✓'; }
-    else { if(msg) msg.textContent='⚠️ '+(lang==='fa'?'کلید ذخیره شد ولی آماری نیامد — توکن را بررسی کنید':'key saved but no stats — check the token'); }
+    else { if(msg) msg.textContent='⚠️ '+(lang==='fa'?'کلید ذخیره شد ولی آماری نیامد — توکن را بررسی کنید':'key saved but no stats — check the token')+((u&&u.error)?(' — '+u.error):''); }
   }catch(e){ if(msg) msg.textContent='⚠️ '+e.message; }
 }
 async function cfDisconnect(){
@@ -1771,14 +1803,14 @@ function applyLang(l){
    ========================================================================== */
 const SUBS = { dashboard:'sub_dashboard', distribution:'sub_distribution', network:'sub_network', cleanips:'sub_cleanips',
   activity:'sub_activity', settings:'sub_settings', notifications:'sub_notifications', users:'sub_users', guide:'sub_guide',
-  wireguard:'sub_wireguard', about:'sub_about' };
+  wireguard:'sub_wireguard', proxy:'sub_proxy', corenode:'sub_corenode', about:'sub_about' };
 let currentView = 'dashboard';
 function syncPageHeader(){
   $('#page-title').textContent = t('nav_'+(currentView==='distribution'?'distribution':currentView==='network'?'network':currentView));
   // map view id back to its nav key for the title
   const navKey = { dashboard:'nav_dashboard', distribution:'nav_distribution', network:'nav_network', cleanips:'nav_cleanips',
     activity:'nav_activity', settings:'nav_settings', notifications:'nav_notifications', users:'nav_users', guide:'nav_guide',
-    wireguard:'nav_wireguard', about:'nav_about' }[currentView];
+    wireguard:'nav_wireguard', proxy:'nav_proxy', corenode:'nav_corenode', about:'nav_about' }[currentView];
   $('#page-title').textContent = t(navKey);
   $('#page-sub').textContent = t(SUBS[currentView]);
 }
@@ -1789,7 +1821,9 @@ function showView(v){
   syncPageHeader();
   closeDrawer();
   if(v==='wireguard') wgInit();
-  if(v==='about') aboutInit();
+  if(v==='proxy') pxInit();
+  if(v==='corenode') cnInit();
+  if(['network','cleanips','wireguard','users','proxy','corenode'].indexOf(v)>=0){ var _g=document.getElementById('grp-netset'); if(_g) _g.classList.add('open'); }
   window.scrollTo({top:0,behavior:'instant'});
 }
 
@@ -1832,6 +1866,121 @@ function wgInit(){
 }
 
 /* ---- About: fill worker version + changelog from version.json / system.json ---- */
+/* ============================================================================
+   Proxy / CDN access — single source of truth for proxy.PROXYIP + chainProxy
+   ========================================================================== */
+function pxApplyMode(){
+  var m=(document.getElementById('px-mode')||{}).value||'proxyip';
+  var ip=document.getElementById('px-sec-proxyip'), ad=document.getElementById('px-sec-addr');
+  if(ip) ip.style.display=(m==='proxyip')?'':'none';
+  if(ad) ad.style.display=(m==='proxyip')?'none':'';
+}
+function pxLoad(){
+  var c=STATE.config||{}; var chain=(c.chainProxy||'').trim();
+  var m=/^(socks5|http|https|turn|sstp):\/\/(.+)$/i.exec(chain);
+  var setv=function(id,v){ var e=document.getElementById(id); if(e) e.value=v||''; };
+  if(m){ document.getElementById('px-mode').value=m[1].toLowerCase(); setv('px-addr', m[2]); setv('px-proxyip', ((c.proxy||{}).PROXYIP)||''); }
+  else { document.getElementById('px-mode').value='proxyip'; setv('px-proxyip', ((c.proxy||{}).PROXYIP)||''); setv('px-addr',''); }
+  pxApplyMode();
+}
+async function pxSave(){
+  if(!LIVE) return previewToast();
+  var c=STATE.config; var m=document.getElementById('px-mode').value;
+  c.proxy=c.proxy||{};
+  if(m==='proxyip'){ c.proxy.PROXYIP=(document.getElementById('px-proxyip').value||'').trim(); c.chainProxy=''; }
+  else { var a=(document.getElementById('px-addr').value||'').trim(); c.chainProxy=a?(m+'://'+a):''; }
+  savedMsg(await API.post('config.json', c));
+}
+async function pxVerify(){
+  if(!LIVE) return previewToast();
+  var msg=document.getElementById('px-msg'); var m=document.getElementById('px-mode').value;
+  var val=(m==='proxyip')?(document.getElementById('px-proxyip').value||'').trim():(document.getElementById('px-addr').value||'').trim();
+  if(!val){ msg.className='msg bad'; msg.textContent=(lang==='fa'?'یک پروکسی وارد کنید':'Enter a proxy first'); return; }
+  if(m==='proxyip'){ msg.className='msg'; msg.textContent=(lang==='fa'?'PROXYIP در دریافت اشتراک بررسی می‌شود.':'PROXYIP is validated when a subscription is fetched.'); return; }
+  msg.className='msg'; msg.textContent=(lang==='fa'?'در حال بررسی…':'Probing…');
+  try{
+    var r=await fetch('/admin/check?'+encodeURIComponent(m)+'='+encodeURIComponent(val)+'&_t='+Date.now());
+    var j=await r.json().catch(function(){return null;});
+    if(r.ok && j && (j.success||j.ok||j.alive)){ msg.className='msg ok'; msg.textContent='✅ '+(lang==='fa'?'پروکسی پاسخ داد':'Proxy reachable')+(j.latency?(' · '+j.latency+'ms'):''); }
+    else { msg.className='msg bad'; msg.textContent='⚠️ '+(lang==='fa'?'پاسخ نداد':'No response')+((j&&j.error)?(' — '+j.error):''); }
+  }catch(e){ msg.className='msg bad'; msg.textContent='⚠️ '+e.message; }
+}
+function pxInit(){
+  var s=document.getElementById('px-mode'); if(!s||s._wired){ if(LIVE) pxLoad(); return; } s._wired=1;
+  s.addEventListener('change', pxApplyMode);
+  document.getElementById('px-save').onclick=pxSave;
+  document.getElementById('px-verify').onclick=pxVerify;
+  var lb=document.getElementById('px-more-load'); if(lb) lb.onclick=pxLoadList;
+  var cc=document.getElementById('px-country'); if(cc) cc.addEventListener('change', pxCountryChange);
+  var us=document.getElementById('px-use'); if(us) us.onclick=pxUse;
+  if(LIVE) pxLoad(); else pxApplyMode();
+}
+/* ---- 'Get more': fetch proxy lists from IRNova/Tools, pick by country ---- */
+var PX_SRC={ proxyip:'https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/all.json', socks5:'https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/SOCKS5.json', http:'https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/HTTP.json', https:'https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/HTTPS.json' };
+var pxMap=null;
+async function pxLoadList(){
+  var m=(document.getElementById('px-mode')||{}).value||'proxyip'; var url=PX_SRC[m]; var msg=document.getElementById('px-more-msg');
+  if(!url){ msg.className='msg bad'; msg.textContent=(lang==='fa'?'برای این حالت منبعی نیست (TURN/SSTP)':'No list source for this mode (TURN/SSTP)'); return; }
+  msg.className='msg'; msg.textContent=(lang==='fa'?'در حال دریافت…':'Fetching…')+(m==='proxyip'?' (~10MB)':'');
+  try{
+    var r=await fetch(url,{cache:'no-store'});
+    if(!r.ok){ msg.className='msg bad'; msg.textContent='⚠️ '+(lang==='fa'?'منبع در دسترس نیست':'Source not available yet')+' ('+r.status+')'; return; }
+    var d=await r.json(); var items=[];
+    if(m==='proxyip'){
+      items=((d&&d.data)||[]).filter(function(x){ return Array.isArray(x.port)?x.port.indexOf(443)>=0:x.port===443; })
+        .map(function(x){ var mt=x.meta||{}; return { proxy:x.ip, country:mt.country||'??', emoji:mt.country_emoji||'🏳️', city:mt.city||'', org:mt.asOrganization||'' }; });
+    } else {
+      var a2=Array.isArray(d)?d:((d&&d.data)||[]);
+      items=a2.map(function(x){ return { proxy:x.proxy||x.address||x.ip, country:x.country||'??', emoji:x.country_emoji||'🏳️', city:x.city||'', org:x.asOrganization||'' }; }).filter(function(x){ return x.proxy; });
+    }
+    if(!items.length){ msg.className='msg bad'; msg.textContent=(lang==='fa'?'موردی یافت نشد':'No entries found'); return; }
+    pxMap={}; items.forEach(function(it){ (pxMap[it.country]=pxMap[it.country]||[]).push(it); });
+    var cs=Object.keys(pxMap).sort(function(a,b){ return pxMap[b].length-pxMap[a].length; });
+    document.getElementById('px-country').innerHTML='<option value="">—</option>'+cs.map(function(c){ return '<option value="'+c+'">'+(pxMap[c][0].emoji||'')+' '+c+' ('+pxMap[c].length+')</option>'; }).join('');
+    document.getElementById('px-pick').innerHTML='<option value="">—</option>';
+    msg.className='msg ok'; msg.textContent='✅ '+items.length+' '+(lang==='fa'?('پروکسی · '+cs.length+' کشور'):('proxies · '+cs.length+' countries'));
+  }catch(e){ msg.className='msg bad'; msg.textContent='⚠️ '+e.message; }
+}
+function pxCountryChange(){
+  var c=document.getElementById('px-country').value, pick=document.getElementById('px-pick');
+  if(!c||!pxMap||!pxMap[c]){ pick.innerHTML='<option value="">—</option>'; return; }
+  pick.innerHTML='<option value="">—</option>'+pxMap[c].slice(0,300).map(function(it){ var v=String(it.proxy); return '<option value="'+v.replace(/"/g,'&quot;')+'">'+v+(it.city?(' · '+it.city):'')+(it.org?(' · '+it.org.slice(0,18)):'')+'</option>'; }).join('');
+}
+function pxUse(){
+  var v=(document.getElementById('px-pick')||{}).value; if(!v) return;
+  var m=(document.getElementById('px-mode')||{}).value||'proxyip';
+  if(m==='proxyip') document.getElementById('px-proxyip').value=v; else document.getElementById('px-addr').value=v;
+  pxApplyMode();
+  var msg=document.getElementById('px-more-msg'); msg.className='msg ok'; msg.textContent='✅ '+(lang==='fa'?'پر شد — حالا بررسی و ذخیره کنید':'Filled — now Verify & Save');
+}
+/* ============================================================================
+   Core Node — the node link on every Cloudflare TLS port (domain direct)
+   ========================================================================== */
+var CN_PORTS=[443,2053,2083,2087,2096,8443];
+function cnPortLink(link,port){
+  var l=String(link).replace(/(@[^:\/?#]+:)\d+(\?)/, '$1'+port+'$2');
+  var h=l.indexOf('#');
+  if(h>=0){ var frag=decodeURIComponent(l.slice(h+1)).replace(/[-_]\d+$/,''); l=l.slice(0,h)+'#'+encodeURIComponent(frag+'-'+port); }
+  else { l=l+'#'+encodeURIComponent('Core-'+port); }
+  return l;
+}
+function cnRender(){
+  var box=document.getElementById('cn-list'); if(!box) return;
+  var link=(STATE.config&&STATE.config.LINK)||'';
+  if(!link){ box.innerHTML='<p style="color:var(--mu);font-size:13px;padding:8px 0">'+(lang==='fa'?'لینک نود در دسترس نیست — ابتدا تنظیمات را ذخیره کنید.':'Node link unavailable — save Settings first.')+'</p>'; return; }
+  box.innerHTML=CN_PORTS.map(function(p){ var l=cnPortLink(link,p); var qid='cn-qr-'+p;
+    return '<div class="card" style="margin-bottom:10px"><div class="card-pad" style="padding:12px 14px">'
+      +'<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">'
+      +'<b style="flex:0 0 auto;color:var(--ac)">:'+p+'</b>'
+      +'<code style="flex:1;min-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;background:var(--card2);border:1px solid var(--bd);padding:6px 8px;border-radius:6px;direction:ltr">'+l.replace(/[<>&]/g,function(c){return{'<':'&lt;','>':'&gt;','&':'&amp;'}[c];})+'</code>'
+      +'<button class="btn ghost sm cn-copy" type="button" data-l="'+encodeURIComponent(l)+'" data-i18n="cn_copy">Copy</button>'
+      +'<button class="btn ghost sm cn-qr" type="button" data-l="'+encodeURIComponent(l)+'" data-id="'+qid+'">QR</button>'
+      +'</div><div id="'+qid+'" style="display:none;text-align:center;margin-top:10px"></div></div></div>';
+  }).join('');
+  box.querySelectorAll('.cn-copy').forEach(function(b){ b.textContent=t('cn_copy'); b.onclick=function(){ navigator.clipboard.writeText(decodeURIComponent(b.dataset.l)).then(function(){toast(t('copied'));}).catch(function(){}); }; });
+  box.querySelectorAll('.cn-qr').forEach(function(b){ b.onclick=function(){ var q=document.getElementById(b.dataset.id); if(!q) return; if(q.style.display==='block'){ q.style.display='none'; return; } q.style.display='block'; q.innerHTML=''; try{ new QRCode(q,{text:decodeURIComponent(b.dataset.l),width:180,height:180,correctLevel:QRCode.CorrectLevel.M}); }catch(e){ q.textContent='QR error'; } }; });
+}
+function cnInit(){ var b=document.getElementById('cn-refresh'); if(b&&!b._w){ b._w=1; b.onclick=function(){ if(LIVE){ loadLive().then(cnRender); } else cnRender(); }; } cnRender(); }
 async function aboutInit(){
   try{ var j=await fetch('/version.json?_t='+Date.now()).then(function(x){return x.json();}); if(j){ var cl=document.getElementById('ab-changelog'); if(cl) cl.innerHTML='<b>v'+(j.version||'')+'</b> · '+(j.released||'')+'<br>'+String(j.notes||'').replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];}); var w=document.getElementById('ab-worker'); if(w) w.textContent='V'+(j.version||'?'); } }catch(e){}
   try{ var s=await fetch('/admin/system.json?_t='+Date.now()).then(function(x){return x.json();}); if(s&&s.version){ var w2=document.getElementById('ab-worker'); if(w2) w2.textContent=(String(s.version).charAt(0)==='V'?'':'V')+s.version; } }catch(e){}
@@ -1925,7 +2074,7 @@ function mapKPIs(sys){
 function mapPolicyFromState(){ MOCK.policy = MOCK.policy.map(p=>({ key:p.key, on:readPolicy(p.key) })); }
 function mapActivity(logs){
   if(!Array.isArray(logs) || !logs.length) return;
-  MOCK.activity = logs.slice().reverse().slice(0,8).map(e=>{
+  MOCK.activity = logs.slice().sort((a,b)=>(b.TIME||0)-(a.TIME||0)).slice(0,500).map(e=>{
     const m=LOGLABEL[e.TYPE]||[null,'pulse']; const d=new Date(e.TIME||0);
     return { ev:m[0]||null, title:m[0]?null:(e.TYPE||'event'), icon:m[1], actor:(e.CC||'').replace('N/A','')||'—', ip:e.IP||'—', time:isNaN(d)?'':relTime(d), st:'st_ok', kind:'ok' };
   });
@@ -2290,6 +2439,12 @@ document.addEventListener('click', (e)=>{
 { const bf=document.getElementById('backup-file2'); if(bf) bf.onchange=(e)=>{ const f=e.target.files&&e.target.files[0]; if(f) backupImport(f); e.target.value=''; }; }
 { const ff=document.getElementById('f2-frag'); if(ff) ff.addEventListener('change',function(){ const b=document.getElementById('f2-frag-custom'); if(b) b.style.display=this.value==='custom'?'block':'none'; }); }
 $('#menu-btn').addEventListener('click', openDrawer)
+/* Collapsible "Network Settings" submenu (closed by default, state remembered) */
+;(function(){
+  var g=document.getElementById('grp-netset'), btn=document.getElementById('netset-toggle'); if(!g||!btn) return;
+  try{ if(localStorage.getItem('nova-netset-open')==='1') g.classList.add('open'); }catch(e){}
+  btn.addEventListener('click', function(){ var o=g.classList.toggle('open'); try{ localStorage.setItem('nova-netset-open', o?'1':'0'); }catch(e){} });
+})();
 /* Sidebar collapse / expand (desktop) */
 ;(function(){
   var app=document.querySelector('.app'); if(!app) return;
