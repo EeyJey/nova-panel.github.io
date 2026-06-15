@@ -364,18 +364,36 @@ html[data-theme=light] .modeseg button.on{color:#fff}
 .urow2:last-child{border-bottom:none}
 .urow2 .uf{display:flex;flex-direction:column;gap:5px}
 .urow2 .uf.grow{flex:1 1 150px;min-width:140px}
-.urow2 .uf-qty{width:96px}
-.urow2 .uf-exp{width:164px}
-.urow2 .uf-actions{margin-inline-start:auto}
 .urow2 .uf>label{font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:var(--mu)}
 .urow2 .uf .inp{height:36px;padding:8px 10px}
-.urow2 .uf input[type=date]{text-align:start}
-/* iOS Safari/WebKit renders the date value inside these pseudo-elements, which default to
-   centered and ignore text-align on the input itself — align them explicitly. */
-.urow2 .uf input[type=date]::-webkit-date-and-time-value{text-align:start;margin:0}
-.urow2 .uf input[type=date]::-webkit-datetime-edit{text-align:start;padding:0}
-.urow2-acts{display:flex;gap:6px;flex-wrap:wrap}
 .urow2 .used{flex-basis:100%;font-size:11px;color:var(--mu);direction:ltr;text-align:start}
+/* ---- Profile cards (Nahan-style user management) ---- */
+.ucard{background:var(--card2);border:1px solid var(--bd);border-radius:14px;padding:14px 15px;margin-bottom:12px}
+.ucard:last-child{margin-bottom:0}
+.ucard.off{opacity:.62}
+.ucard-h{display:flex;align-items:center;gap:11px}
+.ucard-av{width:38px;height:38px;flex:0 0 38px;border-radius:50%;background:linear-gradient(135deg,var(--ac2),var(--ac));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px;text-transform:uppercase}
+.ucard-id{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1 1 auto}
+.ucard-id .un{font-weight:700;font-size:14px;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ucard-id .ul{font-size:11.5px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ucard-bar{height:7px;border-radius:6px;background:var(--bd2);overflow:hidden;margin:13px 0 7px}
+.ucard-bar>i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .3s}
+.ucard-bar.warn>i{background:linear-gradient(90deg,var(--wn),var(--dg))}
+.ucard-meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11.5px;color:var(--mu);direction:ltr}
+.ucard-meta b{color:var(--tx2);font-weight:600}
+.ucard-link{margin-top:11px;display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:7px 10px;font-size:11.5px;direction:ltr}
+.ucard-link code{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--tx2)}
+.ucard-acts{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
+.ucard-edit{margin-top:11px;border-top:1px solid var(--bd);padding-top:0}
+.ucard-edit>summary{cursor:pointer;font-size:12px;font-weight:600;color:var(--tx2);list-style:none;padding-top:11px;display:flex;align-items:center;gap:6px}
+.ucard-edit>summary::-webkit-details-marker{display:none}
+.ucard-edit[open]>summary{margin-bottom:11px}
+.ucard-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ucard-grid .uf{display:flex;flex-direction:column;gap:5px}
+.ucard-grid .uf.full{grid-column:1 / -1}
+.ucard-grid .uf>label{font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:var(--mu)}
+.ucard-grid .inp{height:36px;padding:8px 10px}
+@media(max-width:560px){ .ucard-grid{grid-template-columns:1fr} }
 .fg label{display:block;font-size:12px;color:var(--tx2);margin-bottom:7px;font-weight:500}
 select.inp{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--mu) 50%),linear-gradient(135deg,var(--mu) 50%,transparent 50%);background-position:calc(100% - 16px) 17px,calc(100% - 11px) 17px;background-size:5px 5px;background-repeat:no-repeat}
 html[dir=rtl] select.inp{background-position:16px 17px,21px 17px}
@@ -387,9 +405,8 @@ html[dir=rtl] select.inp{background-position:16px 17px,21px 17px}
 html[data-theme=dark] .qr-ph{border-color:#fff}
 
 /* ---- Toast ---- */
-.toast{position:fixed;top:72px;left:50%;transform:translate(-50%,-14px);z-index:200;background:var(--ok);color:#04110b;font-weight:700;font-size:13.5px;padding:12px 20px;border-radius:11px;box-shadow:var(--shadow);opacity:0;transition:opacity .22s,transform .22s;pointer-events:none;max-width:min(92vw,560px);text-align:center}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.toast.err{background:var(--dg);color:#fff}
+.toast{position:fixed;bottom:22px;inset-inline-end:22px;z-index:100;background:var(--ok);color:#04110b;font-weight:700;font-size:13px;padding:11px 18px;border-radius:10px;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}
+.toast.show{opacity:1;transform:none}
 .btn.flash-ok{background:var(--ok);border-color:var(--ok);color:#04110b}
 .btn.flash-bad{background:var(--dg);border-color:var(--dg);color:#fff}
 
@@ -444,21 +461,8 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
   #view-users .card-h h3{flex:1 0 auto}
   #view-users .card-h .right{width:100%;margin-inline-start:0;flex-wrap:wrap;justify-content:flex-start;gap:10px}
   #view-users .card-h .right>span{white-space:nowrap}
-  /* Users rows: one field per line, full width, with the action buttons spanning the row */
-  #view-users .urow2{gap:12px;padding:16px 0}
-  #view-users .urow2 .uf,
-  #view-users .urow2 .uf.grow,
-  #view-users .urow2 .uf-qty,
-  #view-users .urow2 .uf-exp{width:100%;flex:1 1 100%;min-width:0}
-  #view-users .urow2 .uf-status{flex-direction:row;align-items:center;justify-content:space-between;padding-top:2px}
-  #view-users .urow2 .uf-actions{margin-inline-start:0;width:100%}
-  #view-users .urow2 .uf-actions>label{display:none}
-  #view-users .urow2-acts{width:100%}
-  #view-users .urow2-acts .btn{flex:1 1 0;min-width:64px}
-  /* Save / status confirmations as a top-center banner — clear of the thumb (Save button)
-     and the browser's bottom toolbar, both of which hid the old bottom toast on phones. */
-  .toast{top:calc(62px + env(safe-area-inset-top) + 10px);left:50%;right:auto;transform:translate(-50%,-14px);max-width:92vw;font-size:14px;padding:13px 18px}
-  .toast.show{transform:translate(-50%,0)}
+  /* User rows: stack fields full-width so the status toggle never overlaps */
+  .urow2>.uf{flex:1 1 100%!important;width:auto!important;min-width:0!important;margin-inline-start:0!important}
 }
 </style>
 </head>
@@ -547,8 +551,8 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
         <a data-view="guide" title="Guide" aria-label="Guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></a>
       </div>
       <a class="logout" href="/logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span data-i18n="logout">Logout</span></a>
-      <div class="ver"><span data-i18n="ver_panel">Panel</span><b id="ft-panel-ver">V3.1.6</b></div>
-      <div class="ver"><span data-i18n="ver_worker">Worker</span><b id="ft-worker-ver">V3.1.6</b></div>
+      <div class="ver"><span data-i18n="ver_panel">Panel</span><b>V3.1</b></div>
+      <div class="ver"><span data-i18n="ver_worker">Worker</span><b>V3.1</b></div>
     </div>
   </aside>
 
@@ -584,6 +588,30 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
       <!-- ============ DASHBOARD ============ -->
       <section class="view active" id="view-dashboard">
         <div class="kpi-grid" id="kpi-grid"><!-- rendered from MOCK.kpis --></div>
+
+        <!-- Daily traffic chart (D1-backed; up/down split). Lazy-loaded when this view opens. -->
+        <div class="card" id="traffic-chart-card" style="margin-top:12px">
+          <div class="card-h">
+            <div>
+              <h3 data-i18n="chart_title">Daily traffic</h3>
+              <div class="sub" id="chart-sub" data-i18n="chart_sub">Upload vs download — last 14 days</div>
+            </div>
+            <div class="right" style="display:flex;align-items:center;gap:8px">
+              <span class="chip" style="gap:6px"><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--ac)"></span><span data-i18n="chart_down">Download</span></span>
+              <span class="chip" style="gap:6px"><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--ac2)"></span><span data-i18n="chart_up">Upload</span></span>
+              <div class="segmented" id="chart-range" style="margin-inline-start:6px;height:32px">
+                <button class="on" data-range="daily" data-i18n="chart_d">Day</button>
+                <button data-range="monthly" data-i18n="chart_m">Month</button>
+                <button data-range="yearly" data-i18n="chart_y">Year</button>
+              </div>
+            </div>
+          </div>
+          <div class="card-pad">
+            <div id="chart-empty" style="display:none;color:var(--mu);font-size:13px;text-align:center;padding:28px 0" data-i18n="chart_empty">No traffic recorded yet. Once clients connect, daily usage shows here.</div>
+            <canvas id="traffic-canvas" height="200" style="width:100%;height:200px;display:block"></canvas>
+            <div id="chart-totals" style="display:flex;gap:18px;justify-content:center;margin-top:12px;font-size:12px;color:var(--mu)"></div>
+          </div>
+        </div>
 
         <div class="dash-grid">
           <!-- Resilience Policy (the former "Iran Mode") -->
@@ -836,7 +864,7 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
           <div class="card">
             <div class="card-h"><h3 data-i18n="set_proto">Protocol &amp; transport</h3></div>
             <div class="card-pad">
-              <div class="fg"><label data-i18n="lbl_protocol">Protocol</label><select class="inp" id="f2-proto"><option value="vless">VLESS</option><option value="trojan">Trojan</option><option value="ss">Shadowsocks</option></select></div>
+              <div class="fg"><label data-i18n="lbl_protocol">Protocol</label><select class="inp" id="f2-proto"><option value="vless">VLESS</option><option value="vmess">VMess</option><option value="trojan">Trojan</option><option value="ss">Shadowsocks</option></select></div>
               <div class="fg"><label data-i18n="lbl_transport">Transport</label><select class="inp" id="f2-trans"><option value="ws">WebSocket</option><option value="xhttp">XHTTP</option><option value="grpc">gRPC</option></select></div>
               <div class="fg"><label data-i18n="lbl_fp">TLS fingerprint</label><select class="inp" id="f2-fp"><option value="random">random</option><option value="chrome">chrome</option><option value="firefox">firefox</option><option value="safari">safari</option><option value="ios">ios</option><option value="android">android</option><option value="edge">edge</option></select></div>
               <div class="fg"><label data-i18n="lbl_path">Transport path</label><input class="inp" id="f2-path" placeholder="/"></div>
@@ -1028,7 +1056,6 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
               <div class="fg"><label data-i18n="wg_ep">Endpoint</label><input class="inp" id="wg-ep" value="engage.cloudflareclient.com"></div>
               <div class="fg"><label data-i18n="wg_port">Port</label><input class="inp" id="wg-port" value="2408"></div>
               <div class="fg"><label data-i18n="wg_ka">Keepalive</label><input class="inp" id="wg-ka" value="25"></div>
-              <div class="fg"><label data-i18n="wg_reserved">Reserved (WARP)</label><input class="inp" id="wg-reserved" placeholder="e.g. 12,34,56"></div>
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
               <button class="btn primary" id="wg-build" data-i18n="wg_build">Build config</button>
@@ -1037,7 +1064,6 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
               <button class="btn" id="wg-qr" data-i18n="wg_qrbtn">QR</button>
             </div>
             <div class="fg" style="margin-top:14px"><textarea class="inp" id="wg-out" spellcheck="false" style="min-height:200px;font-family:ui-monospace,monospace;font-size:12px" readonly></textarea></div>
-            <p style="font-size:11.5px;color:var(--mu);line-height:1.7;margin-top:4px" data-i18n="wg_warpnote"></p>
             <div id="wg-qrbox" style="display:none;text-align:center;margin-top:8px"></div>
           </div>
         </div>
@@ -1067,7 +1093,7 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
         <div class="card">
           <div class="card-h"><h3 data-i18n="px_more_h">Find proxies</h3><button class="btn ghost sm" id="px-more-load" data-i18n="px_more_load">Load list</button></div>
           <div class="card-pad">
-            <p style="font-size:12.5px;color:var(--mu);margin-bottom:12px" data-i18n="px_more_s">Fetch public lists (IRNova/Tools), pick by country, then Use. PROXYIP and SOCKS5/HTTP lists are available — PROXYIP is large (~10MB), give it a moment. HTTPS, TURN and SSTP have no public list, so enter those manually.</p>
+            <p style="font-size:12.5px;color:var(--mu);margin-bottom:12px" data-i18n="px_more_s">Fetch public lists (IRNova/Tools), pick by country, then Use. The PROXYIP list is large (~10MB) — give it a moment. SOCKS5/HTTP/HTTPS lists load once their files exist in the repo.</p>
             <div class="set-grid">
               <div class="fg"><label data-i18n="px_country">Country</label><select class="inp" id="px-country"><option value="">—</option></select></div>
               <div class="fg"><label data-i18n="px_pick">Proxy</label><select class="inp" id="px-pick"><option value="">—</option></select></div>
@@ -1131,8 +1157,8 @@ const I18N = {
     env_prod:'Production', grp_ops:'Operations', grp_network:'Network', grp_netset:'Network Settings', grp_config:'Configuration', grp_system:'System', grp_admin:'Administration', grp_tools:'Tools', nav_collapse:'Collapse',
     nav_wireguard:'WireGuard', nav_about:'About', nav_proxy:'Proxy / CDN', nav_corenode:'Core Node', sub_wireguard:'Build a WireGuard config for WARP or a custom peer.', sub_about:'Panel version, changelog and links.', sub_proxy:'How the Worker reaches Cloudflare — PROXYIP / SOCKS5 / HTTP / HTTPS / TURN / SSTP.', sub_corenode:'Your node on every Cloudflare TLS port, on the domain itself.',
     cn_h:'🧩 Core Node', cn_s:'Your node on every Cloudflare TLS port, using the Worker domain directly — separate from the subscription. Copy or scan any port.', cn_copy:'Copy',
-    px_h:'🛡️ Cloudflare CDN access', px_s:"How the Worker reaches Cloudflare's network. Choose a mode, enter the proxy, hit Verify to probe it, then Save. This is the single source of truth — configs pull from here.", px_mode:'Mode', px_proxyip:'PROXYIP address', px_addr:'Proxy address', px_verify:'Verify', px_more_h:'Find proxies', px_more_load:'Load list', px_country:'Country', px_pick:'Proxy', px_use:'Use selected', px_more_s:'Fetch public lists (IRNova/Tools), pick by country, then Use. PROXYIP and SOCKS5/HTTP lists are available — PROXYIP is large (~10MB), give it a moment. HTTPS, TURN and SSTP have no public list, so enter those manually.',
-    wg_h:'🔐 WireGuard config', wg_s:'Build a WireGuard .conf to import into the WireGuard app. Defaults target Cloudflare WARP — edit any field as needed.', wg_loadwarp:'Load from WARP', wg_name:'Name', wg_addr:'Address', wg_dns:'DNS', wg_mtu:'MTU', wg_priv:'Private key', wg_pub:'Peer public key', wg_ep:'Endpoint', wg_port:'Port', wg_ka:'Keepalive', wg_build:'Build config', wg_copy:'Copy', wg_dl:'Download .conf', wg_qrbtn:'QR', wg_loaded:'Loaded from WARP', wg_nowarp:'No WARP config available — register WARP in Network & IPs first.', wg_reserved:'Reserved (WARP)', wg_warpnote:'WARP tip: the official WireGuard app cannot send the Reserved bytes WARP requires — if the handshake connects but no traffic passes, import the WARP node into Hiddify, v2rayN, or AmneziaWG. If it never connects at all, the endpoint is likely blocked — set an alternative endpoint under Network & IPs → WARP and Save.',
+    px_h:'🛡️ Cloudflare CDN access', px_s:"How the Worker reaches Cloudflare's network. Choose a mode, enter the proxy, hit Verify to probe it, then Save. This is the single source of truth — configs pull from here.", px_mode:'Mode', px_proxyip:'PROXYIP address', px_addr:'Proxy address', px_verify:'Verify', px_more_h:'Find proxies', px_more_load:'Load list', px_country:'Country', px_pick:'Proxy', px_use:'Use selected', px_more_s:'Fetch public lists (IRNova/Tools), pick by country, then Use. The PROXYIP list is large (~10MB) — give it a moment. SOCKS5/HTTP/HTTPS load once their files exist in the repo.',
+    wg_h:'🔐 WireGuard config', wg_s:'Build a WireGuard .conf to import into the WireGuard app. Defaults target Cloudflare WARP — edit any field as needed.', wg_loadwarp:'Load from WARP', wg_name:'Name', wg_addr:'Address', wg_dns:'DNS', wg_mtu:'MTU', wg_priv:'Private key', wg_pub:'Peer public key', wg_ep:'Endpoint', wg_port:'Port', wg_ka:'Keepalive', wg_build:'Build config', wg_copy:'Copy', wg_dl:'Download .conf', wg_qrbtn:'QR', wg_loaded:'Loaded from WARP', wg_nowarp:'No WARP config available — register WARP in Network & IPs first.',
     ab_panel:'Panel', ab_worker:'Worker', ab_desc:'Nova Proxy control panel — manage subscriptions, clean IPs, routing, WARP and DNS for your Cloudflare Worker.', ab_changelog:'Changelog', ab_links:'Links',
     nav_dashboard:'Dashboard', nav_distribution:'Subscriptions', nav_network:'Network & IPs',
     nav_activity:'Activity', nav_settings:'Settings', nav_notifications:'Notifications', nav_users:'Users',
@@ -1150,6 +1176,7 @@ const I18N = {
     /* KPIs */
     kpi_network:'Network', kpi_storage:'Storage', kpi_worker:'Worker usage', kpi_traffic:'Traffic today',
     kpi_network_sub:'AS13335 · Cloudflare', kpi_storage_sub:'KV namespace', kpi_worker_sub:'requests today', kpi_traffic_sub:'across 312 sessions',
+    chart_title:'Daily traffic', chart_sub:'Upload vs download — last 14 days', chart_up:'Upload', chart_down:'Download', chart_d:'Day', chart_m:'Month', chart_y:'Year', chart_empty:'No traffic recorded yet. Once clients connect, daily usage shows here.', chart_total_up:'Total up', chart_total_down:'Total down', chart_total_all:'Total',
     healthy:'Healthy', online:'Online', live:'Live',
     /* policy */
     policy_title:'Resistance Policy', policy_profile:'Profile: Iran / High Censorship', policy_active:'Active',
@@ -1174,6 +1201,7 @@ const I18N = {
     net_pool:'Clean IP pool', net_pool_sub:'active across 3 ISPs', net_doh:'Secure DNS',
     net_routing:'Smart routing', net_isp:'Per-ISP pools', col_isp:'ISP', col_count:'Clean IPs',
     r_routing:'Routing rules', r_domestic:'Domestic direct', r_geoip:'GeoIP routing', r_geosite:'GeoSite routing', r_geosite_d:'route by domain list', r_adblock:'Ad & tracker blocking', r_adblock_d:'auto-updated ad/tracker list', r_porn:'Adult-content filter', r_porn_d:'block adult sites using an auto-updated list',
+    r_malware:'Malware blocking', r_malware_d:'block known malware domains', r_phishing:'Phishing blocking', r_phishing_d:'block known phishing domains', r_quic:'Block QUIC', r_quic_d:'force TCP — stops UDP/443 (helps when QUIC is throttled)', r_china:'China direct', r_china_d:'route Chinese sites/IPs directly', r_russia:'Russia direct', r_russia_d:'route Russian sites/IPs directly', r_sanctions:'Sanction bypass', r_sanctions_d:'route sanction-blocked services through the exit',
     /* activity */
     activity_recent:'Recent activity', activity_audit:'Audit log',
     col_time:'Time', col_event:'Event', col_actor:'Actor', col_status:'Status',
@@ -1195,6 +1223,7 @@ const I18N = {
     /* users */
     users_title:'Users & quotas', users_add:'+ Add user',
     col_name:'Name', col_quota:'Quota', col_used:'Used', col_expiry:'Expiry',
+    u_reset:'Reset', col_daily:'Daily limit',
     users_multi:'Multi-user', mu_warn:'Multi-user is on. Give each person their own link (Open / Copy / QR on their row), those enforce quota and expiry. Your main subscription still works as the unmetered admin config. Needs worker b15+.', set_maint:'Backup & maintenance',
     twofa_secret:'Authenticator key', twofa_code:'Enter the 6-digit code', twofa_confirm:'Confirm & turn on', twofa_dcode:'Authenticator code to turn it off', btn_disable2fa:'Disable 2FA',
     backup_s:'Export all settings (config + network + users) to a file, or restore from one. The file contains secrets, so keep it safe.', backup_export:'Export', backup_import:'Import',
@@ -1215,8 +1244,8 @@ const I18N = {
     env_prod:'محیط عملیاتی', grp_ops:'عملیات', grp_network:'شبکه', grp_netset:'تنظیمات شبکه', grp_config:'پیکربندی', grp_system:'سیستم', grp_admin:'مدیریت', grp_tools:'ابزارها', nav_collapse:'جمع کردن',
     nav_wireguard:'وایرگارد', nav_about:'درباره', nav_proxy:'پروکسی / CDN', nav_corenode:'نود اصلی', sub_wireguard:'ساخت کانفیگ وایرگارد برای WARP یا پیر دلخواه.', sub_about:'نسخهٔ پنل، تغییرات و پیوندها.', sub_proxy:'نحوه‌ی دسترسی ورکر به کلودفلر — PROXYIP / SOCKS5 / HTTP / HTTPS / TURN / SSTP.', sub_corenode:'نود شما روی همه‌ی پورت‌های TLS کلودفلر، روی خود دامنه.',
     cn_h:'🧩 نود اصلی', cn_s:'نود شما روی همه‌ی پورت‌های TLS کلودفلر، با استفاده‌ی مستقیم از دامنه‌ی ورکر — جدا از اشتراک. هر پورت را کپی یا اسکن کنید.', cn_copy:'کپی',
-    px_h:'🛡️ دسترسی CDN کلودفلر', px_s:'نحوه‌ی دسترسی ورکر به شبکه‌ی کلودفلر. یک حالت را انتخاب کنید، پروکسی را وارد کنید، با Verify بررسی کنید و سپس ذخیره کنید. این تنها منبع معتبر است — کانفیگ‌ها از همین‌جا می‌خوانند.', px_mode:'حالت', px_proxyip:'آدرس PROXYIP', px_addr:'آدرس پروکسی', px_verify:'بررسی', px_more_h:'یافتن پروکسی', px_more_load:'دریافت فهرست', px_country:'کشور', px_pick:'پروکسی', px_use:'استفاده از انتخاب', px_more_s:'فهرست‌های عمومی (IRNova/Tools) را دریافت کنید، بر اساس کشور انتخاب و سپس استفاده کنید. فهرست‌های PROXYIP و SOCKS5/HTTP در دسترس‌اند — فهرست PROXYIP بزرگ است (~۱۰مگابایت)، کمی صبر کنید. برای HTTPS، TURN و SSTP فهرست عمومی وجود ندارد؛ آن‌ها را دستی وارد کنید.',
-    wg_h:'🔐 کانفیگ وایرگارد', wg_s:'یک فایل .conf وایرگارد بسازید تا در برنامهٔ WireGuard وارد کنید. مقادیر پیش‌فرض برای WARP کلودفلر تنظیم شده‌اند — در صورت نیاز ویرایش کنید.', wg_loadwarp:'دریافت از WARP', wg_name:'نام', wg_addr:'آدرس', wg_dns:'DNS', wg_mtu:'MTU', wg_priv:'کلید خصوصی', wg_pub:'کلید عمومی پیر', wg_ep:'اندپوینت', wg_port:'پورت', wg_ka:'Keepalive', wg_build:'ساخت کانفیگ', wg_copy:'کپی', wg_dl:'دانلود .conf', wg_qrbtn:'QR', wg_loaded:'از WARP بارگذاری شد', wg_nowarp:'کانفیگ WARP موجود نیست — ابتدا در شبکه و آی‌پی WARP را ثبت کنید.', wg_reserved:'Reserved (WARP)', wg_warpnote:'نکتهٔ WARP: برنامهٔ رسمی WireGuard نمی‌تواند بایت‌های Reserved موردنیاز WARP را بفرستد — اگر هندشیک وصل شد ولی ترافیک عبور نکرد، نود WARP را در Hiddify یا v2rayN یا AmneziaWG وارد کنید. اگر اصلاً وصل نشد، احتمالاً اندپوینت مسدود است — در شبکه و آی‌پی → WARP یک اندپوینت جایگزین تنظیم و ذخیره کنید.',
+    px_h:'🛡️ دسترسی CDN کلودفلر', px_s:'نحوه‌ی دسترسی ورکر به شبکه‌ی کلودفلر. یک حالت را انتخاب کنید، پروکسی را وارد کنید، با Verify بررسی کنید و سپس ذخیره کنید. این تنها منبع معتبر است — کانفیگ‌ها از همین‌جا می‌خوانند.', px_mode:'حالت', px_proxyip:'آدرس PROXYIP', px_addr:'آدرس پروکسی', px_verify:'بررسی', px_more_h:'یافتن پروکسی', px_more_load:'دریافت فهرست', px_country:'کشور', px_pick:'پروکسی', px_use:'استفاده از انتخاب', px_more_s:'فهرست‌های عمومی (IRNova/Tools) را دریافت کنید، بر اساس کشور انتخاب و سپس استفاده کنید. فهرست PROXYIP بزرگ است (~۱۰مگابایت) — کمی صبر کنید. SOCKS5/HTTP/HTTPS وقتی فایل‌هایشان در مخزن باشند بارگذاری می‌شوند.',
+    wg_h:'🔐 کانفیگ وایرگارد', wg_s:'یک فایل .conf وایرگارد بسازید تا در برنامهٔ WireGuard وارد کنید. مقادیر پیش‌فرض برای WARP کلودفلر تنظیم شده‌اند — در صورت نیاز ویرایش کنید.', wg_loadwarp:'دریافت از WARP', wg_name:'نام', wg_addr:'آدرس', wg_dns:'DNS', wg_mtu:'MTU', wg_priv:'کلید خصوصی', wg_pub:'کلید عمومی پیر', wg_ep:'اندپوینت', wg_port:'پورت', wg_ka:'Keepalive', wg_build:'ساخت کانفیگ', wg_copy:'کپی', wg_dl:'دانلود .conf', wg_qrbtn:'QR', wg_loaded:'از WARP بارگذاری شد', wg_nowarp:'کانفیگ WARP موجود نیست — ابتدا در شبکه و آی‌پی WARP را ثبت کنید.',
     ab_panel:'پنل', ab_worker:'ورکر', ab_desc:'پنل مدیریت Nova Proxy — مدیریت اشتراک‌ها، آی‌پی‌های تمیز، مسیریابی، WARP و DNS برای ورکر کلودفلر شما.', ab_changelog:'تغییرات', ab_links:'پیوندها',
     nav_dashboard:'داشبورد', nav_distribution:'اشتراک‌ها', nav_network:'شبکه و آی‌پی‌ها',
     nav_activity:'فعالیت', nav_settings:'تنظیمات', nav_notifications:'اعلان‌ها', nav_users:'کاربران',
@@ -1233,6 +1262,7 @@ const I18N = {
     nav_guide:'راهنما', sub_guide:'راهنمای گام‌به‌گام استفاده از نوا پروکسی.', logout:'خروج',
     kpi_network:'شبکه', kpi_storage:'حافظه', kpi_worker:'مصرف ورکر', kpi_traffic:'مصرف امروز',
     kpi_network_sub:'AS13335 · کلودفلر', kpi_storage_sub:'فضای KV', kpi_worker_sub:'درخواست امروز', kpi_traffic_sub:'در ۳۱۲ نشست',
+    chart_title:'مصرف روزانه', chart_sub:'آپلود در برابر دانلود — ۱۴ روز اخیر', chart_up:'آپلود', chart_down:'دانلود', chart_d:'روز', chart_m:'ماه', chart_y:'سال', chart_empty:'هنوز ترافیکی ثبت نشده. وقتی کلاینت‌ها وصل شوند، مصرف روزانه اینجا نشان داده می‌شود.', chart_total_up:'کل آپلود', chart_total_down:'کل دانلود', chart_total_all:'مجموع',
     healthy:'سالم', online:'آنلاین', live:'زنده',
     policy_title:'سیاست مقاومت', policy_profile:'پروفایل: ایران / سانسور بالا', policy_active:'فعال',
     policy_apply:'اعمال سیاست', policy_last:'آخرین اعمال', policy_summary:'{n} از {t} برای ایران بهینه',
@@ -1254,6 +1284,7 @@ const I18N = {
     net_pool:'استخر آی‌پی تمیز', net_pool_sub:'فعال در ۳ اپراتور', net_doh:'DNS امن',
     net_routing:'مسیریابی هوشمند', net_isp:'استخر هر اپراتور', col_isp:'اپراتور', col_count:'آی‌پی تمیز',
     r_routing:'قوانین مسیریابی', r_domestic:'دسترسی مستقیم داخلی', r_geoip:'مسیریابی GeoIP', r_geosite:'مسیریابی GeoSite', r_geosite_d:'مسیریابی بر اساس لیست دامنه', r_adblock:'مسدودسازی تبلیغ و ردیاب', r_adblock_d:'لیست خودکارِ به‌روزِ تبلیغ/ردیاب', r_porn:'فیلتر محتوای بزرگسال', r_porn_d:'مسدودسازی سایت‌های بزرگسال با لیست خودکارِ به‌روز',
+    r_malware:'مسدودسازی بدافزار', r_malware_d:'مسدودسازی دامنه‌های بدافزار شناخته‌شده', r_phishing:'مسدودسازی فیشینگ', r_phishing_d:'مسدودسازی دامنه‌های فیشینگ شناخته‌شده', r_quic:'مسدودسازی QUIC', r_quic_d:'اجبار به TCP — قطع UDP/۴۴۳ (وقتی QUIC محدود می‌شود مفید است)', r_china:'دسترسی مستقیم چین', r_china_d:'مسیریابی مستقیم سایت‌ها/آی‌پی‌های چین', r_russia:'دسترسی مستقیم روسیه', r_russia_d:'مسیریابی مستقیم سایت‌ها/آی‌پی‌های روسیه', r_sanctions:'دور زدن تحریم', r_sanctions_d:'مسیریابی سرویس‌های تحریم‌شده از طریق خروجی',
     activity_recent:'فعالیت اخیر', activity_audit:'گزارش ممیزی',
     col_time:'زمان', col_event:'رویداد', col_actor:'کاربر', col_status:'وضعیت',
     ev_fetch:'دریافت اشتراک', ev_save:'ذخیرهٔ تنظیمات', ev_policy:'اعمال سیاست مقاومت',
@@ -1271,6 +1302,7 @@ const I18N = {
     notif_bot:'توکن ربات', notif_chat:'شناسهٔ چت / کاربر', notif_chat_h:'یک یا چند مورد (با کاما یا خط جدید): شناسهٔ عددی کاربری شما و/یا شناسهٔ کانال (ربات باید ادمین آن باشد). برای مدیریت ربات لازم است.',
     users_title:'کاربران و سهمیه‌ها', users_add:'+ افزودن کاربر',
     col_name:'نام', col_quota:'سهمیه', col_used:'مصرف', col_expiry:'انقضا',
+    u_reset:'بازنشانی', col_daily:'سقف روزانه',
     users_multi:'چندکاربره', mu_warn:'حالت چندکاربره روشن است. به هر نفر لینک اختصاصی خودش را بدهید (باز کردن / کپی / QR در ردیف خودش)؛ این‌ها سهمیه و انقضا را اعمال می‌کنند. اشتراک اصلی شما به‌عنوان کانفیگ ادمین (بدون محدودیت) همچنان کار می‌کند. نیازمند ورکر نسخهٔ b15 به بالا.', set_maint:'پشتیبان‌گیری و نگهداری',
     twofa_secret:'کلید برنامهٔ احراز', twofa_code:'کد ۶ رقمی را وارد کنید', twofa_confirm:'تأیید و روشن‌کردن', twofa_dcode:'کد برنامه برای خاموش‌کردن', btn_disable2fa:'غیرفعال‌سازی ۲FA',
     backup_s:'همهٔ تنظیمات (کانفیگ + شبکه + کاربران) را در یک فایل ذخیره یا بازیابی کنید. فایل شامل کلیدهای محرمانه است، جای امن نگه‌دارید.', backup_export:'خروجی', backup_import:'ورودی',
@@ -1322,6 +1354,7 @@ const MOCK = {
   routing: [
     { key:'r_routing', on:true },{ key:'r_domestic', on:true },{ key:'r_geoip', on:true },
     { key:'r_geosite', on:true },{ key:'r_adblock', on:true },{ key:'r_porn', on:false },
+    { key:'r_malware', on:false },{ key:'r_phishing', on:false },{ key:'r_quic', on:false },{ key:'r_china', on:false },{ key:'r_russia', on:false },{ key:'r_sanctions', on:false },
   ],
   isp: [
     { name:'MCI (Hamrah-e Aval)', asn:'197207', count:54 },
@@ -1575,30 +1608,75 @@ function renderNetwork(){
 }
 function renderSettings(){ $('#security-rows').innerHTML = simpleToggleRows(MOCK.security); }
 /* ---- Users: full editable CRUD, persisted to /admin/users.json ---- */
+function slugify(s){ return String(s||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,24); }
+// Backfill a stable username (link slug) + short secret key for any user missing them.
+// Existing usernames are preserved so live subscription links never change under a user.
+function ensureUserFields(arr){ const seen={}; (arr||[]).forEach(u=>{ if(u && u.username) seen[String(u.username).toLowerCase()]=1; });
+  (arr||[]).forEach((u,i)=>{ if(!u) return;
+    if(!u.key) u.key=uRid().slice(0,12);
+    if(!u.username){ let base=slugify(u.name)||('user'+(i+1)), name=base, n=2; while(seen[name]){ name=base+n; n++; } seen[name]=1; u.username=name; }
+  });
+}
+function userSubLink(u){ return location.origin+'/sub?sub='+encodeURIComponent(u.username||'')+'&key='+(u.key||'')+'&b64'; }
 function renderUsers(){
   const box=document.getElementById('users-body2'); if(!box) return;
   const arr=STATE.users||[], usage=STATE.usage||{};
+  ensureUserFields(arr);
   const cnt=document.getElementById('nav-users-count'); if(cnt) cnt.textContent=arr.length;
   const mu=document.getElementById('t2-multiuser'); if(mu) mu.classList.toggle('on', STATE.multiUser===true);
   updateMultiUserUI();
   if(!arr.length){ box.innerHTML='<p style="color:var(--mu);font-size:13px;padding:8px 0">'+(lang==='fa'?'هنوز کاربری نیست. یکی اضافه کنید.':'No users yet. Add one.')+'</p>'; return; }
   const io=STATE.usageIO||{};
-  box.innerHTML=arr.map((u,i)=>{ const used=usage[u.id]||0, q=u.quotaBytes||0; const usedTxt=fmtBytes(used)+(q?(' / '+fmtBytes(q)):' / ∞');
-    const uio=io[u.id]||{}; const ioTxt=(uio.up||uio.down)?(' &nbsp; ↑ '+fmtBytes(uio.up)+' &nbsp; ↓ '+fmtBytes(uio.down)):'';
-    return `<div class="urow2">
-      <div class="uf grow"><label>${t('col_name')}</label><input class="inp" data-un="${i}" value="${String(u.name||'').replace(/"/g,'&quot;')}"></div>
-      <div class="uf uf-qty"><label>${t('col_quota')} (GB)</label><input class="inp" type="number" min="0" data-uq="${i}" value="${q?Math.round(q/1073741824):0}"></div>
-      <div class="uf uf-exp"><label>${t('col_expiry')}</label><input class="inp" type="date" data-ux="${i}" value="${u.expiry?String(u.expiry).slice(0,10):''}"></div>
-      <div class="uf uf-status"><label>${t('col_status')}</label><div class="sw${u.enabled!==false?' on':''}" data-ue="${i}"><span class="k"></span></div></div>
-      <div class="uf uf-actions"><label>&nbsp;</label><div class="urow2-acts"><button class="btn ghost sm" data-open-user="${u.token||''}" title="${t('open')}">${t('open')}</button><button class="btn ghost sm" data-copy-user="${u.token||''}">${t('copy')}</button><button class="btn ghost sm" data-qr-user="${u.token||''}" data-qr-uname="${String(u.name||'').replace(/"/g,'&quot;')}">${t('qr')}</button><button class="btn ghost sm" data-ud="${i}" title="${lang==='fa'?'حذف':'Remove'}" style="color:var(--dg)">✕</button></div></div>
-      <div class="used">${(lang==='fa'?'مصرف: ':'used: ')}${usedTxt}${ioTxt} &nbsp; <code>${String(u.tag||'').slice(0,10)}</code></div>
+  const esc=(s)=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+  box.innerHTML=arr.map((u,i)=>{
+    const used=usage[u.id]||0, q=u.quotaBytes||0;
+    const day=(STATE.usageDay||{})[u.id]||0, dq=u.dailyQuotaBytes||0;
+    const pct=q? Math.min(100, Math.round(used/q*100)) : 0;
+    const usedTxt=fmtBytes(used)+(q?(' / '+fmtBytes(q)):' / ∞');
+    const uio=io[u.id]||{};
+    const ioTxt=(uio.up||uio.down)?('↑ '+fmtBytes(uio.up)+' &nbsp; ↓ '+fmtBytes(uio.down)):'';
+    const dayTxt=(day||dq)?((lang==='fa'?'امروز ':'today ')+fmtBytes(day)+(dq?(' / '+fmtBytes(dq)):'')):'';
+    const REASON={ 'quota':(lang==='fa'?'سهمیه تمام شد':'quota reached'), 'daily-quota':(lang==='fa'?'سقف روزانه':'daily limit'), 'expired':(lang==='fa'?'منقضی شد':'expired') };
+    const reasonTxt=(u.enabled===false && u.disabledReason)?(REASON[u.disabledReason]||u.disabledReason):'';
+    const expTxt=u.expiry? ((lang==='fa'?'انقضا ':'expires ')+String(u.expiry).slice(0,10)) : (lang==='fa'?'بدون انقضا':'no expiry');
+    const link=userSubLink(u);
+    const init=(u.name||u.username||'u').slice(0,1);
+    const warn=(q && pct>=90) ? ' warn':'';
+    return `<div class="ucard${u.enabled===false?' off':''}">
+      <div class="ucard-h">
+        <div class="ucard-av">${esc(init)}</div>
+        <div class="ucard-id"><span class="un">${esc(u.name||u.username)}</span><span class="ul">@${esc(u.username)}</span></div>
+        <div class="sw${u.enabled!==false?' on':''}" data-ue="${i}" title="${t('col_status')}" style="flex:0 0 auto"><span class="k"></span></div>
+        <button class="btn ghost sm" data-ud="${i}" title="${lang==='fa'?'حذف':'Remove'}" style="color:var(--dg);flex:0 0 auto;padding:0 10px">✕</button>
+      </div>
+      <div class="ucard-bar${warn}"><i style="width:${q?pct:0}%"></i></div>
+      <div class="ucard-meta"><span><b>${usedTxt}</b>${q?(' &middot; '+pct+'%'):''}</span>${dayTxt?('<span>'+dayTxt+'</span>'):''}${ioTxt?('<span>'+ioTxt+'</span>'):''}<span>${expTxt}</span>${reasonTxt?('<span style="color:var(--dg);font-weight:700">⛔ '+reasonTxt+'</span>'):''}</div>
+      <div class="ucard-link"><code title="${esc(link)}">${esc(link)}</code></div>
+      <div class="ucard-acts">
+        <button class="btn ghost sm" data-open-user="${esc(link)}" data-islink="1" title="${t('open')}">${t('open')}</button>
+        <button class="btn ghost sm" data-copy-user="${esc(link)}" data-islink="1">${t('copy')}</button>
+        <button class="btn ghost sm" data-qr-user="${esc(link)}" data-islink="1" data-qr-uname="${esc(u.name||u.username)}">${t('qr')}</button>
+        <button class="btn ghost sm" data-ureset="${i}" title="${t('u_reset')}" style="color:var(--wn)">${t('u_reset')}</button>
+      </div>
+      <details class="ucard-edit">
+        <summary>✏️ ${lang==='fa'?'ویرایش':'Edit'}</summary>
+        <div class="ucard-grid">
+          <div class="uf"><label>${t('col_name')}</label><input class="inp" data-un="${i}" value="${esc(u.name)}"></div>
+          <div class="uf"><label>${lang==='fa'?'نام‌کاربری (لینک)':'Username (link)'}</label><input class="inp" data-uu="${i}" value="${esc(u.username)}"></div>
+          <div class="uf"><label>${t('col_quota')} (GB)</label><input class="inp" type="number" min="0" data-uq="${i}" value="${q?Math.round(q/1073741824):0}"></div>
+          <div class="uf"><label>${t('col_daily')} (GB)</label><input class="inp" type="number" min="0" data-udq="${i}" value="${dq?Math.round(dq/1073741824):0}"></div>
+          <div class="uf"><label>${t('col_expiry')}</label><input class="inp" type="date" data-ux="${i}" value="${u.expiry?String(u.expiry).slice(0,10):''}"></div>
+        </div>
+      </details>
     </div>`;
   }).join('');
 }
 function uRid(){ try{ return crypto.randomUUID().replace(/-/g,''); }catch(e){ return Math.random().toString(16).slice(2)+Math.random().toString(16).slice(2); } }
 function collectUsers(){ const box=document.getElementById('users-body2'); if(!box) return; const arr=STATE.users||[];
   box.querySelectorAll('[data-un]').forEach(el=>{ const u=arr[+el.dataset.un]; if(u) u.name=el.value.trim(); });
+  box.querySelectorAll('[data-uu]').forEach(el=>{ const u=arr[+el.dataset.uu]; if(u){ const v=slugify(el.value); if(v) u.username=v; } });
   box.querySelectorAll('[data-uq]').forEach(el=>{ const u=arr[+el.dataset.uq]; if(u){ const g=Number(el.value)||0; u.quotaBytes=g>0?Math.round(g*1073741824):0; } });
+  box.querySelectorAll('[data-udq]').forEach(el=>{ const u=arr[+el.dataset.udq]; if(u){ const g=Number(el.value)||0; u.dailyQuotaBytes=g>0?Math.round(g*1073741824):0; } });
   box.querySelectorAll('[data-ux]').forEach(el=>{ const u=arr[+el.dataset.ux]; if(u) u.expiry=el.value||''; });
   box.querySelectorAll('[data-ue]').forEach(el=>{ const u=arr[+el.dataset.ue]; if(u) u.enabled=el.classList.contains('on'); });
 }
@@ -1611,7 +1689,7 @@ function writeUsersCache(mu,users){ try{ localStorage.setItem('nova_users_cache'
 async function loadUsersFromServer(){
   let serverUsers=[], usage={}, usageIO={}, mu=false, parsed=false;
   try{ const r=await fetch('/admin/users.json?_t='+Date.now(),{cache:'no-store'});
-    if(!(r.redirected || /\/login/.test(r.url))){ const d=await r.json(); serverUsers=Array.isArray(d.users)?d.users:[]; usage=d.usage||{}; usageIO=d.usageIO||{}; mu=d.multiUser===true; parsed=true; }
+    if(!(r.redirected || /\/login/.test(r.url))){ const d=await r.json(); serverUsers=Array.isArray(d.users)?d.users:[]; usage=d.usage||{}; usageIO=d.usageIO||{}; STATE.usageDay=d.usageDay||{}; mu=d.multiUser===true; parsed=true; }
   }catch(e){}
   const c=readUsersCache();
   if(c && Array.isArray(c.users) && (Date.now()-(c.t||0))<120000 && (!parsed || c.users.length!==serverUsers.length || JSON.stringify(c.users)!==JSON.stringify(serverUsers))){
@@ -1621,7 +1699,7 @@ async function loadUsersFromServer(){
   }
   return { users:serverUsers, usage, usageIO, multiUser:mu };
 }
-async function addUser(){ const _sw=document.getElementById('t2-multiuser'); if(!_sw || !_sw.classList.contains('on')){ toast(lang==='fa'?'ابتدا «چندکاربره» را روشن کنید':'Turn on Multi-user first to add users'); return; } collectUsers(); STATE.users=STATE.users||[]; STATE.users.push({ id:uRid(), name:'user'+(STATE.users.length+1), tag:uRid().slice(0,10), token:uRid()+uRid().slice(0,8), quotaBytes:0, expiry:'', enabled:true, created:new Date().toISOString() }); renderUsers(); if(LIVE) await saveUsers(); }
+async function addUser(){ const _sw=document.getElementById('t2-multiuser'); if(!_sw || !_sw.classList.contains('on')){ toast(lang==='fa'?'ابتدا «چندکاربره» را روشن کنید':'Turn on Multi-user first to add users'); return; } collectUsers(); STATE.users=STATE.users||[]; STATE.users.push({ id:uRid(), name:'user'+(STATE.users.length+1), username:'', tag:uRid().slice(0,10), token:uRid()+uRid().slice(0,8), key:uRid().slice(0,12), quotaBytes:0, expiry:'', enabled:true, created:new Date().toISOString() }); renderUsers(); if(LIVE) await saveUsers(); }
 function updateMultiUserUI(){
   const sw=document.getElementById('t2-multiuser'); const on = !!(sw && sw.classList.contains('on'));
   const btn=document.getElementById('users-add2');
@@ -1634,18 +1712,27 @@ function updateMultiUserUI(){
   }
 }
 async function deleteUser(i){ collectUsers(); (STATE.users||[]).splice(i,1); renderUsers(); if(LIVE) await saveUsers(); }
+async function resetUser(i){ const u=(STATE.users||[])[i]; if(!u) return;
+  if(!confirm((lang==='fa'?'مصرف این کاربر صفر شود و دوباره فعال گردد؟ ':'Reset this user\'s usage and re-enable them? ')+(u.name||u.username||''))) return;
+  if(!LIVE){ toast(lang==='fa'?'حالت پیش‌نمایش':'Preview mode'); return; }
+  try{ const r=await fetch('/admin/user-reset',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:u.id})}); const ok=r.ok;
+    if(ok){ u.enabled=true; delete u.disabledReason; delete u.disabledAt; delete u.autoDisabled; if(STATE.usage) STATE.usage[u.id]=0; if(STATE.usageDay) STATE.usageDay[u.id]=0;
+      const us=await loadUsersFromServer(); STATE.users=us.users; STATE.usage=us.usage; STATE.usageIO=us.usageIO; renderUsers(); toast(lang==='fa'?'بازنشانی شد ✓':'Reset ✓'); }
+    else toast(lang==='fa'?'بازنشانی ناموفق':'Reset failed',1);
+  }catch(e){ toast(lang==='fa'?'بازنشانی ناموفق':'Reset failed',1); }
+}
 async function saveUsers(){ collectUsers();
   // Multi-user is explicit (the toggle only). It is NOT auto-enabled by adding users, because
   // turning it on makes the worker reject the default/dashboard config (it has no per-user tag),
   // which looked like "all configs stopped working".
   const mu=document.getElementById('t2-multiuser').classList.contains('on'); STATE.multiUser=mu;
-  if(!LIVE){ writeUsersCache(mu, STATE.users); renderUsers(); flashSaved('users-save2', false); return previewToast(); }
+  if(!LIVE){ writeUsersCache(mu, STATE.users); renderUsers(); return previewToast(); }
   try{ const r=await fetch('/admin/users.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({multiUser:mu, users:STATE.users})});
-    if(r.redirected || /\/login/.test(r.url)){ toast(lang==='fa'?'نشست منقضی شد — دوباره وارد شوید':'Session expired — sign in again'); flashSaved('users-save2', false); return; }
+    if(r.redirected || /\/login/.test(r.url)){ toast(lang==='fa'?'نشست منقضی شد — دوباره وارد شوید':'Session expired — sign in again'); return; }
     let j={}; try{ j=await r.json(); }catch(e){}
-    if(r.ok && j && j.success===true){ writeUsersCache(mu, STATE.users); const n=(typeof j.count==='number')?j.count:STATE.users.length; toast((lang==='fa'?'ذخیره و تأیید شد — ':'Saved & verified — ')+n+(lang==='fa'?' کاربر':(' user'+(n===1?'':'s')))); flashSaved('users-save2', true); renderUsers(); }
-    else { toast('⚠️ '+((j&&j.error)||('HTTP '+r.status))); flashSaved('users-save2', false); }
-  }catch(e){ toast('⚠️ '+e.message); flashSaved('users-save2', false); } }
+    if(r.ok && j && j.success===true){ writeUsersCache(mu, STATE.users); const n=(typeof j.count==='number')?j.count:STATE.users.length; toast((lang==='fa'?'ذخیره و تأیید شد — ':'Saved & verified — ')+n+(lang==='fa'?' کاربر':(' user'+(n===1?'':'s')))); renderUsers(); }
+    else { toast('⚠️ '+((j&&j.error)||('HTTP '+r.status))); }
+  }catch(e){ toast('⚠️ '+e.message); } }
 
 /* ---- Worker requests: live Cloudflare status (connect / disconnect) ---- */
 function renderWorker(){
@@ -1748,9 +1835,9 @@ async function changePassword(){ const msg=document.getElementById('pw-msg'); co
   if((nw||'').length<6){ msg.textContent=lang==='fa'?'حداقل ۶ کاراکتر':'At least 6 characters'; return; }
   msg.textContent=lang==='fa'?'در حال تغییر…':'Changing…';
   try{ const r=await fetch('/admin/security/change-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({current:cur,new:nw})}); let j={}; try{ j=await r.json(); }catch(e){}
-    if(r.ok && j && j.success!==false){ msg.textContent=lang==='fa'?'رمز تغییر کرد ✓':'Password changed ✓'; toast(lang==='fa'?'رمز تغییر کرد ✓':'Password changed ✓'); document.getElementById('pw-cur').value=''; document.getElementById('pw-new').value=''; }
-    else { var _pe='⚠️ '+((j&&j.error)||(lang==='fa'?'رمز فعلی اشتباه است':'Wrong current password')); msg.textContent=_pe; toast(_pe); }
-  }catch(e){ msg.textContent='⚠️ '+e.message; toast('⚠️ '+e.message); } }
+    if(r.ok && j && j.success!==false){ msg.textContent=lang==='fa'?'رمز تغییر کرد ✓':'Password changed ✓'; document.getElementById('pw-cur').value=''; document.getElementById('pw-new').value=''; }
+    else { msg.textContent='⚠️ '+((j&&j.error)||(lang==='fa'?'رمز فعلی اشتباه است':'Wrong current password')); }
+  }catch(e){ msg.textContent='⚠️ '+e.message; } }
 async function twofaStart(){ const msg=document.getElementById('twofa-msg'); if(msg) msg.textContent='';
   if(!LIVE){ STATE.twofaSecret='DEMOKEYNOVA234567'; STATE.twofaOtp='otpauth://totp/Nova%20Proxy?secret=DEMOKEYNOVA234567&issuer=Nova'; document.getElementById('twofa-key').value=STATE.twofaSecret; document.getElementById('twofa-off').style.display='none'; document.getElementById('twofa-setup').style.display='block'; return; }
   try{ const s=await API.get('security/2fa-setup'); STATE.twofaSecret=s.secret; STATE.twofaOtp=s.otpauth||('otpauth://totp/Nova?secret='+s.secret+'&issuer=Nova');
@@ -1829,6 +1916,7 @@ function applyLang(l){
   $$('#lang-seg button').forEach(b=>b.classList.toggle('on', b.dataset.lang===l));
   syncPageHeader();
   renderAll(); /* dynamic content re-rendered in the new language */
+  try{ if(currentView==='dashboard') TChart.render(); }catch(e){}
 }
 
 /* ============================================================================
@@ -1856,6 +1944,7 @@ function showView(v){
   if(v==='wireguard') wgInit();
   if(v==='proxy') pxInit();
   if(v==='corenode') cnInit();
+  if(v==='dashboard'){ try{ TChart.ensure(); }catch(e){} }
   if(['network','cleanips','wireguard','users','proxy','corenode'].indexOf(v)>=0){ var _g=document.getElementById('grp-netset'); if(_g) _g.classList.add('open'); }
   window.scrollTo({top:0,behavior:'instant'});
 }
@@ -1865,7 +1954,6 @@ function showView(v){
    ========================================================================== */
 function wgVal(id){ var el=document.getElementById(id); return el? (el.value||'').trim() : ''; }
 function wgBuild(){
-  var resv=(wgVal('wg-reserved')||'').replace(/\s+/g,'');
   var cfg='[Interface]\n'
     +'PrivateKey = '+(wgVal('wg-priv')||'<your-private-key>')+'\n'
     +'Address = '+wgVal('wg-addr')+'\n'
@@ -1875,25 +1963,19 @@ function wgBuild(){
     +'PublicKey = '+wgVal('wg-pub')+'\n'
     +'AllowedIPs = 0.0.0.0/0, ::/0\n'
     +'Endpoint = '+wgVal('wg-ep')+':'+wgVal('wg-port')+'\n'
-    +(wgVal('wg-ka')?('PersistentKeepalive = '+wgVal('wg-ka')+'\n'):'')
-    +(resv?('# Reserved (WARP client_id) = '+resv+' — the stock WireGuard app cannot send this; if the handshake works but no traffic flows, import the WARP node into Hiddify / v2rayN / AmneziaWG instead.\n'):'');
+    +(wgVal('wg-ka')?('PersistentKeepalive = '+wgVal('wg-ka')+'\n'):'');
   var out=document.getElementById('wg-out'); if(out) out.value=cfg;
   return cfg;
 }
 function wgParseInto(conf){
   var map={PrivateKey:'wg-priv',Address:'wg-addr',DNS:'wg-dns',MTU:'wg-mtu',PublicKey:'wg-pub'};
-  var reserved='';
   String(conf).split('\n').forEach(function(line){
-    var rm=line.match(/Reserved[^=]*=\s*([0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+)/i); if(rm){ reserved=rm[1].replace(/\s+/g,''); return; }
-    if(line.trim().charAt(0)==='#') return;            // ignore other comment lines
     var i=line.indexOf('='); if(i<0) return;
     var k=line.slice(0,i).trim(), val=line.slice(i+1).trim();
-    if(!val) return;                                   // never overwrite a good default with a blank value
     if(map[k]&&document.getElementById(map[k])) document.getElementById(map[k]).value=val;
-    if(k==='Endpoint'){ var c=val.lastIndexOf(':'); var host=c>0?val.slice(0,c):val, port=c>0?val.slice(c+1):''; if(document.getElementById('wg-ep')) document.getElementById('wg-ep').value=host; if(port&&document.getElementById('wg-port')) document.getElementById('wg-port').value=port; }
+    if(k==='Endpoint'){ var ep=val.split(':'); if(document.getElementById('wg-ep')) document.getElementById('wg-ep').value=ep[0]; if(ep[1]&&document.getElementById('wg-port')) document.getElementById('wg-port').value=ep[1]; }
     if(k==='PersistentKeepalive'&&document.getElementById('wg-ka')) document.getElementById('wg-ka').value=val;
   });
-  var rf=document.getElementById('wg-reserved'); if(rf&&reserved) rf.value=reserved;
   wgBuild();
 }
 function wgInit(){
@@ -1902,7 +1984,7 @@ function wgInit(){
   var copy=document.getElementById('wg-copy'); if(copy) copy.onclick=function(){ var v=document.getElementById('wg-out').value||wgBuild(); navigator.clipboard.writeText(v).then(function(){toast(t('copied'));}).catch(function(){}); };
   var dl=document.getElementById('wg-dl'); if(dl) dl.onclick=function(){ var v=document.getElementById('wg-out').value||wgBuild(); var name=(wgVal('wg-name')||'nova-wg').replace(/[^a-zA-Z0-9_-]/g,'_'); var bl=new Blob([v],{type:'text/plain'}); var u=URL.createObjectURL(bl); var a=document.createElement('a'); a.href=u; a.download=name+'.conf'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(u); };
   var qr=document.getElementById('wg-qr'); if(qr) qr.onclick=function(){ var v=document.getElementById('wg-out').value||wgBuild(); var box=document.getElementById('wg-qrbox'); if(!box) return; box.style.display='block'; box.innerHTML=''; try{ new QRCode(box,{text:v,width:220,height:220,correctLevel:QRCode.CorrectLevel.L}); }catch(e){ box.textContent='QR error'; } };
-  var w=document.getElementById('wg-warp'); if(w) w.onclick=async function(){ try{ var r=await fetch('/admin/warp.json?_t='+Date.now()); var j=await r.json(); var conf=j&&(j.conf||j.config||(j.w&&j.w.conf)); if(conf){ wgParseInto(conf); if(j&&Array.isArray(j.reserved)&&j.reserved.length){ var rf=document.getElementById('wg-reserved'); if(rf){ rf.value=j.reserved.join(','); wgBuild(); } } toast(t('wg_loaded')); } else { toast(t('wg_nowarp')); } }catch(e){ toast(t('wg_nowarp')); } };
+  var w=document.getElementById('wg-warp'); if(w) w.onclick=async function(){ try{ var r=await fetch('/admin/warp.json?_t='+Date.now()); var j=await r.json(); var conf=j&&(j.conf||j.config||(j.w&&j.w.conf)); if(conf){ wgParseInto(conf); toast(t('wg_loaded')); } else { toast(t('wg_nowarp')); } }catch(e){ toast(t('wg_nowarp')); } };
 }
 
 /* ---- About: fill worker version + changelog from version.json / system.json ---- */
@@ -1956,13 +2038,11 @@ function pxInit(){
   if(LIVE) pxLoad(); else pxApplyMode();
 }
 /* ---- 'Get more': fetch proxy lists from IRNova/Tools, pick by country ---- */
-/* Repo file names are lowercase (data/socks5.json, data/http.json). There is no HTTPS list
-   in the repo, so HTTPS/TURN/SSTP have no public source — those modes are entered manually. */
-var PX_SRC={ proxyip:'https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/all.json', socks5:'https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/socks5.json', http:'https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/http.json' };
+var PX_SRC={ proxyip:'https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/all.json', socks5:'https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/SOCKS5.json', http:'https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/HTTP.json', https:'https://raw.githubusercontent.com/IRNova/Tools/refs/heads/main/data/HTTPS.json' };
 var pxMap=null;
 async function pxLoadList(){
   var m=(document.getElementById('px-mode')||{}).value||'proxyip'; var url=PX_SRC[m]; var msg=document.getElementById('px-more-msg');
-  if(!url){ msg.className='msg bad'; msg.textContent=(lang==='fa'?'برای این حالت فهرست عمومی نیست — پروکسی را دستی وارد کنید':'No public list for this mode — enter the proxy manually'); return; }
+  if(!url){ msg.className='msg bad'; msg.textContent=(lang==='fa'?'برای این حالت منبعی نیست (TURN/SSTP)':'No list source for this mode (TURN/SSTP)'); return; }
   msg.className='msg'; msg.textContent=(lang==='fa'?'در حال دریافت…':'Fetching…')+(m==='proxyip'?' (~10MB)':'');
   try{
     var r=await fetch(url,{cache:'no-store'});
@@ -2047,10 +2127,8 @@ function applyTheme(th){
    ========================================================================== */
 let toastTimer;
 function toast(msg){
-  const el = $('#toast'); if(!el) return; el.textContent = msg;
-  const bad=/⚠️|✕|fail|failed|ناموفق|منقضی|خطا/i.test(String(msg));
-  el.classList.toggle('err', bad); el.classList.add('show');
-  clearTimeout(toastTimer); toastTimer = setTimeout(()=>el.classList.remove('show'), 2800);
+  const el = $('#toast'); el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=>el.classList.remove('show'), 2400);
 }
 /* Unmistakable inline confirmation: flash the clicked Save button to "✓ Saved". */
 function flashSaved(id, ok){
@@ -2092,7 +2170,7 @@ const POLICY_MAP = {
   p_routing:  {s:'net',    f:'enableRouting'},
 };
 const SEC_MAP = { s_tls:'enableTLS', s_ech:'ECH', s_0rtt:'enable0RTT', s_rp:'randomPath', s_scv:'skipCertVerify' };
-const NET_MAP = { r_routing:'enableRouting', r_domestic:'enableDomesticBypass', r_geoip:'enableGeoIP', r_geosite:'enableGeoSite', r_adblock:'enableAdBlock', r_porn:'enablePornBlock' };
+const NET_MAP = { r_routing:'enableRouting', r_domestic:'enableDomesticBypass', r_geoip:'enableGeoIP', r_geosite:'enableGeoSite', r_adblock:'enableAdBlock', r_porn:'enablePornBlock', r_malware:'enableMalwareBlock', r_phishing:'enablePhishingBlock', r_quic:'blockQUIC', r_china:'bypassChina', r_russia:'bypassRussia', r_sanctions:'bypassSanctions' };
 const LOGLABEL = { Get_SUB:['ev_fetch','down'], Get_Best_SUB:['ev_fetch','down'], Save_Config:['ev_save','save'],
   Save_Network_Settings:['ev_save','save'], Init_Config:['ev_save','save'], Save_Custom_IPs:['ev_save','save'],
   Admin_Login:['ev_login','key'], Register_WARP:['ev_warp','wifi'], WARP_License:['ev_warp','wifi'], Save_Users:['ev_user','user'] };
@@ -2212,15 +2290,15 @@ async function applyPolicy(){
   toast(ok ? (lang==='fa'?'سیاست اعمال شد ✓':'Policy applied ✓') : savedMsg(false));
 }
 async function saveSettings(){
-  if(!LIVE){ try{ await loadLive(); }catch(e){} if(!LIVE){ flashSaved('save-settings2', false); return previewToast(); } }
+  if(!LIVE){ try{ await loadLive(); }catch(e){} if(!LIVE) return previewToast(); }
   const c=STATE.config;
-  if(!c || !c.UUID || !c.HOST){ toast('⚠️ '+(lang==='fa'?'تنظیمات هنوز بارگذاری نشده — صفحه را تازه کنید':'Config not loaded yet — reload the page')); flashSaved('save-settings2', false); return; }
+  if(!c || !c.UUID || !c.HOST){ toast('⚠️ '+(lang==='fa'?'تنظیمات هنوز بارگذاری نشده — صفحه را تازه کنید':'Config not loaded yet — reload the page')); return; }
   const g=(id)=>{ const e=document.getElementById(id); return e? e.value : undefined; };
-  const isOn=(id)=>{ const e=document.getElementById(id); return e? e.classList.contains('on') : false; };
+  const isOn=(id)=>{ const e=document.getElementById(id); return !!(e && e.classList.contains('on')); };
   const proto=g('f2-proto');
   c.protocolType=(proto && proto!=='all') ? proto : 'vless'; c.multiProtocolSub=false; // All-protocol removed (caused 1101)
   c.transportProtocol=g('f2-trans'); c.Fingerprint=g('f2-fp');
-  document.querySelectorAll('#security-rows [data-toggle]').forEach(row=>{ const k=row.dataset.toggle, sw=row.querySelector('.sw'), on=sw?sw.classList.contains('on'):false;
+  document.querySelectorAll('#security-rows [data-toggle]').forEach(row=>{ const k=row.dataset.toggle, on=row.querySelector('.sw').classList.contains('on');
     if(k==='s_tls') c.enableTLS=on; else c[SEC_MAP[k]]=on; });
   // advanced
   let pa=(g('f2-path')||'/').trim()||'/'; if(!pa.startsWith('/')) pa='/'+pa; c.PATH=pa;
@@ -2289,18 +2367,12 @@ async function mirrorSave(silent){ if(!LIVE) return previewToast(); const c=STAT
   c.mirror.branch=(document.getElementById('m2-branch').value||'').trim()||'main';
   c.mirror.pathPrefix=(document.getElementById('m2-path').value||'').trim();
   const tk=(document.getElementById('m2-token').value||'').trim(); if(tk){ c.mirror.token=tk; document.getElementById('m2-token').value=''; }
-  const ok=await API.post('config.json', c); if(!silent){ const _m=document.getElementById('m2-msg'); if(_m) _m.textContent=savedMsg(ok); toast(savedMsg(ok)); flashSaved('m2-save', ok); } return ok;
+  const ok=await API.post('config.json', c); if(!silent){ document.getElementById('m2-msg').textContent=savedMsg(ok); } return ok;
 }
 async function mirrorPublish(){ if(!LIVE) return previewToast(); const msg=document.getElementById('m2-msg'); msg.textContent=lang==='fa'?'در حال انتشار…':'Publishing…';
   await mirrorSave(true);
-  try{
-    const r=await fetch('/admin/publish-mirror',{method:'POST'}); const j=await r.json().catch(()=>({}));
-    if(r.ok){ msg.textContent=(lang==='fa'?'✓ منتشر شد':'✓ Published'); toast(lang==='fa'?'✓ در گیت‌هاب منتشر شد':'✓ Published to GitHub'); return; }
-    var why=j.reason;
-    if(!why && Array.isArray(j.results)){ var bad=j.results.find(function(x){return x&&!x.ok;}); if(bad){ why=(bad.file?bad.file+': ':'')+(bad.error||('GitHub HTTP '+(bad.status||'?'))); } }
-    msg.textContent='⚠️ '+(why||('HTTP '+r.status)); toast('⚠️ '+(why||('HTTP '+r.status)));
-  }
-  catch(e){ msg.textContent='⚠️ '+e.message; toast('⚠️ '+e.message); } }
+  try{ const r=await fetch('/admin/publish-mirror',{method:'POST'}); const j=await r.json().catch(()=>({})); msg.textContent = r.ok ? (lang==='fa'?'✓ منتشر شد':'✓ Published') : ('⚠️ '+(j.reason||('HTTP '+r.status))); }
+  catch(e){ msg.textContent='⚠️ '+e.message; } }
 async function saveNotif(){
   if(!LIVE) return previewToast(); const c=STATE.config; c.TG=c.TG||{};
   c.TG.enabled = document.getElementById('t2-tg').classList.contains('on');
@@ -2473,6 +2545,7 @@ document.addEventListener('click', (e)=>{
   if(e.target.closest('#users-add2')){ addUser(); return; }
   if(e.target.closest('#users-save2')){ saveUsers(); return; }
   const ud=e.target.closest('[data-ud]'); if(ud){ deleteUser(+ud.dataset.ud); return; }
+  const urs=e.target.closest('[data-ureset]'); if(urs){ resetUser(+urs.dataset.ureset); return; }
   if(e.target.closest('#pw-change')){ changePassword(); return; }
   if(e.target.closest('#twofa-start')){ twofaStart(); return; }
   if(e.target.closest('#twofa-qr')){ showQR(STATE.twofaOtp||'', 'Nova 2FA'); return; }
@@ -2489,10 +2562,10 @@ document.addEventListener('click', (e)=>{
   const ib = e.target.closest('[data-import-sub]'); if(ib){ navigator.clipboard && navigator.clipboard.writeText(ib.dataset.importSub); toast(t('app_copied')); return; }
   // copy actions
   const cp = e.target.closest('[data-copy]'); if(cp){ const el=$(cp.getAttribute('data-copy')); copy(el? el.textContent : (STATE.subUrl||'')); return; }
-  const ou = e.target.closest('[data-open-user]'); if(ou){ window.open(location.origin+'/sub?token='+ou.dataset.openUser+'&b64','_blank','noopener'); return; }
-  const qu = e.target.closest('[data-qr-user]'); if(qu){ showQR(location.origin+'/sub?token='+qu.dataset.qrUser+'&b64', qu.dataset.qrUname||'User'); return; }
+  const ou = e.target.closest('[data-open-user]'); if(ou){ const url=ou.dataset.islink? ou.dataset.openUser : (location.origin+'/sub?token='+ou.dataset.openUser+'&b64'); window.open(url,'_blank','noopener'); return; }
+  const qu = e.target.closest('[data-qr-user]'); if(qu){ const url=qu.dataset.islink? qu.dataset.qrUser : (location.origin+'/sub?token='+qu.dataset.qrUser+'&b64'); showQR(url, qu.dataset.qrUname||'User'); return; }
   const qfm = e.target.closest('[data-qr-fmt]'); if(qfm){ const tok=(STATE.config.optimizedSubGeneration||{}).TOKEN||''; const q=qfm.dataset.qrFmt; showQR(location.origin+'/sub?token='+tok+(q && q!=='auto' ? '&'+q : ''), 'Nova '+(qfm.dataset.qrFmtname||q)); return; }
-  const cu = e.target.closest('[data-copy-user]'); if(cu){ copy(location.origin+'/sub?token='+cu.dataset.copyUser+'&b64'); return; }
+  const cu = e.target.closest('[data-copy-user]'); if(cu){ copy(cu.dataset.islink? cu.dataset.copyUser : (location.origin+'/sub?token='+cu.dataset.copyUser+'&b64')); return; }
   const cfm = e.target.closest('[data-copy-fmt]'); if(cfm){ const tok=(STATE.config.optimizedSubGeneration||{}).TOKEN||''; const q=cfm.dataset.copyFmt; copy(location.origin+'/sub?token='+tok+(q && q!=='auto' ? '&'+q : '')); return; }
   // policy toggle (flips local state; persisted by "Apply policy")
   const prow = e.target.closest('[data-policy]');
@@ -2536,9 +2609,8 @@ const DEMO_USAGE={ u1:31*1073741824, u2:8*1073741824, u3:10*1073741824 };
 let _updVer='';
 async function checkUpdate(){ try{
  const vr=await fetch('/version.json?_t='+Date.now()).then(function(r){return r.json()}).catch(function(){return null});
- if(vr&&vr.version){ var _pv=document.getElementById('ft-panel-ver'); if(_pv) _pv.textContent='V'+vr.version; }
- let cur=0; try{ const sys=await API.get('system.json'); if(sys&&sys.version){ var _wv=document.getElementById('ft-worker-ver'); if(_wv) _wv.textContent=(String(sys.version).charAt(0)==='V'?'':'V')+sys.version; cur=parseFloat(String(sys.version).replace(/[^0-9.]/g,''))||0; } }catch(e){}
  if(!vr||!vr.version) return;
+ let cur=0; try{ const sys=await API.get('system.json'); cur=parseFloat(String(sys.version||'').replace(/[^0-9.]/g,''))||0; }catch(e){}
  const latest=parseFloat(String(vr.version).replace(/[^0-9.]/g,''))||0; if(latest<=cur) return;
  let dm=''; try{ dm=localStorage.getItem('nova-upd-dismiss')||''; }catch(e){} if(dm===String(vr.version)) return;
  _updVer=String(vr.version);
@@ -2550,12 +2622,90 @@ async function checkUpdate(){ try{
 }catch(e){} }
 setTimeout(checkUpdate, 1800);
 setTimeout(function(){ try{ renderDatacenter(); var b=document.getElementById("dc-refresh"); if(b) b.onclick=renderDatacenter; var c=document.getElementById("ct-run"); if(c) c.onclick=runConnTest; }catch(e){} }, 700);
+/* ============================================================================
+   DAILY TRAFFIC CHART — D1-backed, dependency-free canvas. Up/down split.
+   Lazy: only fetches /admin/usage-data when the Dashboard view is shown, and
+   caches the result for 60s. (The chart was previously removed for KV cost;
+   Nova is on D1 now, where these reads are cheap.)
+   ========================================================================== */
+const TChart = {
+  data:null, at:0, range:'daily', drawnFor:null,
+  cssVar(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim() || '#888'; },
+  async ensure(force){
+    if(!LIVE){ this.data = this._demo(); this.render(); return; }
+    const fresh = this.data && (Date.now()-this.at < 60000);
+    if(fresh && !force){ this.render(); return; }
+    try{
+      const d = await API.get('usage-data');
+      this.data = d || {daily:[],monthly:[],yearly:[]};
+      this.at = Date.now();
+    }catch(e){ if(!this.data) this.data={daily:[],monthly:[],yearly:[]}; }
+    this.render();
+  },
+  _series(){
+    const d=this.data||{}; 
+    if(this.range==='monthly') return (d.monthly||[]).map(x=>({label:(x.month||'').slice(2),up:x.up||0,down:x.down||0}));
+    if(this.range==='yearly')  return (d.yearly||[]).map(x=>({label:x.year||'',up:x.up||0,down:x.down||0}));
+    // daily: oldest→newest, last 14
+    return (d.daily||[]).slice().sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(-14)
+      .map(x=>({label:(x.date||'').slice(5),up:x.up||0,down:x.down||0}));
+  },
+  render(){
+    const cv=$('#traffic-canvas'); if(!cv) return;
+    const series=this._series();
+    const empty=$('#chart-empty'), totals=$('#chart-totals');
+    const has = series.some(p=>p.up>0||p.down>0);
+    if(empty) empty.style.display = has? 'none':'block';
+    cv.style.display = has? 'block':'none';
+    if(totals){
+      const tu=series.reduce((s,p)=>s+p.up,0), td=series.reduce((s,p)=>s+p.down,0);
+      totals.innerHTML = has ? ('<span>'+t('chart_total_down')+': <b style="color:var(--tx)">'+fmtBytes(td)+'</b></span>'
+        +'<span>'+t('chart_total_up')+': <b style="color:var(--tx)">'+fmtBytes(tu)+'</b></span>'
+        +'<span>'+t('chart_total_all')+': <b style="color:var(--tx)">'+fmtBytes(tu+td)+'</b></span>') : '';
+    }
+    if(!has) return;
+    // retina-aware sizing
+    const dpr=window.devicePixelRatio||1, cssW=cv.clientWidth||cv.offsetWidth||600, cssH=200;
+    cv.width=Math.round(cssW*dpr); cv.height=Math.round(cssH*dpr);
+    const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,cssW,cssH);
+    const rtl = document.documentElement.dir==='rtl';
+    const acDown=this.cssVar('--ac')||'#22d3ee', acUp=this.cssVar('--ac2')||'#a855f7', mu=this.cssVar('--mu')||'#888', bd=this.cssVar('--bd')||'#333';
+    const padL=46, padR=12, padT=12, padB=22, gw=cssW-padL-padR, gh=cssH-padT-padB;
+    let max=0; series.forEach(p=>{ max=Math.max(max,p.up+p.down); }); if(max<=0) max=1;
+    // nice ceil
+    const niceMax=(function(m){ const p=Math.pow(10,Math.floor(Math.log10(m))); const n=m/p; const s=n<=1?1:n<=2?2:n<=5?5:10; return s*p; })(max);
+    // gridlines + y labels (bytes)
+    ctx.font='10px system-ui,sans-serif'; ctx.textBaseline='middle'; ctx.strokeStyle=bd; ctx.fillStyle=mu; ctx.lineWidth=1;
+    for(let i=0;i<=4;i++){ const y=padT+gh-(gh*i/4); ctx.globalAlpha=.5; ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(padL+gw,y); ctx.stroke(); ctx.globalAlpha=1;
+      const val=niceMax*i/4; const lbl=fmtBytes(val); ctx.textAlign=rtl?'left':'right'; ctx.fillText(lbl, rtl?padL+gw+8:padL-8, y); }
+    // bars (stacked down + up)
+    const n=series.length, slot=gw/n, bw=Math.min(26, slot*0.6);
+    series.forEach((p,i)=>{
+      const cx=padL+slot*i+slot/2, x=cx-bw/2;
+      const hDown=gh*(p.down/niceMax), hUp=gh*(p.up/niceMax);
+      const yDown=padT+gh-hDown; ctx.fillStyle=acDown; ctx.fillRect(x,yDown,bw,hDown);
+      const yUp=yDown-hUp; ctx.fillStyle=acUp; ctx.fillRect(x,yUp,bw,hUp);
+      // x label every other for daily
+      if(n<=8 || i%2===0){ ctx.fillStyle=mu; ctx.textAlign='center'; ctx.fillText(p.label, cx, padT+gh+11); }
+    });
+  },
+  _demo(){ const days=[]; const now=new Date(); for(let i=13;i>=0;i--){ const d=new Date(now); d.setDate(d.getDate()-i); const up=2e8+Math.random()*6e8, down=up*(3+Math.random()*3); days.push({date:d.toISOString().slice(0,10),up:Math.round(up),down:Math.round(down),total:Math.round(up+down)}); }
+    const mMap={}; days.forEach(x=>{const m=x.date.slice(0,7); (mMap[m]=mMap[m]||{up:0,down:0})['up']+=x.up; mMap[m].down+=x.down;});
+    return {daily:days, monthly:Object.entries(mMap).map(([month,v])=>({month,...v})), yearly:[{year:String(now.getFullYear()),up:days.reduce((s,x)=>s+x.up,0),down:days.reduce((s,x)=>s+x.down,0)}]}; }
+};
+// range toggle
+document.addEventListener('click',(e)=>{ const b=e.target.closest('#chart-range button'); if(!b) return;
+  document.querySelectorAll('#chart-range button').forEach(x=>x.classList.toggle('on',x===b)); TChart.range=b.dataset.range; TChart.render(); });
+// redraw on resize (debounced) and on theme/lang change
+let _tcrz; window.addEventListener('resize',()=>{ clearTimeout(_tcrz); _tcrz=setTimeout(()=>{ if(currentView==='dashboard') TChart.render(); },150); });
+
 (async function init(){
   applyTheme(localStorage.getItem('nova-theme') || 'light');
   await loadLive();   // pull real /admin data when served by the Worker; falls back to MOCK otherwise
   if(LIVE){ loadSecurity(); loadWarpStatus(); }
   else { STATE.users=DEMO_USERS.map(u=>({...u})); STATE.usage=DEMO_USAGE; STATE.multiUser=true; }
   applyLang(lang);    // renders everything (incl. syncFormValues) in the chosen language
+  try{ if(currentView==='dashboard') TChart.ensure(); }catch(e){}
   try{ setCiMode(LIVE ? ciMode : 'smart'); }catch(e){}  // default Clean-IP mode highlight (live mode is set by syncFormValues)
   if(!LIVE) console.log('%cNova panel — preview mode (no backend): showing mock data','color:#f5b042;font-weight:700');
 })();
