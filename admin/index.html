@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Nova Proxy — Control Plane</title>
-<meta name="nova-panel-version" content="3.5.5" />
+<meta name="nova-panel-version" content="3.5.7" />
 <link rel="icon" type="image/svg+xml" href="/logo-mark.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -551,8 +551,8 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
         <a data-view="guide" title="Guide" aria-label="Guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></a>
       </div>
       <a class="logout" href="/logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span data-i18n="logout">Logout</span></a>
-      <div class="ver"><span data-i18n="ver_panel">Panel</span><b>V3.5.5</b></div>
-      <div class="ver"><span data-i18n="ver_worker">Worker</span><b>V3.5.5</b></div>
+      <div class="ver"><span data-i18n="ver_panel">Panel</span><b>V3.5.7</b></div>
+      <div class="ver"><span data-i18n="ver_worker">Worker</span><b>V3.5.7</b></div>
     </div>
   </aside>
 
@@ -803,6 +803,24 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
                     <button class="btn ghost sm" id="be-cmd-copy" style="flex:0 0 auto" data-i18n="copy">Copy</button>
                   </div>
                   <p style="font-size:11px;color:var(--mu);margin-top:8px" data-i18n="be_quick_h">Paste this one line into your VPS over SSH. It installs Xray, writes the config, opens the firewall, and prints the exact Backend URL to paste above. Your VPS credentials are never sent anywhere — you run it yourself on your own server.</p>
+                </div>
+                <!-- Auto-generated client config + QR (built from Backend URL + this panel's UUID & domain) -->
+                <div id="be-client-wrap" style="margin-top:14px;padding:14px;border:1px solid var(--ac-line);border-radius:12px;background:var(--bg);display:none">
+                  <div style="font-size:12.5px;font-weight:700;color:var(--tx2);margin-bottom:4px" data-i18n="be_client_h">📱 Ready-to-use client config</div>
+                  <p style="font-size:11px;color:var(--mu);margin:0 0 12px" data-i18n="be_client_s">Scan this QR with Hiddify / v2rayNG to connect through your backend. It already points at this panel's domain — just scan and connect.</p>
+                  <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+                    <div id="be-qr" style="background:#fff;padding:10px;border-radius:10px;flex:0 0 auto;cursor:pointer" title="Tap to enlarge"></div>
+                    <div style="flex:1;min-width:200px">
+                      <div style="display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;direction:ltr;margin-bottom:8px">
+                        <code id="be-vless" style="flex:1;font-size:10.5px;overflow-x:auto;white-space:nowrap;color:var(--tx2)"></code>
+                      </div>
+                      <div style="display:flex;gap:8px;flex-wrap:wrap">
+                        <button class="btn sm" id="be-vless-copy" data-i18n="be_client_copy">Copy link</button>
+                        <button class="btn ghost sm" id="be-vless-qr" data-i18n="be_client_qr">Show big QR</button>
+                      </div>
+                      <p style="font-size:10.5px;color:var(--wn);margin:10px 0 0" data-i18n="be_client_iran">🇮🇷 In Iran, *.workers.dev is filtered — add a Custom Domain to the Worker and the QR will use it automatically.</p>
+                    </div>
+                  </div>
                 </div>
                 <div class="msg" id="be-msg" style="margin-top:8px"></div>
                 <p style="font-size:11.5px;color:var(--wn);margin-top:10px" data-i18n="be_warn">⚠️ Needs a real Xray/sing-box backend. Generate your client configs on the backend, then point them at Nova's domain — Nova will relay to the backend. Test with a real client before relying on it.</p>
@@ -1176,7 +1194,7 @@ const I18N = {
     env_prod:'Production', grp_ops:'Operations', grp_network:'Network', grp_netset:'Network Settings', grp_config:'Configuration', grp_system:'System', grp_admin:'Administration', grp_tools:'Tools', nav_collapse:'Collapse',
     nav_wireguard:'WireGuard', nav_about:'About', nav_proxy:'Proxy / CDN', nav_corenode:'Core Node', sub_wireguard:'Build a WireGuard config for WARP or a custom peer.', sub_about:'Panel version, changelog and links.', sub_proxy:'How the Worker reaches Cloudflare — PROXYIP / SOCKS5 / HTTP / HTTPS / TURN / SSTP.', sub_corenode:'Your node on every Cloudflare TLS port, on the domain itself.',
     cn_h:'🧩 Core Node', cn_s:'Your node on every Cloudflare TLS port, using the Worker domain directly — separate from the subscription. Copy or scan any port.', cn_copy:'Copy',
-    be_h:'🛰 Backend mode (advanced)', be_s:'Forward traffic to your own Xray/sing-box server instead of handling it in the Worker. This is the ONLY way to get VMess and working voice/video calls (UDP) — but it requires you to run a backend server (a VPS). Leave OFF to use the normal free in-Worker mode (VLESS/Trojan).', be_en:'Enable backend mode', be_en_h:'when on, Nova bridges to the backend below', be_url:'Backend URL', be_check:'Health check', be_quick:'⚡ Quick install (run on your VPS as root)', be_quick_h:'Paste this one line into your VPS over SSH. It installs Xray, writes the config, opens the firewall, and prints the exact Backend URL to paste above. Your VPS credentials are never sent anywhere — you run it yourself on your own server.', be_warn:'⚠️ Needs a real Xray/sing-box backend. Generate your client configs on the backend, then point them at Nova\'s domain — Nova will relay to the backend. Test with a real client before relying on it.',
+    be_h:'🛰 Backend mode (advanced)', be_s:'Forward traffic to your own Xray/sing-box server instead of handling it in the Worker. This is the ONLY way to get VMess and working voice/video calls (UDP) — but it requires you to run a backend server (a VPS). Leave OFF to use the normal free in-Worker mode (VLESS/Trojan).', be_en:'Enable backend mode', be_en_h:'when on, Nova bridges to the backend below', be_url:'Backend URL', be_check:'Health check', be_quick:'⚡ Quick install (run on your VPS as root)', be_quick_h:'Paste this one line into your VPS over SSH. It installs Xray, writes the config, opens the firewall, and prints the exact Backend URL to paste above. Your VPS credentials are never sent anywhere — you run it yourself on your own server.', be_warn:'⚠️ Needs a real Xray/sing-box backend. Generate your client configs on the backend, then point them at Nova\'s domain — Nova will relay to the backend. Test with a real client before relying on it.', be_client_h:'📱 Ready-to-use client config', be_client_s:'Scan this QR with Hiddify / v2rayNG to connect through your backend. It already points at this panel\'s domain — just scan and connect.', be_client_copy:'Copy link', be_client_qr:'Show big QR', be_client_iran:'🇮🇷 In Iran, *.workers.dev is filtered — add a Custom Domain to the Worker and the QR will use it automatically.',
     px_h:'🛡️ Cloudflare CDN access', px_s:"How the Worker reaches Cloudflare's network. Choose a mode, enter the proxy, hit Verify to probe it, then Save. This is the single source of truth — configs pull from here.", px_mode:'Mode', px_proxyip:'PROXYIP address', px_addr:'Proxy address', px_verify:'Verify', px_more_h:'Find proxies', px_more_load:'Load list', px_country:'Country', px_pick:'Proxy', px_use:'Use selected', px_more_s:'Fetch public lists (PROXYIP from IRNova/Tools, SOCKS5/HTTP/HTTPS from proxifly), pick by country, then Use. The PROXYIP list is large (~10MB) — give it a moment. Free public proxies vary in quality; test before relying on one.',
     wg_h:'🔐 WireGuard config', wg_s:'Build a WireGuard .conf to import into the WireGuard app. Defaults target Cloudflare WARP — edit any field as needed.', wg_loadwarp:'Load from WARP', wg_name:'Name', wg_addr:'Address', wg_dns:'DNS', wg_mtu:'MTU', wg_priv:'Private key', wg_pub:'Peer public key', wg_ep:'Endpoint', wg_port:'Port', wg_ka:'Keepalive', wg_build:'Build config', wg_copy:'Copy', wg_dl:'Download .conf', wg_qrbtn:'QR', wg_loaded:'Loaded from WARP', wg_nowarp:'No WARP config available — register WARP in Network & IPs first.',
     ab_panel:'Panel', ab_worker:'Worker', ab_desc:'Nova Proxy control panel — manage subscriptions, clean IPs, routing, WARP and DNS for your Cloudflare Worker.', ab_changelog:'Changelog', ab_links:'Links',
@@ -1264,7 +1282,7 @@ const I18N = {
     env_prod:'محیط عملیاتی', grp_ops:'عملیات', grp_network:'شبکه', grp_netset:'تنظیمات شبکه', grp_config:'پیکربندی', grp_system:'سیستم', grp_admin:'مدیریت', grp_tools:'ابزارها', nav_collapse:'جمع کردن',
     nav_wireguard:'وایرگارد', nav_about:'درباره', nav_proxy:'پروکسی / CDN', nav_corenode:'نود اصلی', sub_wireguard:'ساخت کانفیگ وایرگارد برای WARP یا پیر دلخواه.', sub_about:'نسخهٔ پنل، تغییرات و پیوندها.', sub_proxy:'نحوه‌ی دسترسی ورکر به کلودفلر — PROXYIP / SOCKS5 / HTTP / HTTPS / TURN / SSTP.', sub_corenode:'نود شما روی همه‌ی پورت‌های TLS کلودفلر، روی خود دامنه.',
     cn_h:'🧩 نود اصلی', cn_s:'نود شما روی همه‌ی پورت‌های TLS کلودفلر، با استفاده‌ی مستقیم از دامنه‌ی ورکر — جدا از اشتراک. هر پورت را کپی یا اسکن کنید.', cn_copy:'کپی',
-    be_h:'🛰 حالت backend (پیشرفته)', be_s:'ترافیک را به‌جای پردازش در ورکر، به سرور Xray/sing-box خودت بفرست. این تنها راه داشتن VMess و تماس صوتی/تصویری (UDP) است — ولی نیاز به یک سرور backend (VPS) داری. برای حالت رایگانِ معمولی (VLESS/Trojan) خاموش بگذار.', be_en:'فعال‌سازی حالت backend', be_en_h:'وقتی روشن باشد، Nova به backend زیر پل می‌زند', be_url:'آدرس backend', be_check:'بررسی سلامت', be_quick:'⚡ نصب سریع (روی VPS خودت با root اجرا کن)', be_quick_h:'این یک خط را از طریق SSH روی VPS بچسبان. Xray را نصب می‌کند، کانفیگ را می‌نویسد، فایروال را باز می‌کند و آدرس backend دقیق را برای گذاشتن در بالا چاپ می‌کند. اطلاعات VPS تو هیچ‌جا فرستاده نمی‌شود — خودت روی سرور خودت اجرایش می‌کنی.', be_warn:'⚠️ نیاز به یک backend واقعی (Xray/sing-box) دارد. کانفیگ کلاینت‌ها را روی backend بساز، بعد به دامنهٔ Nova اشاره بده — Nova به backend رله می‌کند. قبل از اتکا، با یک کلاینت واقعی تست کن.',
+    be_h:'🛰 حالت backend (پیشرفته)', be_s:'ترافیک را به‌جای پردازش در ورکر، به سرور Xray/sing-box خودت بفرست. این تنها راه داشتن VMess و تماس صوتی/تصویری (UDP) است — ولی نیاز به یک سرور backend (VPS) داری. برای حالت رایگانِ معمولی (VLESS/Trojan) خاموش بگذار.', be_en:'فعال‌سازی حالت backend', be_en_h:'وقتی روشن باشد، Nova به backend زیر پل می‌زند', be_url:'آدرس backend', be_check:'بررسی سلامت', be_quick:'⚡ نصب سریع (روی VPS خودت با root اجرا کن)', be_quick_h:'این یک خط را از طریق SSH روی VPS بچسبان. Xray را نصب می‌کند، کانفیگ را می‌نویسد، فایروال را باز می‌کند و آدرس backend دقیق را برای گذاشتن در بالا چاپ می‌کند. اطلاعات VPS تو هیچ‌جا فرستاده نمی‌شود — خودت روی سرور خودت اجرایش می‌کنی.', be_warn:'⚠️ نیاز به یک backend واقعی (Xray/sing-box) دارد. کانفیگ کلاینت‌ها را روی backend بساز، بعد به دامنهٔ Nova اشاره بده — Nova به backend رله می‌کند. قبل از اتکا، با یک کلاینت واقعی تست کن.', be_client_h:'📱 کانفیگ آمادهٔ کلاینت', be_client_s:'این QR را با هیدیفای / v2rayNG اسکن کن تا از طریق backend وصل شوی. همین حالا به دامنهٔ این پنل اشاره می‌کند — فقط اسکن کن و وصل شو.', be_client_copy:'کپی لینک', be_client_qr:'نمایش QR بزرگ', be_client_iran:'🇮🇷 در ایران، *.workers.dev فیلتر است — یک دامنهٔ اختصاصی به ورکر اضافه کن تا QR خودکار از آن استفاده کند.',
     px_h:'🛡️ دسترسی CDN کلودفلر', px_s:'نحوه‌ی دسترسی ورکر به شبکه‌ی کلودفلر. یک حالت را انتخاب کنید، پروکسی را وارد کنید، با Verify بررسی کنید و سپس ذخیره کنید. این تنها منبع معتبر است — کانفیگ‌ها از همین‌جا می‌خوانند.', px_mode:'حالت', px_proxyip:'آدرس PROXYIP', px_addr:'آدرس پروکسی', px_verify:'بررسی', px_more_h:'یافتن پروکسی', px_more_load:'دریافت فهرست', px_country:'کشور', px_pick:'پروکسی', px_use:'استفاده از انتخاب', px_more_s:'فهرست‌های عمومی (PROXYIP از IRNova/Tools و SOCKS5/HTTP/HTTPS از proxifly) را دریافت کنید، بر اساس کشور انتخاب و سپس استفاده کنید. فهرست PROXYIP بزرگ است (~۱۰مگابایت). کیفیت پروکسی‌های عمومی متغیر است؛ قبل از استفاده تست کنید.',
     wg_h:'🔐 کانفیگ وایرگارد', wg_s:'یک فایل .conf وایرگارد بسازید تا در برنامهٔ WireGuard وارد کنید. مقادیر پیش‌فرض برای WARP کلودفلر تنظیم شده‌اند — در صورت نیاز ویرایش کنید.', wg_loadwarp:'دریافت از WARP', wg_name:'نام', wg_addr:'آدرس', wg_dns:'DNS', wg_mtu:'MTU', wg_priv:'کلید خصوصی', wg_pub:'کلید عمومی پیر', wg_ep:'اندپوینت', wg_port:'پورت', wg_ka:'Keepalive', wg_build:'ساخت کانفیگ', wg_copy:'کپی', wg_dl:'دانلود .conf', wg_qrbtn:'QR', wg_loaded:'از WARP بارگذاری شد', wg_nowarp:'کانفیگ WARP موجود نیست — ابتدا در شبکه و آی‌پی WARP را ثبت کنید.',
     ab_panel:'پنل', ab_worker:'ورکر', ab_desc:'پنل مدیریت Nova Proxy — مدیریت اشتراک‌ها، آی‌پی‌های تمیز، مسیریابی، WARP و DNS برای ورکر کلودفلر شما.', ab_changelog:'تغییرات', ab_links:'پیوندها',
@@ -2289,7 +2307,7 @@ function syncFormValues(){
   on('t2-antisanc', n.enableAntiSanctionDNS); set('d2-antiprov', n.antiSanctionDNSProvider||'shekan'); set('d2-anticustom', n.antiSanctionCustomDNS||'');
   on('t2-localdns', n.enableLocalDNS); set('d2-localip', n.localDNSIP||'8.8.8.8'); set('d2-localport', n.localDNSPort||'53');
   on('t2-fakedns', n.enableFakeDNS); set('d2-fakeip', n.fakeDNSIP||'198.51.100.1'); set('d2-loglevel', n.logLevel||'error');
-  on('t2-backend', n.backendMode); set('be-url', n.backendUrl||'');
+  on('t2-backend', n.backendMode); set('be-url', n.backendUrl||''); try{ renderBackendClient(); }catch(e){}
   // Clean IPs (config) — mode + pool API + random params; custom list loaded from ADD.txt
   const osg=c.optimizedSubGeneration||{}, pool=osg.localIPPool||{};
   set('ci-poolapi', c.POOL_API||'https://nova-deploy.pages.dev/api/pool');
@@ -2373,6 +2391,33 @@ async function backendHealthCheck(){ var el=document.getElementById('be-msg'); v
     if(el){ el.className='msg'; el.textContent=(lang==='fa'?'پاسخ /health نگرفت؛ اگر backend فقط مسیر اختصاصی دارد طبیعی است. با یک کلاینت واقعی تست کنید.':'No /health response; that\'s normal if your backend only serves its own path. Test with a real client.'); }
   }catch(e){ if(el){ el.className='msg bad'; el.textContent='⚠️ '+e.message; } }
 }
+// Build the ready-to-use VLESS link from the Backend URL + this panel's UUID & domain,
+// render a scannable QR, and show/hide the block based on the toggle + URL.
+function backendClientLink(){
+  var c=STATE.config||{};
+  var uuid=c.UUID||'';
+  // domain the client should connect to = this panel's host (Custom Domain if set, else workers.dev)
+  var domain=(Array.isArray(c.HOSTS)&&c.HOSTS[0]) ? c.HOSTS[0] : (c.HOST || location.host);
+  domain=String(domain).replace(/^https?:\/\//,'').split('/')[0].split(':')[0];
+  var u=((document.getElementById('be-url')||{}).value||'').trim();
+  // extract path from the Backend URL (default /novavpn)
+  var path='/novavpn';
+  try{ var bu=new URL(u); if(bu.pathname && bu.pathname!=='/') path=bu.pathname; }catch(e){}
+  if(!uuid || !domain) return '';
+  var ep=encodeURIComponent(path);
+  return 'vless://'+uuid+'@'+domain+':443?security=tls&type=ws&host='+domain+'&sni='+domain+'&path='+ep+'&encryption=none#Nova-Backend';
+}
+function renderBackendClient(){
+  var wrap=document.getElementById('be-client-wrap'); if(!wrap) return;
+  var enabled=isOn2('t2-backend');
+  var u=((document.getElementById('be-url')||{}).value||'').trim();
+  var link=(enabled && /^https?:\/\//i.test(u)) ? backendClientLink() : '';
+  if(!link){ wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  var code=document.getElementById('be-vless'); if(code) code.textContent=link;
+  var box=document.getElementById('be-qr'); if(box){ box.innerHTML=''; if(window.QRCode){ try{ new QRCode(box,{text:link,width:132,height:132,correctLevel:QRCode.CorrectLevel.M}); }catch(e){} } else { box.textContent='QR'; } }
+}
+function isOn2(id){ var e=document.getElementById(id); return !!(e && e.classList.contains('on')); }
 async function saveNetwork(){
   if(!LIVE) return previewToast(); const n=STATE.net;
   document.querySelectorAll('#routing-rows [data-toggle]').forEach(row=>{ n[NET_MAP[row.dataset.toggle]] = row.querySelector('.sw').classList.contains('on'); });
@@ -2587,6 +2632,8 @@ document.addEventListener('click', (e)=>{
   if(e.target.closest('#save-settings2')){ saveSettings(); return; }
   if(e.target.closest('#be-check')){ backendHealthCheck(); return; }
   if(e.target.closest('#be-cmd-copy')){ var cmd=(document.getElementById('be-cmd')||{}).textContent||''; copy(cmd); return; }
+  if(e.target.closest('#be-vless-copy')){ copy((document.getElementById('be-vless')||{}).textContent||''); return; }
+  if(e.target.closest('#be-vless-qr') || e.target.closest('#be-qr')){ var l=(document.getElementById('be-vless')||{}).textContent||''; if(l) showQR(l,'Nova Backend'); return; }
   if(e.target.closest('#save-network2')){ saveNetwork(); return; }
   { const cm=e.target.closest('#ci-seg button'); if(cm){ setCiMode(cm.dataset.m); return; } }
   if(e.target.closest('#ci-speedtest')){ runSpeedTest(); return; }
@@ -2641,10 +2688,11 @@ document.addEventListener('click', (e)=>{
   const trow = e.target.closest('[data-toggle]');
   if(trow){ trow.querySelector('.sw').classList.toggle('on'); return; }
   // standalone switches (telegram alerts, etc.)
-  const sw = e.target.closest('.sw'); if(sw){ sw.classList.toggle('on'); if(sw.id==='t2-multiuser') updateMultiUserUI(); return; }
+  const sw = e.target.closest('.sw'); if(sw){ sw.classList.toggle('on'); if(sw.id==='t2-multiuser') updateMultiUserUI(); if(sw.id==='t2-backend'){ try{ renderBackendClient(); }catch(_e){} } return; }
 });
 { const bf=document.getElementById('backup-file2'); if(bf) bf.onchange=(e)=>{ const f=e.target.files&&e.target.files[0]; if(f) backupImport(f); e.target.value=''; }; }
 { const ff=document.getElementById('f2-frag'); if(ff) ff.addEventListener('change',function(){ const b=document.getElementById('f2-frag-custom'); if(b) b.style.display=this.value==='custom'?'block':'none'; }); }
+{ const bu=document.getElementById('be-url'); if(bu) bu.addEventListener('input',function(){ try{ renderBackendClient(); }catch(_e){} }); }
 $('#menu-btn').addEventListener('click', openDrawer)
 /* Collapsible "Network Settings" submenu (closed by default, state remembered) */
 ;(function(){

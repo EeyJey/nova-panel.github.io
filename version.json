@@ -1,6 +1,6 @@
 {
-  "version": "3.5.5",
+  "version": "3.5.7",
   "released": "2026-06",
-  "notes": "Version bump to 3.5.5 (panel = worker). Includes the DoH fix: backend mode never intercepts /dns-query, /doh, or Nova's own endpoints (admin/login/bot/sub/warp/install) — only real client proxy traffic is forwarded. Secure DNS works with backend mode on or off.",
+  "notes": "Backend mode now auto-generates a ready-to-use VLESS client link + scannable QR (Hiddify/v2rayNG) the moment you enable it and paste the Backend URL — no manual link building. QR auto-uses your Custom Domain if set. Includes the DoH POST fix (backend mode never intercepts /dns-query or Nova's own endpoints).",
   "worker_url": "https://raw.githubusercontent.com/iiviirv/panel/main/worker.js"
 }
