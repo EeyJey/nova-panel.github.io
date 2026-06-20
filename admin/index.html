@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Nova Proxy — Control Plane</title>
-<meta name="nova-panel-version" content="3.7.0" />
+<meta name="nova-panel-version" content="3.8.0" />
 <link rel="icon" type="image/svg+xml" href="/logo-mark.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -562,8 +562,8 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
         <a data-view="guide" title="Guide" aria-label="Guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></a>
       </div>
       <a class="logout" href="/logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span data-i18n="logout">Logout</span></a>
-      <div class="ver"><span data-i18n="ver_panel">Panel</span><b>V3.7</b></div>
-      <div class="ver"><span data-i18n="ver_worker">Worker</span><b>V3.7</b></div>
+      <div class="ver"><span data-i18n="ver_panel">Panel</span><b id="ver-panel">—</b></div>
+      <div class="ver"><span data-i18n="ver_worker">Worker</span><b id="ver-worker">—</b></div>
     </div>
   </aside>
 
@@ -1022,6 +1022,25 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
           </div>
         </div>
 
+        <div class="section-label" data-i18n="upd_h">Update panel</div>
+        <div class="card card-pad">
+          <p style="font-size:12.5px;color:var(--mu);margin-bottom:12px" data-i18n="upd_s">Update your Worker to the latest Nova version straight from here — no manual redeploy. It keeps your database, settings, and password. You provide a Cloudflare API token with Workers Scripts → Edit; it is used once and never stored.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+            <button class="btn ghost sm" id="upd-check" data-i18n="upd_check">Check for updates</button>
+            <span id="upd-msg" class="msg" style="font-size:12.5px"></span>
+          </div>
+          <div id="upd-box" style="display:none;border-top:1px solid var(--bd);margin-top:10px;padding-top:14px">
+            <p style="font-size:12px;color:var(--mu);margin:0 0 8px" data-i18n="upd_token_help">Create a Cloudflare API token (My Profile → API Tokens → Create Custom Token) with permission: Account → Workers Scripts → Edit. Then paste it below.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+              <a class="btn ghost sm" href="https://dash.cloudflare.com/profile/api-tokens" target="_blank" rel="noopener" data-i18n="upd_token_link">Open Cloudflare tokens</a>
+            </div>
+            <div class="fg"><label data-i18n="upd_token_lbl">Cloudflare API token</label><input class="inp" id="upd-token" type="text" autocomplete="off" spellcheck="false" placeholder="••••••••••••••••"></div>
+            <div class="fg" id="upd-scriptname-wrap" style="display:none"><label data-i18n="upd_scriptname_lbl">Worker script name</label><input class="inp" id="upd-scriptname" type="text" autocomplete="off" placeholder="nova-..."></div>
+            <div id="upd-acct-wrap" style="display:none;margin-bottom:10px"></div>
+            <button class="btn primary sm" id="upd-now" data-i18n="upd_now">Update now</button>
+          </div>
+        </div>
+
         <div class="section-label" data-i18n="mirror_h">GitHub mirror (blocked-domain failover)</div>
         <div class="card card-pad">
           <p style="font-size:12.5px;color:var(--mu);margin-bottom:12px" data-i18n="mirror_intro">Publishes your sub to a GitHub repo so users keep a permanent raw.githubusercontent.com link even if your domain gets filtered.</p>
@@ -1236,7 +1255,7 @@ const I18N = {
     ver_panel:'Panel', ver_worker:'Worker', view_all:'View all', refresh:'Refresh', copy:'Copy', open:'Open', qr:'QR', btn_save:'Save',
     cf_estimate:'Estimated', cf_h:'Live status (Cloudflare API)', cf_sub:'Connect an API token to show real request counts instead of an estimate. The token needs Account Analytics: Read.', cf_accid:'Account ID', cf_token:'API token', cf_connect:'Connect', cf_disconnect:'Disconnect',
     dns_yourdoh:'Your private DoH endpoint. Paste it into a Secure DNS field in your browser or VPN client.', dns_test:'Test',
-    reset_h:'Factory reset', reset_s:'Wipes everything from the database (settings, network, clean IPs, users, Cloudflare and Telegram keys) and restores the initial state. Your panel password is kept. This cannot be undone.', reset_btn:'Factory reset',
+    reset_h:'Factory reset', reset_s:'Wipes everything from the database (settings, network, clean IPs, users, Cloudflare and Telegram keys) and restores the initial state. Your panel password is kept. This cannot be undone.', reset_btn:'Factory reset', upd_h:'Update panel', upd_s:'Update your Worker to the latest Nova version straight from here — no manual redeploy. It keeps your database, settings, and password. You provide a Cloudflare API token with Workers Scripts → Edit; it is used once and never stored.', upd_check:'Check for updates', upd_token_help:'Create a Cloudflare API token (My Profile → API Tokens → Create Custom Token) with permission: Account → Workers Scripts → Edit. Then paste it below.', upd_token_link:'Open Cloudflare tokens', upd_token_lbl:'Cloudflare API token', upd_scriptname_lbl:'Worker script name', upd_now:'Update now',
     kill_h:'Kill switch', kill_s:'Emergency stop. While on, every proxy connection and subscription fetch is refused (503). The admin panel stays reachable so you can switch it back off. Use it if your service is being abused.', kill_banner:'Service is paused. All proxy traffic and subscription fetches are stopped. Turn the kill switch off in Settings to resume.',
     nav_guide:'Guide', sub_guide:'How to use Nova Proxy, step by step.', logout:'Logout',
     /* KPIs */
@@ -1324,7 +1343,7 @@ const I18N = {
     ver_panel:'پنل', ver_worker:'ورکر', view_all:'مشاهدهٔ همه', refresh:'بازخوانی', copy:'کپی', open:'باز کردن', qr:'کد QR', btn_save:'ذخیره',
     cf_estimate:'تخمینی', cf_h:'وضعیت زنده (API کلودفلر)', cf_sub:'برای نمایش تعداد واقعی درخواست‌ها به‌جای تخمین، یک توکن API وصل کنید. توکن به دسترسی Account Analytics: Read نیاز دارد.', cf_accid:'شناسهٔ حساب', cf_token:'توکن API', cf_connect:'اتصال', cf_disconnect:'قطع اتصال',
     dns_yourdoh:'نشانی DoH خصوصی شما. آن را در فیلد DNS امن مرورگر یا کلاینت VPN بگذارید.', dns_test:'تست',
-    reset_h:'بازنشانی کارخانه‌ای', reset_s:'همه‌چیز را از پایگاه‌داده پاک می‌کند (تنظیمات، شبکه، IPهای تمیز، کاربران، کلیدهای کلودفلر و تلگرام) و به حالت اولیه برمی‌گرداند. رمز پنل حفظ می‌شود. این کار قابل بازگشت نیست.', reset_btn:'بازنشانی کارخانه‌ای',
+    reset_h:'بازنشانی کارخانه‌ای', reset_s:'همه‌چیز را از پایگاه‌داده پاک می‌کند (تنظیمات، شبکه، IPهای تمیز، کاربران، کلیدهای کلودفلر و تلگرام) و به حالت اولیه برمی‌گرداند. رمز پنل حفظ می‌شود. این کار قابل بازگشت نیست.', reset_btn:'بازنشانی کارخانه‌ای', upd_h:'به‌روزرسانی پنل', upd_s:'ورکر خود را مستقیماً از همین‌جا به آخرین نسخهٔ Nova به‌روزرسانی کن — بدون دیپلوی دستی. دیتابیس، تنظیمات و رمز عبور حفظ می‌شوند. یک توکن API کلودفلر با دسترسی Workers Scripts → Edit می‌دهی؛ فقط یک‌بار استفاده می‌شود و هیچ‌جا ذخیره نمی‌شود.', upd_check:'بررسی به‌روزرسانی', upd_token_help:'یک توکن API کلودفلر بساز (My Profile → API Tokens → Create Custom Token) با دسترسی: Account → Workers Scripts → Edit. سپس آن را پایین جای‌گذاری کن.', upd_token_link:'باز کردن توکن‌های کلودفلر', upd_token_lbl:'توکن API کلودفلر', upd_scriptname_lbl:'نام اسکریپت ورکر', upd_now:'به‌روزرسانی اکنون',
     kill_h:'دکمهٔ توقف اضطراری', kill_s:'توقف اضطراری. وقتی روشن باشد، هر اتصال پراکسی و دریافت اشتراک رد می‌شود (۵۰۳). پنل مدیریت باز می‌ماند تا بتوانید دوباره خاموشش کنید. اگر سرویس‌تان مورد سوءاستفاده است از آن استفاده کنید.', kill_banner:'سرویس متوقف است. همهٔ ترافیک پراکسی و دریافت اشتراک‌ها متوقف شده. برای ازسرگیری، Kill switch را در تنظیمات خاموش کنید.',
     nav_guide:'راهنما', sub_guide:'راهنمای گام‌به‌گام استفاده از نوا پروکسی.', logout:'خروج',
     kpi_network:'شبکه', kpi_storage:'حافظه', kpi_worker:'مصرف ورکر', kpi_traffic:'مصرف امروز',
@@ -1926,6 +1945,61 @@ async function twofaDisable(){ const msg=document.getElementById('twofa-dmsg'); 
   try{ const r=await fetch('/admin/security/2fa-disable',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})}); let j={}; try{ j=await r.json(); }catch(e){}
     if(r.ok && j && j.success!==false){ toast(lang==='fa'?'۲FA خاموش شد':'2FA turned off'); set2faUI(false); } else { msg.textContent='⚠️ '+((j&&j.error)||(lang==='fa'?'کد اشتباه است':'Wrong code')); }
   }catch(e){ msg.textContent='⚠️ '+e.message; } }
+
+/* ---- In-panel self-update ---- */
+async function updateCheck(){
+  var msg=document.getElementById('upd-msg'); var box=document.getElementById('upd-box');
+  if(!LIVE) return previewToast();
+  if(msg){ msg.className='msg'; msg.textContent=(lang==='fa'?'در حال بررسی…':'Checking…'); }
+  try{
+    var r=await fetch('admin/update-check.json',{cache:'no-store'}); var j=await r.json();
+    var cur=j.current||'?', latest=j.latest||'?';
+    if(j.updateAvailable){
+      if(msg){ msg.className='msg warn'; msg.textContent='⬆ '+(lang==='fa'?('نسخهٔ جدید موجود است — فعلی '+cur+' ← جدید '+latest):('Update available — current '+cur+' → latest '+latest)); }
+      if(box) box.style.display='block';
+    } else if(j.latest){
+      if(msg){ msg.className='msg ok'; msg.textContent='✓ '+(lang==='fa'?('روی آخرین نسخه هستی ('+cur+')'):('You are on the latest version ('+cur+')')); }
+      if(box) box.style.display='none';
+    } else {
+      if(msg){ msg.className='msg bad'; msg.textContent='⚠️ '+(lang==='fa'?'بررسی نسخه ممکن نشد. ':'Could not check for updates. ')+(j.error||''); }
+    }
+  }catch(e){ if(msg){ msg.className='msg bad'; msg.textContent='⚠️ '+e.message; } }
+}
+async function updateNow(extra){
+  var msg=document.getElementById('upd-msg'); if(!LIVE) return previewToast();
+  var token=((document.getElementById('upd-token')||{}).value||'').trim();
+  if(!token){ if(msg){ msg.className='msg bad'; msg.textContent=(lang==='fa'?'ابتدا توکن را وارد کن':'Enter your token first'); } return; }
+  var body={ token: token };
+  var sn=((document.getElementById('upd-scriptname')||{}).value||'').trim(); if(sn) body.scriptName=sn;
+  if(extra && extra.accountId) body.accountId=extra.accountId;
+  if(msg){ msg.className='msg'; msg.textContent=(lang==='fa'?'در حال به‌روزرسانی…':'Updating…'); }
+  try{
+    var r=await fetch('admin/self-update.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    var j=await r.json();
+    if(j.success){
+      if(msg){ msg.className='msg ok'; msg.textContent='✅ '+(lang==='fa'?('به‌روزرسانی شروع شد'+(j.version?(' (نسخهٔ '+j.version+')'):'')+'. پنل در حال جایگزینی است — حدود ۳۰ ثانیه صبر کن و صفحه را تازه کن. سپس توکن را در Cloudflare باطل کن.'):('Update started'+(j.version?(' (v'+j.version+')'):'')+'. Your panel is being replaced — wait ~30s and refresh. Then revoke the token in Cloudflare.')); }
+      var t=document.getElementById('upd-token'); if(t) t.value='';
+      return;
+    }
+    if(j.error==='multiple_accounts' && Array.isArray(j.accounts)){
+      var wrap=document.getElementById('upd-acct-wrap');
+      if(wrap){ wrap.style.display='block';
+        wrap.innerHTML='<div style="font-size:12px;color:var(--mu);margin-bottom:6px">'+(lang==='fa'?'چند حساب پیدا شد — یکی را انتخاب کن:':'Multiple accounts found — pick one:')+'</div>'+
+          j.accounts.map(function(a){ return '<button class="btn ghost sm upd-acct" data-acct="'+String(a.id).replace(/"/g,'&quot;')+'" style="margin:0 6px 6px 0">'+String(a.name||a.id).replace(/</g,'&lt;')+'</button>'; }).join('');
+      }
+      if(msg){ msg.className='msg'; msg.textContent=(lang==='fa'?'حساب را انتخاب کن.':'Choose your account.'); }
+      return;
+    }
+    if(j.error==='need_script_name'){
+      var w=document.getElementById('upd-scriptname-wrap'); if(w) w.style.display='block';
+      if(msg){ msg.className='msg bad'; msg.textContent=(lang==='fa'?'نام اسکریپت ورکر را وارد کن (برای دامنهٔ اختصاصی لازم است).':'Enter your Worker script name (needed on a custom domain).'); }
+      return;
+    }
+    var emap={ no_token:(lang==='fa'?'توکن وارد نشده':'No token'), token_invalid:(lang==='fa'?'توکن نامعتبر است':'Token is invalid'), no_accounts:(lang==='fa'?'هیچ حسابی برای این توکن دیده نشد':'No accounts for this token'), cannot_read_bindings:(lang==='fa'?'نتوانستم تنظیمات فعلی ورکر را بخوانم — به‌روزرسانی برای جلوگیری از پاک شدن دیتابیس متوقف شد':'Could not read the worker\'s current bindings — update stopped to avoid wiping your database'), fetch_worker_failed:(lang==='fa'?'دریافت نسخهٔ جدید ناموفق بود':'Failed to download the new version'), bad_worker_source:(lang==='fa'?'فایل ورکر دریافت‌شده معتبر نبود':'Downloaded worker file was invalid'), upload_failed:(lang==='fa'?'آپلود ناموفق بود':'Upload failed') };
+    var em=emap[j.error]||(j.error||'error');
+    if(msg){ msg.className='msg bad'; msg.textContent='✗ '+em+(j.detail?(' — '+j.detail):''); }
+  }catch(e){ if(msg){ msg.className='msg bad'; msg.textContent='⚠️ '+e.message; } }
+}
 
 /* ---- Backup & restore (config + network) ---- */
 async function backupExport(){ const msg=document.getElementById('backup-msg'); if(!LIVE) return previewToast(); msg.textContent=lang==='fa'?'در حال آماده‌سازی…':'Preparing…';
@@ -2759,6 +2833,9 @@ document.addEventListener('click', (e)=>{
   if(e.target.closest('#cf-connect')){ cfConnect(); return; }
   if(e.target.closest('#cf-disconnect')){ cfDisconnect(); return; }
   if(e.target.closest('#factory-reset')){ factoryReset(); return; }
+  if(e.target.closest('#upd-check')){ updateCheck(); return; }
+  if(e.target.closest('#upd-now')){ updateNow(); return; }
+  { var _ua=e.target.closest('.upd-acct'); if(_ua){ updateNow({ accountId: _ua.getAttribute('data-acct') }); return; } }
   if(e.target.closest('#t2-kill')){ toggleKill(); return; }
   if(e.target.closest('#doh-copy')){ copy(location.origin+'/dns-query'); return; }
   if(e.target.closest('#doh-test')){ dohTest(); return; }
@@ -2927,9 +3004,40 @@ document.addEventListener('click',(e)=>{ const b=e.target.closest('#chart-range 
 // redraw on resize (debounced) and on theme/lang change
 let _tcrz; window.addEventListener('resize',()=>{ clearTimeout(_tcrz); _tcrz=setTimeout(()=>{ if(currentView==='dashboard') TChart.render(); },150); });
 
+// Fill the two version badges from REAL sources instead of hardcoded numbers:
+//  • Worker badge  = the running worker's version (admin/system.json → version), with the latest
+//    published worker version (IRNova/Nova-Proxy version.json) shown after it when newer.
+//  • Panel  badge  = the panel HTML's own embedded version (this file's <meta> tag), with the latest
+//    published panel version (Nova-Panel/nova-panel.github.io version.json) shown after it when newer.
+var WORKER_VERSION_JSON='https://raw.githubusercontent.com/IRNova/Nova-Proxy/main/public/version.json';
+var PANEL_VERSION_JSON='https://raw.githubusercontent.com/Nova-Panel/nova-panel.github.io/main/version.json';
+function _vnorm(s){ return String(s||'').replace(/^[vV]/,'').trim(); }
+function _vgt(a,b){ var pa=_vnorm(a).split('.').map(function(n){return parseInt(n,10)||0;}); var pb=_vnorm(b).split('.').map(function(n){return parseInt(n,10)||0;}); for(var i=0;i<Math.max(pa.length,pb.length);i++){ var x=pa[i]||0,y=pb[i]||0; if(x>y)return true; if(x<y)return false; } return false; }
+function _setVer(elId, current, latest){
+  var el=document.getElementById(elId); if(!el) return;
+  var cur=_vnorm(current);
+  if(!cur){ el.textContent='—'; return; }
+  if(latest && _vgt(latest, cur)){ el.innerHTML='V'+cur+' <span style="color:var(--wn);font-weight:700" title="'+(lang==='fa'?('نسخهٔ جدید: V'+_vnorm(latest)):('Update available: V'+_vnorm(latest)))+'">↑V'+_vnorm(latest)+'</span>'; }
+  else { el.textContent='V'+cur; }
+}
+async function loadVersions(){
+  // Worker: running version from system.json (falls back to the panel meta if offline)
+  var workerCur='';
+  try{ var sys=await API.get('system.json'); workerCur=_vnorm(sys && sys.version); }catch(e){}
+  // Panel: this HTML's embedded version
+  var meta=document.querySelector('meta[name="nova-panel-version"]');
+  var panelCur=_vnorm(meta && meta.getAttribute('content'));
+  // show what we know immediately
+  _setVer('ver-worker', workerCur || panelCur, null);
+  _setVer('ver-panel', panelCur, null);
+  // then enrich with "latest available" from GitHub (best-effort; never blocks the UI)
+  try{ var wr=await fetch(WORKER_VERSION_JSON,{cache:'no-store'}); var wj=await wr.json(); _setVer('ver-worker', workerCur||panelCur, wj && wj.version); }catch(e){}
+  try{ var pr=await fetch(PANEL_VERSION_JSON,{cache:'no-store'}); var pj=await pr.json(); _setVer('ver-panel', panelCur, pj && pj.version); }catch(e){}
+}
 (async function init(){
   applyTheme(localStorage.getItem('nova-theme') || 'light');
   await loadLive();   // pull real /admin data when served by the Worker; falls back to MOCK otherwise
+  try{ loadVersions(); }catch(e){}
   if(LIVE){ loadSecurity(); loadWarpStatus(); }
   else { STATE.users=DEMO_USERS.map(u=>({...u})); STATE.usage=DEMO_USAGE; STATE.multiUser=true; }
   applyLang(lang);    // renders everything (incl. syncFormValues) in the chosen language
