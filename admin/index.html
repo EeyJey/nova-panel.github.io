@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Nova Proxy — Control Panel</title>
-<meta name="nova-panel-version" content="3.8.0" />
+<meta name="nova-panel-version" content="3.8.1" />
 <link rel="icon" type="image/svg+xml" href="/logo-mark.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -1089,6 +1089,7 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
           <div class="card">
             <div class="card-h"><h3 data-i18n="notif_worker">Worker requests</h3><div class="right"><span class="chip" id="cf-chip"><span class="dot"></span><span id="cf-chip-tx" data-i18n="cf_estimate">Estimated</span></span></div></div>
             <div class="card-pad">
+              <div id="nova-ver-card" style="display:none;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 12px;padding:9px 12px;border-radius:9px;font-size:12.5px;border:1px solid var(--bd)"></div>
               <div class="kpi-val" style="font-size:24px"><span id="u-total">18,420</span> <span style="font-size:13px;color:var(--mu);font-weight:500">/ <span id="u-max">100,000</span></span></div>
               <div class="kpi-sub" style="margin:8px 0" id="u-note" data-i18n="notif_today">requests today (Cloudflare free plan)</div>
               <div class="meter" style="height:8px;margin-top:6px;border-radius:999px;background:var(--card2);border:1px solid var(--bd);overflow:hidden"><i id="u-bar" style="display:block;height:100%;width:18%;background:var(--ac)"></i></div>
@@ -1291,7 +1292,7 @@ const I18N = {
     ver_panel:'Panel', ver_worker:'Worker', view_all:'View all', refresh:'Refresh', copy:'Copy', open:'Open', qr:'QR', btn_save:'Save',
     cf_estimate:'Estimated', cf_h:'Live status (Cloudflare API)', cf_sub:'Paste a Cloudflare API token to show real request counts — your Account ID is auto-detected. Click "Create token", press Continue to summary → Create Token, copy it, and paste below. Give it Account Analytics: Read + Workers Scripts: Edit — then this one token powers both live usage and one-click updates.', cf_accid:'Account ID', cf_accid_opt:'(optional — auto-detected)', cf_accid_ph:'leave blank to auto-detect', cf_token:'API token', cf_connect:'Connect', cf_disconnect:'Disconnect', upd_saved_note:'Already connected Cloudflare in the Worker-usage card? Leave this blank and just press Update now.',
     dns_yourdoh:'Your private DoH endpoint. Paste it into a Secure DNS field in your browser or VPN client.', dns_test:'Test',
-    reset_h:'Factory reset', reset_s:'Wipes everything from the database (settings, network, clean IPs, users, Cloudflare and Telegram keys) and restores the initial state. Your panel password is kept. This cannot be undone.', reset_btn:'Factory reset', upd_h:'Update panel', upd_s:'Update your Worker to the latest Nova version straight from here — no manual redeploy. It keeps your database, settings, and password. You provide a Cloudflare API token with Workers Scripts → Edit; it is used once and never stored. Requires Nova v3.8.0+ on your Worker — if you are on an older version, deploy v3.8.0 once manually, then updates here are one-click.', upd_check:'Check for updates', upd_token_help:'Click "Create token" — it opens Cloudflare with the right permission (Workers Scripts → Edit) already selected. Just press "Continue to summary" → "Create Token", copy it, and paste below. The token is used once and never stored.', upd_token_link:'Create token (1-click)', upd_token_lbl:'Cloudflare API token', upd_scriptname_lbl:'Worker script name', upd_now:'Update now', upd_connected:'Cloudflare connected ✓ — updates are one-click. Just press “Update now” below.', upd_usetoken:'Use a different token',
+    reset_h:'Factory reset', reset_s:'Wipes everything from the database (settings, network, clean IPs, users, Cloudflare and Telegram keys) and restores the initial state. Your panel password is kept. This cannot be undone.', reset_btn:'Factory reset', upd_h:'Update panel', upd_s:'Update your Worker to the latest Nova version straight from here — no manual redeploy. It keeps your database, settings, and password. You provide a Cloudflare API token with Workers Scripts → Edit; it is used once and never stored. Requires Nova v3.8.0+ on your Worker — if you are on an older version, deploy the latest worker.js once manually, then updates here are one-click.', upd_check:'Check for updates', upd_token_help:'Click "Create token" — it opens Cloudflare with the right permission (Workers Scripts → Edit) already selected. Just press "Continue to summary" → "Create Token", copy it, and paste below. The token is used once and never stored.', upd_token_link:'Create token (1-click)', upd_token_lbl:'Cloudflare API token', upd_scriptname_lbl:'Worker script name', upd_now:'Update now', upd_connected:'Cloudflare connected ✓ — updates are one-click. Just press “Update now” below.', upd_usetoken:'Use a different token',
     kill_h:'Kill switch', kill_s:'Emergency stop. While on, every proxy connection and subscription fetch is refused (503). The admin panel stays reachable so you can switch it back off. Use it if your service is being abused.', kill_banner:'Service is paused. All proxy traffic and subscription fetches are stopped. Turn the kill switch off in Settings to resume.',
     nav_guide:'Guide', sub_guide:'How to use Nova Proxy, step by step.', logout:'Logout',
     /* KPIs */
@@ -1380,7 +1381,7 @@ const I18N = {
     ver_panel:'پنل', ver_worker:'ورکر', view_all:'مشاهدهٔ همه', refresh:'بازخوانی', copy:'کپی', open:'باز کردن', qr:'کد QR', btn_save:'ذخیره',
     cf_estimate:'تخمینی', cf_h:'وضعیت زنده (API کلودفلر)', cf_sub:'یک توکن API کلودفلر را بچسبان تا تعداد واقعی درخواست‌ها نمایش داده شود — شناسهٔ حساب خودکار پیدا می‌شود. روی «ساخت توکن» بزن، سپس Continue to summary ← Create Token را بزن، کپی کن و پایین جای‌گذاری کن. به آن دسترسی Account Analytics: Read و Workers Scripts: Edit بده — همین یک توکن، هم مصرف زنده و هم به‌روزرسانی یک‌کلیکی را فعال می‌کند.', cf_accid:'شناسهٔ حساب', cf_accid_opt:'(اختیاری — خودکار پیدا می‌شود)', cf_accid_ph:'خالی بگذار تا خودکار پیدا شود', cf_token:'توکن API', cf_connect:'اتصال', cf_disconnect:'قطع اتصال', upd_saved_note:'قبلاً کلودفلر را در کارت «مصرف ورکر» وصل کرده‌اید؟ این را خالی بگذارید و فقط «به‌روزرسانی اکنون» را بزنید.',
     dns_yourdoh:'نشانی DoH خصوصی شما. آن را در فیلد DNS امن مرورگر یا کلاینت VPN بگذارید.', dns_test:'تست',
-    reset_h:'بازنشانی کارخانه‌ای', reset_s:'همه‌چیز را از پایگاه‌داده پاک می‌کند (تنظیمات، شبکه، IPهای تمیز، کاربران، کلیدهای کلودفلر و تلگرام) و به حالت اولیه برمی‌گرداند. رمز پنل حفظ می‌شود. این کار قابل بازگشت نیست.', reset_btn:'بازنشانی کارخانه‌ای', upd_h:'به‌روزرسانی پنل', upd_s:'ورکر خود را مستقیماً از همین‌جا به آخرین نسخهٔ Nova به‌روزرسانی کن — بدون دیپلوی دستی. دیتابیس، تنظیمات و رمز عبور حفظ می‌شوند. یک توکن API کلودفلر با دسترسی Workers Scripts → Edit می‌دهی؛ فقط یک‌بار استفاده می‌شود و هیچ‌جا ذخیره نمی‌شود. نیازمند نسخهٔ ۳.۸.۰ به بالا روی ورکر است — اگر نسخهٔ قدیمی‌تری داری، یک‌بار نسخهٔ ۳.۸.۰ را دستی Deploy کن؛ پس از آن به‌روزرسانی‌ها این‌جا یک‌کلیکی می‌شوند.', upd_check:'بررسی به‌روزرسانی', upd_token_help:'روی «ساخت توکن» بزن — کلودفلر با دسترسی درست (Workers Scripts → Edit) از قبل انتخاب‌شده باز می‌شود. فقط «Continue to summary» ← «Create Token» را بزن، توکن را کپی کن و پایین جای‌گذاری کن. توکن فقط یک‌بار استفاده و هیچ‌جا ذخیره نمی‌شود.', upd_token_link:'ساخت توکن (یک‌کلیک)', upd_token_lbl:'توکن API کلودفلر', upd_scriptname_lbl:'نام اسکریپت ورکر', upd_now:'به‌روزرسانی اکنون', upd_connected:'کلودفلر وصل است ✓ — به‌روزرسانی‌ها فقط با یک کلیک انجام می‌شوند. کافی است «به‌روزرسانی اکنون» را بزنید.', upd_usetoken:'استفاده از توکن دیگر',
+    reset_h:'بازنشانی کارخانه‌ای', reset_s:'همه‌چیز را از پایگاه‌داده پاک می‌کند (تنظیمات، شبکه، IPهای تمیز، کاربران، کلیدهای کلودفلر و تلگرام) و به حالت اولیه برمی‌گرداند. رمز پنل حفظ می‌شود. این کار قابل بازگشت نیست.', reset_btn:'بازنشانی کارخانه‌ای', upd_h:'به‌روزرسانی پنل', upd_s:'ورکر خود را مستقیماً از همین‌جا به آخرین نسخهٔ Nova به‌روزرسانی کن — بدون دیپلوی دستی. دیتابیس، تنظیمات و رمز عبور حفظ می‌شوند. یک توکن API کلودفلر با دسترسی Workers Scripts → Edit می‌دهی؛ فقط یک‌بار استفاده می‌شود و هیچ‌جا ذخیره نمی‌شود. نیازمند نسخهٔ ۳.۸.۰ به بالا روی ورکر است — اگر نسخهٔ قدیمی‌تری داری، یک‌بار آخرین نسخهٔ worker.js را دستی Deploy کن؛ پس از آن به‌روزرسانی‌ها این‌جا یک‌کلیکی می‌شوند.', upd_check:'بررسی به‌روزرسانی', upd_token_help:'روی «ساخت توکن» بزن — کلودفلر با دسترسی درست (Workers Scripts → Edit) از قبل انتخاب‌شده باز می‌شود. فقط «Continue to summary» ← «Create Token» را بزن، توکن را کپی کن و پایین جای‌گذاری کن. توکن فقط یک‌بار استفاده و هیچ‌جا ذخیره نمی‌شود.', upd_token_link:'ساخت توکن (یک‌کلیک)', upd_token_lbl:'توکن API کلودفلر', upd_scriptname_lbl:'نام اسکریپت ورکر', upd_now:'به‌روزرسانی اکنون', upd_connected:'کلودفلر وصل است ✓ — به‌روزرسانی‌ها فقط با یک کلیک انجام می‌شوند. کافی است «به‌روزرسانی اکنون» را بزنید.', upd_usetoken:'استفاده از توکن دیگر',
     kill_h:'دکمهٔ توقف اضطراری', kill_s:'توقف اضطراری. وقتی روشن باشد، هر اتصال پراکسی و دریافت اشتراک رد می‌شود (۵۰۳). پنل مدیریت باز می‌ماند تا بتوانید دوباره خاموشش کنید. اگر سرویس‌تان مورد سوءاستفاده است از آن استفاده کنید.', kill_banner:'سرویس متوقف است. همهٔ ترافیک پراکسی و دریافت اشتراک‌ها متوقف شده. برای ازسرگیری، Kill switch را در تنظیمات خاموش کنید.',
     nav_guide:'راهنما', sub_guide:'راهنمای گام‌به‌گام استفاده از نوا پروکسی.', logout:'خروج',
     kpi_network:'شبکه', kpi_storage:'حافظه', kpi_worker:'مصرف ورکر', kpi_traffic:'مصرف امروز',
@@ -2004,8 +2005,8 @@ function updMsgOldWorker(){
   msg.className='msg warn';
   var url='https://github.com/IRNova/Nova-Proxy/blob/main/worker.js';
   msg.innerHTML=(lang==='fa'
-    ?'⚠️ این ورکر نسخهٔ قدیمی است و هنوز به‌روزرسانی درون‌برنامه‌ای ندارد. یک‌بار در کلودفلر فایل <a href="'+url+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">worker.js نسخهٔ 3.8.0</a> را جای‌گذاری و Deploy کن؛ پس از آن همهٔ به‌روزرسانی‌های بعدی این‌جا یک‌کلیکی می‌شوند.'
-    :'⚠️ This worker is an older version without in-app updates yet. Open Cloudflare once and paste/deploy <a href="'+url+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">worker.js v3.8.0</a> — after that, every future update here is one-click.');
+    ?'⚠️ این ورکر نسخهٔ قدیمی است و هنوز به‌روزرسانی درون‌برنامه‌ای ندارد. یک‌بار در کلودفلر فایل <a href="'+url+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">آخرین نسخهٔ worker.js</a> را جای‌گذاری و Deploy کن؛ پس از آن همهٔ به‌روزرسانی‌های بعدی این‌جا یک‌کلیکی می‌شوند.'
+    :'⚠️ This worker is an older version without in-app updates yet. Open Cloudflare once and paste/deploy <a href="'+url+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">the latest worker.js</a> — after that, every future update here is one-click.');
 }
 async function updateCheck(){
   // Only REPORTS status. The token box + Update button are always visible, so the user can update
@@ -2166,6 +2167,30 @@ function syncPageHeader(){
   $('#page-title').textContent = t(navKey);
   $('#page-sub').textContent = t(SUBS[currentView]);
 }
+// Worker version + update status on the Worker-requests card. Uses admin/update-check.json
+// (no Cloudflare token needed) so the version shows whether or not usage is connected.
+async function renderNovaVerCard(){
+  var el=document.getElementById('nova-ver-card'); if(!el) return;
+  if(!LIVE){ el.style.display='none'; return; }
+  try{
+    var r=await fetch('admin/update-check.json',{cache:'no-store'});
+    if((r.headers.get('content-type')||'').indexOf('application/json')<0){ el.style.display='none'; return; }
+    var j=await r.json();
+    var cur=j.current||'?', latest=j.latest||'';
+    el.style.display='flex'; el.onclick=null; el.style.cursor='default';
+    if(j.updateAvailable){
+      el.style.borderColor='var(--ac)'; el.style.background='color-mix(in srgb,var(--ac) 12%,transparent)';
+      el.innerHTML='<span style="font-size:15px">⬆</span><span style="flex:1;min-width:150px">'+(lang==='fa'?('نسخهٔ جدید موجود است — فعلی <b>v'+cur+'</b> ‹ جدید <b>v'+latest+'</b>'):('Update available — current <b>v'+cur+'</b> → latest <b>v'+latest+'</b>'))+'</span><button type="button" class="btn primary sm" id="nova-ver-go">'+(lang==='fa'?'به‌روزرسانی':'Update now')+'</button>';
+      var go=document.getElementById('nova-ver-go'); if(go) go.onclick=function(){ try{ showView('settings'); }catch(e){} setTimeout(function(){ try{ var b=document.getElementById('upd-box'); var c=b?b.closest('.card'):null; (c||b||{scrollIntoView:function(){}}).scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} },140); };
+    } else if(latest){
+      el.style.borderColor='color-mix(in srgb,#16a34a 45%,var(--bd))'; el.style.background='color-mix(in srgb,#16a34a 10%,transparent)';
+      el.innerHTML='<span style="font-size:15px">✓</span><span>'+(lang==='fa'?('روی آخرین نسخه هستی — <b>v'+cur+'</b>'):('You are on the latest version — <b>v'+cur+'</b>'))+'</span>';
+    } else {
+      el.style.borderColor='var(--bd)'; el.style.background='transparent';
+      el.innerHTML='<span style="color:var(--mu)">'+(lang==='fa'?'نسخهٔ ورکر: ':'Worker version: ')+'</span><b>v'+cur+'</b>';
+    }
+  }catch(e){ el.style.display='none'; }
+}
 function showView(v){
   currentView = v;
   $$('.view').forEach(s=>s.classList.toggle('active', s.id==='view-'+v));
@@ -2176,6 +2201,7 @@ function showView(v){
   if(v==='proxy') pxInit();
   if(v==='corenode') cnInit();
   if(v==='dashboard'){ try{ TChart.ensure(); }catch(e){} }
+  if(v==='notifications'){ try{ renderNovaVerCard(); }catch(e){} }
   if(['network','cleanips','wireguard','users','proxy','corenode'].indexOf(v)>=0){ var _g=document.getElementById('grp-netset'); if(_g) _g.classList.add('open'); }
   window.scrollTo({top:0,behavior:'instant'});
 }
