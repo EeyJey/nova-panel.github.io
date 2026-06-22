@@ -1054,12 +1054,15 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
             <span id="upd-msg" class="msg" style="font-size:12.5px"></span>
           </div>
           <div id="upd-box" style="border-top:1px solid var(--bd);margin-top:10px;padding-top:14px">
+            <div id="upd-connected" style="display:none;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;padding:10px 12px;border:1px solid var(--ac);background:color-mix(in srgb,var(--ac) 10%,transparent);border-radius:10px;font-size:12.5px"><span style="font-size:15px">☁️</span><span style="flex:1;min-width:180px" data-i18n="upd_connected">Cloudflare connected ✓ — updates are one-click. Just press “Update now” below.</span><a href="#" id="upd-usetoken" style="font-size:11.5px;color:var(--mu)" data-i18n="upd_usetoken">Use a different token</a></div>
+            <div id="upd-token-area">
             <p style="font-size:12px;color:var(--mu);margin:0 0 8px" data-i18n="upd_token_help">Create a Cloudflare API token (My Profile → API Tokens → Create Custom Token) with permission: Account → Workers Scripts → Edit. Then paste it below.</p>
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
               <a class="btn primary sm" href="https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22account_analytics%22%2C%22type%22%3A%22read%22%7D%5D&accountId=*&zoneId=all&name=Nova%20Cloudflare" target="_blank" rel="noopener" data-i18n="upd_token_link">Create token (1-click)</a>
             </div>
             <div class="fg"><label data-i18n="upd_token_lbl">Cloudflare API token</label><input class="inp" id="upd-token" type="text" autocomplete="off" spellcheck="false" placeholder="••••••••••••••••"></div>
             <div style="font-size:11px;color:var(--mu);margin:-2px 0 8px" data-i18n="upd_saved_note"></div>
+            </div>
             <div class="fg" id="upd-scriptname-wrap" style="display:none"><label data-i18n="upd_scriptname_lbl">Worker script name</label><input class="inp" id="upd-scriptname" type="text" autocomplete="off" placeholder="nova-..."></div>
             <div id="upd-acct-wrap" style="display:none;margin-bottom:10px"></div>
             <button class="btn primary sm" id="upd-now" data-i18n="upd_now">Update now</button>
@@ -1288,7 +1291,7 @@ const I18N = {
     ver_panel:'Panel', ver_worker:'Worker', view_all:'View all', refresh:'Refresh', copy:'Copy', open:'Open', qr:'QR', btn_save:'Save',
     cf_estimate:'Estimated', cf_h:'Live status (Cloudflare API)', cf_sub:'Paste a Cloudflare API token to show real request counts — your Account ID is auto-detected. Click "Create token", press Continue to summary → Create Token, copy it, and paste below. Give it Account Analytics: Read + Workers Scripts: Edit — then this one token powers both live usage and one-click updates.', cf_accid:'Account ID', cf_accid_opt:'(optional — auto-detected)', cf_accid_ph:'leave blank to auto-detect', cf_token:'API token', cf_connect:'Connect', cf_disconnect:'Disconnect', upd_saved_note:'Already connected Cloudflare in the Worker-usage card? Leave this blank and just press Update now.',
     dns_yourdoh:'Your private DoH endpoint. Paste it into a Secure DNS field in your browser or VPN client.', dns_test:'Test',
-    reset_h:'Factory reset', reset_s:'Wipes everything from the database (settings, network, clean IPs, users, Cloudflare and Telegram keys) and restores the initial state. Your panel password is kept. This cannot be undone.', reset_btn:'Factory reset', upd_h:'Update panel', upd_s:'Update your Worker to the latest Nova version straight from here — no manual redeploy. It keeps your database, settings, and password. You provide a Cloudflare API token with Workers Scripts → Edit; it is used once and never stored.', upd_check:'Check for updates', upd_token_help:'Click "Create token" — it opens Cloudflare with the right permission (Workers Scripts → Edit) already selected. Just press "Continue to summary" → "Create Token", copy it, and paste below. The token is used once and never stored.', upd_token_link:'Create token (1-click)', upd_token_lbl:'Cloudflare API token', upd_scriptname_lbl:'Worker script name', upd_now:'Update now',
+    reset_h:'Factory reset', reset_s:'Wipes everything from the database (settings, network, clean IPs, users, Cloudflare and Telegram keys) and restores the initial state. Your panel password is kept. This cannot be undone.', reset_btn:'Factory reset', upd_h:'Update panel', upd_s:'Update your Worker to the latest Nova version straight from here — no manual redeploy. It keeps your database, settings, and password. You provide a Cloudflare API token with Workers Scripts → Edit; it is used once and never stored. Requires Nova v3.8.0+ on your Worker — if you are on an older version, deploy v3.8.0 once manually, then updates here are one-click.', upd_check:'Check for updates', upd_token_help:'Click "Create token" — it opens Cloudflare with the right permission (Workers Scripts → Edit) already selected. Just press "Continue to summary" → "Create Token", copy it, and paste below. The token is used once and never stored.', upd_token_link:'Create token (1-click)', upd_token_lbl:'Cloudflare API token', upd_scriptname_lbl:'Worker script name', upd_now:'Update now', upd_connected:'Cloudflare connected ✓ — updates are one-click. Just press “Update now” below.', upd_usetoken:'Use a different token',
     kill_h:'Kill switch', kill_s:'Emergency stop. While on, every proxy connection and subscription fetch is refused (503). The admin panel stays reachable so you can switch it back off. Use it if your service is being abused.', kill_banner:'Service is paused. All proxy traffic and subscription fetches are stopped. Turn the kill switch off in Settings to resume.',
     nav_guide:'Guide', sub_guide:'How to use Nova Proxy, step by step.', logout:'Logout',
     /* KPIs */
@@ -1377,7 +1380,7 @@ const I18N = {
     ver_panel:'پنل', ver_worker:'ورکر', view_all:'مشاهدهٔ همه', refresh:'بازخوانی', copy:'کپی', open:'باز کردن', qr:'کد QR', btn_save:'ذخیره',
     cf_estimate:'تخمینی', cf_h:'وضعیت زنده (API کلودفلر)', cf_sub:'یک توکن API کلودفلر را بچسبان تا تعداد واقعی درخواست‌ها نمایش داده شود — شناسهٔ حساب خودکار پیدا می‌شود. روی «ساخت توکن» بزن، سپس Continue to summary ← Create Token را بزن، کپی کن و پایین جای‌گذاری کن. به آن دسترسی Account Analytics: Read و Workers Scripts: Edit بده — همین یک توکن، هم مصرف زنده و هم به‌روزرسانی یک‌کلیکی را فعال می‌کند.', cf_accid:'شناسهٔ حساب', cf_accid_opt:'(اختیاری — خودکار پیدا می‌شود)', cf_accid_ph:'خالی بگذار تا خودکار پیدا شود', cf_token:'توکن API', cf_connect:'اتصال', cf_disconnect:'قطع اتصال', upd_saved_note:'قبلاً کلودفلر را در کارت «مصرف ورکر» وصل کرده‌اید؟ این را خالی بگذارید و فقط «به‌روزرسانی اکنون» را بزنید.',
     dns_yourdoh:'نشانی DoH خصوصی شما. آن را در فیلد DNS امن مرورگر یا کلاینت VPN بگذارید.', dns_test:'تست',
-    reset_h:'بازنشانی کارخانه‌ای', reset_s:'همه‌چیز را از پایگاه‌داده پاک می‌کند (تنظیمات، شبکه، IPهای تمیز، کاربران، کلیدهای کلودفلر و تلگرام) و به حالت اولیه برمی‌گرداند. رمز پنل حفظ می‌شود. این کار قابل بازگشت نیست.', reset_btn:'بازنشانی کارخانه‌ای', upd_h:'به‌روزرسانی پنل', upd_s:'ورکر خود را مستقیماً از همین‌جا به آخرین نسخهٔ Nova به‌روزرسانی کن — بدون دیپلوی دستی. دیتابیس، تنظیمات و رمز عبور حفظ می‌شوند. یک توکن API کلودفلر با دسترسی Workers Scripts → Edit می‌دهی؛ فقط یک‌بار استفاده می‌شود و هیچ‌جا ذخیره نمی‌شود.', upd_check:'بررسی به‌روزرسانی', upd_token_help:'روی «ساخت توکن» بزن — کلودفلر با دسترسی درست (Workers Scripts → Edit) از قبل انتخاب‌شده باز می‌شود. فقط «Continue to summary» ← «Create Token» را بزن، توکن را کپی کن و پایین جای‌گذاری کن. توکن فقط یک‌بار استفاده و هیچ‌جا ذخیره نمی‌شود.', upd_token_link:'ساخت توکن (یک‌کلیک)', upd_token_lbl:'توکن API کلودفلر', upd_scriptname_lbl:'نام اسکریپت ورکر', upd_now:'به‌روزرسانی اکنون',
+    reset_h:'بازنشانی کارخانه‌ای', reset_s:'همه‌چیز را از پایگاه‌داده پاک می‌کند (تنظیمات، شبکه، IPهای تمیز، کاربران، کلیدهای کلودفلر و تلگرام) و به حالت اولیه برمی‌گرداند. رمز پنل حفظ می‌شود. این کار قابل بازگشت نیست.', reset_btn:'بازنشانی کارخانه‌ای', upd_h:'به‌روزرسانی پنل', upd_s:'ورکر خود را مستقیماً از همین‌جا به آخرین نسخهٔ Nova به‌روزرسانی کن — بدون دیپلوی دستی. دیتابیس، تنظیمات و رمز عبور حفظ می‌شوند. یک توکن API کلودفلر با دسترسی Workers Scripts → Edit می‌دهی؛ فقط یک‌بار استفاده می‌شود و هیچ‌جا ذخیره نمی‌شود. نیازمند نسخهٔ ۳.۸.۰ به بالا روی ورکر است — اگر نسخهٔ قدیمی‌تری داری، یک‌بار نسخهٔ ۳.۸.۰ را دستی Deploy کن؛ پس از آن به‌روزرسانی‌ها این‌جا یک‌کلیکی می‌شوند.', upd_check:'بررسی به‌روزرسانی', upd_token_help:'روی «ساخت توکن» بزن — کلودفلر با دسترسی درست (Workers Scripts → Edit) از قبل انتخاب‌شده باز می‌شود. فقط «Continue to summary» ← «Create Token» را بزن، توکن را کپی کن و پایین جای‌گذاری کن. توکن فقط یک‌بار استفاده و هیچ‌جا ذخیره نمی‌شود.', upd_token_link:'ساخت توکن (یک‌کلیک)', upd_token_lbl:'توکن API کلودفلر', upd_scriptname_lbl:'نام اسکریپت ورکر', upd_now:'به‌روزرسانی اکنون', upd_connected:'کلودفلر وصل است ✓ — به‌روزرسانی‌ها فقط با یک کلیک انجام می‌شوند. کافی است «به‌روزرسانی اکنون» را بزنید.', upd_usetoken:'استفاده از توکن دیگر',
     kill_h:'دکمهٔ توقف اضطراری', kill_s:'توقف اضطراری. وقتی روشن باشد، هر اتصال پراکسی و دریافت اشتراک رد می‌شود (۵۰۳). پنل مدیریت باز می‌ماند تا بتوانید دوباره خاموشش کنید. اگر سرویس‌تان مورد سوءاستفاده است از آن استفاده کنید.', kill_banner:'سرویس متوقف است. همهٔ ترافیک پراکسی و دریافت اشتراک‌ها متوقف شده. برای ازسرگیری، Kill switch را در تنظیمات خاموش کنید.',
     nav_guide:'راهنما', sub_guide:'راهنمای گام‌به‌گام استفاده از نوا پروکسی.', logout:'خروج',
     kpi_network:'شبکه', kpi_storage:'حافظه', kpi_worker:'مصرف ورکر', kpi_traffic:'مصرف امروز',
@@ -1898,7 +1901,7 @@ async function cfConnect(extra){
   try{
     const r=await fetch('/admin/cf-usage-setup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     const j=await r.json().catch(()=>null);
-    if(j && j.success){ STATE.config.CF=STATE.config.CF||{}; STATE.config.CF.Usage=j.usage; if(j.accountId){ const a=document.getElementById('cf-accid'); if(a) a.value=j.accountId; } const w=document.getElementById('cf-acct-wrap'); if(w){ w.style.display='none'; w.innerHTML=''; } renderWorker(); renderKPIs(); try{ var _cb=document.getElementById('cf-connect-bar'); if(_cb) _cb.style.display='none'; localStorage.removeItem('nova-cf-dismiss'); }catch(e){} if(msg) msg.textContent=lang==='fa'?'وصل شد ✓':'Connected ✓'; return; }
+    if(j && j.success){ STATE.config.CF=STATE.config.CF||{}; STATE.config.CF.Usage=j.usage; if(j.accountId){ const a=document.getElementById('cf-accid'); if(a) a.value=j.accountId; } const w=document.getElementById('cf-acct-wrap'); if(w){ w.style.display='none'; w.innerHTML=''; } renderWorker(); renderKPIs(); try{ var _cb=document.getElementById('cf-connect-bar'); if(_cb) _cb.style.display='none'; localStorage.removeItem('nova-cf-dismiss'); setUpdConnected(true); }catch(e){} if(msg) msg.textContent=lang==='fa'?'وصل شد ✓':'Connected ✓'; return; }
     if(j && j.error==='multiple_accounts' && Array.isArray(j.accounts)){
       const w=document.getElementById('cf-acct-wrap');
       if(w){ w.style.display='block'; w.innerHTML='<div style="font-size:12px;color:var(--mu);margin-bottom:6px">'+(lang==='fa'?'چند حساب پیدا شد — یکی را انتخاب کن:':'Multiple accounts — pick one:')+'</div>'+j.accounts.map(function(a){ return '<button class="btn ghost sm cf-acct" data-acct="'+String(a.id).replace(/"/g,'&quot;')+'" style="margin:0 6px 6px 0">'+String(a.name||a.id).replace(/</g,'&lt;')+'</button>'; }).join(''); }
@@ -1915,7 +1918,7 @@ async function cfDisconnect(){
     await fetch('/admin/cf.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({init:true})});
     if(STATE.config.CF) STATE.config.CF.Usage=null;
     const a=document.getElementById('cf-accid'), tk=document.getElementById('cf-token'); if(a) a.value=''; if(tk) tk.value='';
-    renderWorker(); renderKPIs(); if(msg) msg.textContent=lang==='fa'?'قطع شد':'Disconnected';
+    renderWorker(); renderKPIs(); try{ setUpdConnected(false); }catch(e){} if(msg) msg.textContent=lang==='fa'?'قطع شد':'Disconnected';
   }catch(e){ if(msg) msg.textContent='⚠️ '+e.message; }
 }
 /* ---- DoH endpoint (this worker's private resolver) ---- */
@@ -1996,6 +1999,14 @@ async function twofaDisable(){ const msg=document.getElementById('twofa-dmsg'); 
   }catch(e){ msg.textContent='⚠️ '+e.message; } }
 
 /* ---- In-panel self-update ---- */
+function updMsgOldWorker(){
+  var msg=document.getElementById('upd-msg'); if(!msg) return;
+  msg.className='msg warn';
+  var url='https://github.com/IRNova/Nova-Proxy/blob/main/worker.js';
+  msg.innerHTML=(lang==='fa'
+    ?'⚠️ این ورکر نسخهٔ قدیمی است و هنوز به‌روزرسانی درون‌برنامه‌ای ندارد. یک‌بار در کلودفلر فایل <a href="'+url+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">worker.js نسخهٔ 3.8.0</a> را جای‌گذاری و Deploy کن؛ پس از آن همهٔ به‌روزرسانی‌های بعدی این‌جا یک‌کلیکی می‌شوند.'
+    :'⚠️ This worker is an older version without in-app updates yet. Open Cloudflare once and paste/deploy <a href="'+url+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">worker.js v3.8.0</a> — after that, every future update here is one-click.');
+}
 async function updateCheck(){
   // Only REPORTS status. The token box + Update button are always visible, so the user can update
   // (or re-install the same version) regardless of whether this check succeeds or says up-to-date.
@@ -2007,15 +2018,16 @@ async function updateCheck(){
     var ct=(r.headers.get('content-type')||'');
     if(ct.indexOf('application/json')<0){
       // Old worker that doesn't have the update-check endpoint yet → returns an HTML page, not JSON.
-      if(msg){ msg.className='msg warn'; msg.textContent='⚠️ '+(lang==='fa'?'این ورکر هنوز نسخهٔ قدیمی است (قابلیت بررسی ندارد). با توکن زیر همین حالا به آخرین نسخه به‌روزرسانی کن.':'This worker is still an older version (no update-check endpoint). Use the token below to update to the latest now.'); }
+      updMsgOldWorker();
       return;
     }
     var j=await r.json();
+    try{ if(typeof j.hasCfToken!=='undefined') setUpdConnected(!!j.hasCfToken); }catch(e){}
     var cur=j.current||'?', latest=j.latest||'?';
     if(j.updateAvailable){
       if(msg){ msg.className='msg warn'; msg.textContent='⬆ '+(lang==='fa'?('نسخهٔ جدید موجود است — فعلی '+cur+' ← جدید '+latest):('Update available — current '+cur+' → latest '+latest))+(j.hasCfToken?(lang==='fa'?' — فقط Update now را بزن':' — just press Update now'):''); }
     } else if(j.latest){
-      if(msg){ msg.className='msg ok'; msg.textContent='✓ '+(lang==='fa'?('روی آخرین نسخه هستی ('+cur+'). می‌توانی برای نصب دوباره از توکن زیر استفاده کنی.'):('You are on the latest version ('+cur+'). You can still re-install with the token below.')); }
+      if(msg){ msg.className='msg ok'; msg.textContent='✓ '+(lang==='fa'?('روی آخرین نسخه هستی ('+cur+').'+(j.hasCfToken?' برای نصب دوباره فقط Update now را بزن.':' می‌توانی برای نصب دوباره از توکن زیر استفاده کنی.')):('You are on the latest version ('+cur+').'+(j.hasCfToken?' Press Update now to re-install.':' You can still re-install with the token below.'))); }
     } else {
       if(msg){ msg.className='msg warn'; msg.textContent='⚠️ '+(lang==='fa'?'سرور بروزرسانی در دسترس نیست — هنوز version.json روی IRNova/Nova-Proxy منتشر نشده؟':'Couldn\'t reach the update server — is version.json published on IRNova/Nova-Proxy?'); }
     }
@@ -2032,6 +2044,7 @@ async function updateNow(extra){
   try{
     var r=await fetch('admin/self-update.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     var j=await r.json();
+    if(j && (j.error==='unsupportedPostPath' || j.error==='not_found')){ updMsgOldWorker(); return; }
     if(j.success){
       if(msg){ msg.className='msg ok'; msg.textContent='✅ '+(lang==='fa'?('به‌روزرسانی شروع شد'+(j.version?(' (نسخهٔ '+j.version+')'):'')+'. پنل در حال جایگزینی است — حدود ۳۰ ثانیه صبر کن و صفحه را تازه کن. سپس توکن را در Cloudflare باطل کن.'):('Update started'+(j.version?(' (v'+j.version+')'):'')+'. Your panel is being replaced — wait ~30s and refresh. Then revoke the token in Cloudflare.')); }
       var t=document.getElementById('upd-token'); if(t) t.value='';
@@ -2992,6 +3005,13 @@ let _updVer='';
 // Update banner: shows ONLY when the running worker is older than the latest published version.
 // The "Update" button takes the user straight to Settings → Update panel (in-panel self-update),
 // not to a raw GitHub URL. Dismiss is remembered per-version so it doesn't nag.
+function setUpdConnected(connected){
+  var c=document.getElementById('upd-connected'), a=document.getElementById('upd-token-area');
+  if(c) c.style.display=connected?'flex':'none';
+  if(a) a.style.display=connected?'none':'';
+  var ut=document.getElementById('upd-usetoken');
+  if(ut && !ut._wired){ ut._wired=1; ut.onclick=function(ev){ if(ev) ev.preventDefault(); if(a) a.style.display=''; if(c) c.style.display='none'; var t=document.getElementById('upd-token'); if(t) t.focus(); }; }
+}
 function showCfBar(show){
   var bar=document.getElementById('cf-connect-bar'); if(!bar) return;
   if(!show){ bar.style.display='none'; return; }
@@ -3021,7 +3041,7 @@ async function checkUpdate(){ try{
    if((r.headers.get('content-type')||'').indexOf('application/json')>=0) j=await r.json();
  }catch(e){}
  // Cloudflare-connect banner: when the worker reports no saved token, prompt the one-time connect.
- try{ if(j && typeof j.hasCfToken!=='undefined') showCfBar(!j.hasCfToken); }catch(e){}
+ try{ if(j && typeof j.hasCfToken!=='undefined'){ showCfBar(!j.hasCfToken); setUpdConnected(!!j.hasCfToken); } }catch(e){}
  if(!j || !j.latest){
    let cur='';
    try{ const sr=await API.get('system.json'); cur=_vnorm(sr&&sr.version); }catch(e){}
