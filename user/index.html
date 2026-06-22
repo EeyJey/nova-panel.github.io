@@ -20,7 +20,7 @@
   :root{
     --bg:#070809; --panel:#0c0e12; --card:#101319; --card2:#0b0d11;
     --bd:#1c2027; --bd2:#262b34; --tx:#e9edf4; --tx2:#aeb6c4; --mu:#6f7888;
-    --ac:#22d3ee; --ac2:#a855f7; --ok:#34d399;
+    --ac:#22d3ee; --ac2:#a855f7; --ok:#34d399; --wn:#f5b042; --dg:#f87171;
     --grad:linear-gradient(120deg,#22d3ee,#7c5cff);
     --radius:12px; --r-sm:9px; --r-lg:16px;
     --ac-soft:color-mix(in srgb,var(--ac) 14%,transparent);
@@ -29,7 +29,7 @@
   html[data-theme=light]{
     --bg:#f4f6fb; --panel:#ffffff; --card:#ffffff; --card2:#f7f9fc;
     --bd:#e6eaf1; --bd2:#dde2eb; --tx:#101622; --tx2:#3a465c; --mu:#5f6a7d;
-    --ac:#0ea5c4; --ac2:#7c3aed; --grad:linear-gradient(120deg,#0891b2,#7c3aed); --ok:#047857;
+    --ac:#0ea5c4; --ac2:#7c3aed; --grad:linear-gradient(120deg,#0891b2,#7c3aed); --ok:#047857; --wn:#b45309; --dg:#dc2626;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
@@ -48,8 +48,20 @@
   .segmented button{border:none;background:transparent;color:var(--mu);font:inherit;font-size:12px;font-weight:700;padding:0 11px;border-radius:6px;transition:.12s;cursor:pointer;line-height:1}
   .segmented button.on{background:var(--ac);color:#04121a}
   html[data-theme=light] .segmented button.on{color:#fff}
-  .subtitle{color:var(--tx2);font-size:13.5px;line-height:1.75;margin:4px 0 20px}
+  .subtitle{color:var(--tx2);font-size:13.5px;line-height:1.75;margin:4px 0 18px}
   .subtitle b{color:var(--ac);font-weight:700}
+  .usage{background:var(--card);border:1px solid var(--bd);border-radius:var(--radius);padding:15px 16px;margin-bottom:16px}
+  .usage[hidden]{display:none}
+  .usage-top{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-end;margin-bottom:11px}
+  .ustat{display:flex;flex-direction:column;gap:3px}
+  .ustat .lbl{font-size:10px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--mu)}
+  .ustat .val{font-size:16px;font-weight:700;color:var(--tx);line-height:1}
+  .ustat .val.warn{color:var(--wn)} .ustat .val.dg{color:var(--dg)}
+  .bar{height:8px;border-radius:999px;background:var(--card2);border:1px solid var(--bd);overflow:hidden}
+  .bar-fill{height:100%;border-radius:999px;background:var(--grad);width:0;transition:width .45s ease}
+  .bar-fill.warn{background:var(--wn)} .bar-fill.dg{background:var(--dg)}
+  .usplit{margin-top:9px;font-size:12px;color:var(--tx2);display:flex;gap:16px;flex-wrap:wrap}
+  .usplit .ar{color:var(--ac);font-weight:700}
   .sublink{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--bd);border-radius:var(--radius);padding:11px 14px;margin-bottom:22px}
   .sublink code{flex:1;min-width:0;font-family:ui-monospace,'SF Mono',monospace;font-size:11.5px;color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;text-align:left}
   .appgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:12px}
@@ -97,6 +109,16 @@
 
     <p class="subtitle" id="subtitle"></p>
 
+    <section class="usage" id="usage" hidden>
+      <div class="usage-top">
+        <div class="ustat"><span class="lbl" id="ul-used">Used</span><span class="val" id="u-used">—</span></div>
+        <div class="ustat"><span class="lbl" id="ul-total">Total</span><span class="val" id="u-total">—</span></div>
+        <div class="ustat"><span class="lbl" id="ul-exp">Expires</span><span class="val" id="u-exp">—</span></div>
+      </div>
+      <div class="bar" id="u-bar-wrap"><div class="bar-fill" id="u-bar"></div></div>
+      <div class="usplit" id="u-split"></div>
+    </section>
+
     <div class="sublink">
       <button class="btn ghost sm" id="copyraw"></button>
       <code id="rawsub">…</code>
@@ -112,11 +134,12 @@
   <script>
   (function(){
     var I18N = {
-      en: { brandsub:'configs', subtitle:'Pick your app, scan the QR or tap Add. Same servers in every app.', sub_user:'Configs for ', copy:'Copy', copied:'Copied', copyraw:'Copy subscription link', add:'Add to app', scanhint:'or scan this in your app', qmiss:'QR unavailable', foot:'Powered by Nova Proxy' },
-      fa: { brandsub:'کانفیگ‌ها', subtitle:'اپ خود را انتخاب کن، QR را اسکن کن یا روی «افزودن» بزن. سرورها در همه‌ی اپ‌ها یکی است.', sub_user:'کانفیگ‌های ', copy:'کپی', copied:'کپی شد', copyraw:'کپی لینک اشتراک', add:'افزودن به اپ', scanhint:'یا این را در اپ خود اسکن کن', qmiss:'QR در دسترس نیست', foot:'قدرت‌گرفته از Nova Proxy' }
+      en: { brandsub:'configs', subtitle:'Pick your app, scan the QR or tap Add. Same servers in every app.', sub_user:'Configs for ', copy:'Copy', copied:'Copied', copyraw:'Copy subscription link', add:'Add to app', scanhint:'or scan this in your app', qmiss:'QR unavailable', foot:'Powered by Nova Proxy', used:'Used', total:'Limit', expires:'Expires', unlimited:'Unlimited', noexpiry:'No expiry', expired:'Expired', days:'d left', today:'today', up:'Up', down:'Down', remaining:'left' },
+      fa: { brandsub:'کانفیگ‌ها', subtitle:'اپ خود را انتخاب کن، QR را اسکن کن یا روی «افزودن» بزن. سرورها در همه‌ی اپ‌ها یکی است.', sub_user:'کانفیگ‌های ', copy:'کپی', copied:'کپی شد', copyraw:'کپی لینک اشتراک', add:'افزودن به اپ', scanhint:'یا این را در اپ خود اسکن کن', qmiss:'QR در دسترس نیست', foot:'قدرت‌گرفته از Nova Proxy', used:'مصرف‌شده', total:'حجم کل', expires:'انقضا', unlimited:'نامحدود', noexpiry:'بدون انقضا', expired:'منقضی شده', days:'روز مانده', today:'امروز', up:'آپلود', down:'دانلود', remaining:'باقی‌مانده' }
     };
     var lang = (function(){ try{ return localStorage.getItem('nova-user-lang')||'fa'; }catch(e){ return 'fa'; } })();
     var theme = document.documentElement.dataset.theme==='light' ? 'light' : 'dark';
+    var USAGE = null;
 
     function subFor(fmt){
       var u = new URL(location.href);
@@ -141,6 +164,51 @@
     function toast(msg){ var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(function(){ t.classList.remove('show'); },1400); }
     function copy(text){ try{ navigator.clipboard.writeText(text); }catch(e){ var ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(_){} document.body.removeChild(ta); } toast(I18N[lang].copied); }
     function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+    function fmtBytes(n){ n=Number(n)||0; if(n<=0) return '0 GB'; var u=['B','KB','MB','GB','TB','PB']; var i=Math.floor(Math.log(n)/Math.log(1024)); i=Math.max(0,Math.min(i,u.length-1)); var v=n/Math.pow(1024,i); return (v>=100?v.toFixed(0):v>=10?v.toFixed(1):v.toFixed(2))+' '+u[i]; }
+
+    async function loadUsage(){
+      try{
+        var r = await fetch(subFor('b64'), { cache:'no-store' });
+        var h = r.headers.get('Subscription-Userinfo'); if(!h) return;
+        var d={}; h.split(';').forEach(function(p){ var kv=p.trim().split('='); if(kv.length===2) d[kv[0].trim()]=Number(kv[1]); });
+        var up=d.upload||0, down=d.download||0, total=d.total||0, expire=d.expire||0;
+        USAGE = { up:up, down:down, total:total, expire:expire, used:up+down,
+                  unlim: !total || total>=1099511627776000,
+                  noexp: !expire || expire>=4102300000 };
+        renderUsage();
+      }catch(e){}
+    }
+
+    function renderUsage(){
+      if(!USAGE) return;
+      var t=I18N[lang], el=document.getElementById('usage');
+      document.getElementById('ul-used').textContent=t.used;
+      document.getElementById('ul-total').textContent=t.total;
+      document.getElementById('ul-exp').textContent=t.expires;
+      document.getElementById('u-used').textContent=fmtBytes(USAGE.used);
+      var totalEl=document.getElementById('u-total'), bar=document.getElementById('u-bar'), barWrap=document.getElementById('u-bar-wrap');
+      if(USAGE.unlim){ totalEl.textContent=t.unlimited; barWrap.style.display='none'; }
+      else{
+        totalEl.textContent=fmtBytes(USAGE.total);
+        barWrap.style.display='';
+        var pct=Math.max(0,Math.min(100, USAGE.used/USAGE.total*100));
+        bar.style.width=pct.toFixed(1)+'%';
+        bar.className='bar-fill'+(pct>=90?' dg':pct>=75?' warn':'');
+        document.getElementById('u-used').className='val'+(pct>=90?' dg':pct>=75?' warn':'');
+      }
+      var expEl=document.getElementById('u-exp');
+      if(USAGE.noexp){ expEl.textContent=t.noexpiry; expEl.className='val'; }
+      else{
+        var ms=USAGE.expire*1000, days=Math.ceil((ms-Date.now())/86400000);
+        if(days<0){ expEl.textContent=t.expired; expEl.className='val dg'; }
+        else if(days===0){ expEl.textContent=t.today; expEl.className='val warn'; }
+        else{ expEl.textContent=days+' '+t.days; expEl.className='val'+(days<=3?' warn':''); }
+      }
+      var split=document.getElementById('u-split');
+      split.innerHTML='<span><span class="ar">↑</span> '+t.up+': '+fmtBytes(USAGE.up)+'</span><span><span class="ar">↓</span> '+t.down+': '+fmtBytes(USAGE.down)+'</span>'+
+        (USAGE.unlim?'':'<span>'+t.remaining+': '+fmtBytes(Math.max(0,USAGE.total-USAGE.used))+'</span>');
+      el.hidden=false;
+    }
 
     function render(){
       var t = I18N[lang];
@@ -172,6 +240,7 @@
       grid.querySelectorAll('[data-copy]').forEach(function(b){ b.onclick=function(){ copy(b.getAttribute('data-copy')); }; });
       document.querySelectorAll('#lang button').forEach(function(b){ b.classList.toggle('on', b.dataset.l===lang); });
       document.querySelectorAll('#theme button').forEach(function(b){ b.classList.toggle('on', b.dataset.t===theme); });
+      renderUsage();
     }
 
     document.getElementById('lang').onclick=function(e){ var b=e.target.closest('button'); if(!b) return; lang=b.dataset.l; try{ localStorage.setItem('nova-user-lang',lang); }catch(_){} render(); };
@@ -179,6 +248,7 @@
 
     if (!window.QRCode) { var tries=0; var iv=setInterval(function(){ if(window.QRCode || ++tries>25){ clearInterval(iv); render(); } }, 140); }
     render();
+    loadUsage();
   })();
   </script>
 </body>
