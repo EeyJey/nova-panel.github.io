@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Nova Proxy — Control Panel</title>
-<meta name="nova-panel-version" content="3.8.2" />
+<meta name="nova-panel-version" content="3.8.3" />
 <link rel="icon" type="image/svg+xml" href="/logo-mark.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -2076,6 +2076,15 @@ async function updateNow(extra){
     if(j.error==='need_script_name'){
       var w=document.getElementById('upd-scriptname-wrap'); if(w) w.style.display='block';
       if(msg){ msg.className='msg bad'; msg.textContent=(lang==='fa'?'نام اسکریپت ورکر را وارد کن (برای دامنهٔ اختصاصی لازم است).':'Enter your Worker script name (needed on a custom domain).'); }
+      return;
+    }
+    if(j.error==='token_invalid' || j.error==='no_token'){
+      // Saved token was rotated/removed: reveal the token field so they can paste a fresh one. The
+      // panel may still show "Cloudflare connected" from the old token, which is what confuses people.
+      var _a=document.getElementById('upd-token-area'), _c=document.getElementById('upd-connected');
+      if(_a) _a.style.display=''; if(_c) _c.style.display='none';
+      var _t=document.getElementById('upd-token'); if(_t){ _t.value=''; try{ _t.focus(); _t.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){} }
+      if(msg){ msg.className='msg bad'; msg.textContent=(lang==='fa'?'توکن کلودفلر نامعتبر است یا عوض شده — یک توکن جدید بساز، در کادر بالا بچسبان و دوباره «به‌روزرسانی» را بزن.':'Cloudflare token is invalid or was rotated — create a new token, paste it in the field above, then press Update now again.'); }
       return;
     }
     var emap={ no_token:(lang==='fa'?'اول کلودفلر را وصل کن (کارت «مصرف ورکر») یا توکن را اینجا بچسبان':'Connect Cloudflare first (Worker-usage card) or paste a token here'), token_invalid:(lang==='fa'?'توکن نامعتبر است':'Token is invalid'), no_accounts:(lang==='fa'?'هیچ حسابی برای این توکن دیده نشد':'No accounts for this token'), cannot_read_bindings:(lang==='fa'?'نتوانستم تنظیمات فعلی ورکر را بخوانم — به‌روزرسانی برای جلوگیری از پاک شدن دیتابیس متوقف شد':'Could not read the worker\'s current bindings — update stopped to avoid wiping your database'), fetch_worker_failed:(lang==='fa'?'دریافت نسخهٔ جدید ناموفق بود':'Failed to download the new version'), bad_worker_source:(lang==='fa'?'فایل ورکر دریافت‌شده معتبر نبود':'Downloaded worker file was invalid'), upload_failed:(lang==='fa'?'آپلود ناموفق بود':'Upload failed') };
