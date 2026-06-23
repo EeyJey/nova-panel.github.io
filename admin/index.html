@@ -772,19 +772,19 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
 
         <!-- Monthly data cap (abuse / Cloudflare-ToS safety) -->
         <div class="card">
-          <div class="card-h"><h3>Monthly data cap · سقف داده ماهانه</h3></div>
+          <div class="card-h"><h3 data-i18n="monthlycap_h">Monthly data cap</h3></div>
           <div class="card-pad">
-            <p style="font-size:12px;color:var(--mu);margin-bottom:11px">Auto-pauses all proxy traffic for the rest of the month once this much data is used — a backstop that protects your Cloudflare account from abuse-detection suspensions. 0 = no cap. · با رسیدن مصرف ماه به این مقدار، ترافیک تا پایان ماه متوقف می‌شود تا حساب Cloudflare از مسدودی در امان بماند. صفر = بدون محدودیت.</p>
-            <div class="fg" style="margin-bottom:0;max-width:260px"><label>GB / month (0 = off)</label><input class="inp" id="n2-monthlycap" type="number" min="0" step="1" inputmode="numeric" placeholder="0"></div>
+            <p style="font-size:12px;color:var(--mu);margin-bottom:11px" data-i18n="monthlycap_p">Auto-pauses all proxy traffic for the rest of the month once this much data is used — a backstop that protects your Cloudflare account from abuse-detection suspensions. 0 = no cap.</p>
+            <div class="fg" style="margin-bottom:0;max-width:260px"><label data-i18n="monthlycap_label">GB / month (0 = off)</label><input class="inp" id="n2-monthlycap" type="number" min="0" step="1" inputmode="numeric" placeholder="0"></div>
           </div>
         </div>
 
         <!-- Speed limit (per connection, fairness) -->
         <div class="card">
-          <div class="card-h"><h3>Speed limit · محدودیت سرعت</h3></div>
+          <div class="card-h"><h3 data-i18n="speedlimit_h">Speed limit</h3></div>
           <div class="card-pad">
-            <p style="font-size:12px;color:var(--mu);margin-bottom:11px">Caps throughput per connection — up to this rate in each direction (download and upload). A fairness backstop so one user can't saturate the worker. 0 = unlimited. A per-user limit (on the Users page) overrides this. · سرعت هر اتصال را محدود می‌کند (در هر جهت: دانلود و آپلود). صفر = بدون محدودیت. محدودیت تعیین‌شده برای هر کاربر بر این مقدار اولویت دارد.</p>
-            <div class="fg" style="margin-bottom:0;max-width:260px"><label>KB/s per connection (0 = off)</label><input class="inp" id="n2-speedlimit" type="number" min="0" step="64" inputmode="numeric" placeholder="0"></div>
+            <p style="font-size:12px;color:var(--mu);margin-bottom:11px" data-i18n="speedlimit_p">Caps throughput per connection — up to this rate in each direction (download and upload). A fairness backstop so no single user can saturate the worker. 0 = unlimited. A per-user limit (on the Users page) overrides this.</p>
+            <div class="fg" style="margin-bottom:0;max-width:260px"><label data-i18n="speedlimit_label">KB/s per connection (0 = off)</label><input class="inp" id="n2-speedlimit" type="number" min="0" step="64" inputmode="numeric" placeholder="0"></div>
           </div>
         </div>
 
@@ -1283,6 +1283,7 @@ html[data-theme=dark] .qr-ph{border-color:#fff}
    ========================================================================== */
 const I18N = {
   en:{
+    monthlycap_h:'Monthly data cap', monthlycap_p:'Auto-pauses all proxy traffic for the rest of the month once this much data is used — a backstop that protects your Cloudflare account from abuse-detection suspensions. 0 = no cap.', monthlycap_label:'GB / month (0 = off)', speedlimit_h:'Speed limit', speedlimit_p:'Caps throughput per connection — up to this rate in each direction (download and upload). A fairness backstop so no single user can saturate the worker. 0 = unlimited. A per-user limit (on the Users page) overrides this.', speedlimit_label:'KB/s per connection (0 = off)',
     env_prod:'Production', grp_ops:'Operations', grp_network:'Network', grp_netset:'Network Settings', grp_config:'Configuration', grp_system:'System', grp_admin:'Administration', grp_tools:'Tools', nav_collapse:'Collapse',
     nav_wireguard:'WireGuard', nav_about:'About', nav_proxy:'Proxy / CDN', nav_corenode:'Core Node', sub_wireguard:'Build a WireGuard config for WARP or a custom peer.', sub_about:'Panel version, changelog and links.', sub_proxy:'How the Worker reaches Cloudflare — PROXYIP / SOCKS5 / HTTP / HTTPS / TURN / SSTP.', sub_corenode:'Your node on every Cloudflare TLS port, on the domain itself.',
     cn_h:'🧩 Core Node', cn_s:'Your node on every Cloudflare TLS port, using the Worker domain directly — separate from the subscription. Copy or scan any port.', cn_copy:'Copy',
@@ -1372,6 +1373,7 @@ const I18N = {
     copied:'Copied to clipboard'
   },
   fa:{
+    monthlycap_h:'سقف داده ماهانه', monthlycap_p:'با رسیدن مصرف ماه به این مقدار، ترافیک تا پایان ماه متوقف می‌شود تا حساب Cloudflare از مسدودی در امان بماند. صفر = بدون محدودیت.', monthlycap_label:'گیگابایت در ماه (۰ = خاموش)', speedlimit_h:'محدودیت سرعت', speedlimit_p:'سرعت هر اتصال را محدود می‌کند (در هر جهت: دانلود و آپلود). صفر = بدون محدودیت. محدودیت تعیین‌شده برای هر کاربر بر این مقدار اولویت دارد.', speedlimit_label:'سرعت بر اتصال — KB/s (۰ = خاموش)',
     env_prod:'محیط عملیاتی', grp_ops:'عملیات', grp_network:'شبکه', grp_netset:'تنظیمات شبکه', grp_config:'پیکربندی', grp_system:'سیستم', grp_admin:'مدیریت', grp_tools:'ابزارها', nav_collapse:'جمع کردن',
     nav_wireguard:'وایرگارد', nav_about:'درباره', nav_proxy:'پروکسی / CDN', nav_corenode:'نود اصلی', sub_wireguard:'ساخت کانفیگ وایرگارد برای WARP یا پیر دلخواه.', sub_about:'نسخهٔ پنل، تغییرات و پیوندها.', sub_proxy:'نحوه‌ی دسترسی ورکر به کلودفلر — PROXYIP / SOCKS5 / HTTP / HTTPS / TURN / SSTP.', sub_corenode:'نود شما روی همه‌ی پورت‌های TLS کلودفلر، روی خود دامنه.',
     cn_h:'🧩 نود اصلی', cn_s:'نود شما روی همه‌ی پورت‌های TLS کلودفلر، با استفاده‌ی مستقیم از دامنه‌ی ورکر — جدا از اشتراک. هر پورت را کپی یا اسکن کنید.', cn_copy:'کپی',
