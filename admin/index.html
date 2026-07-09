@@ -1792,7 +1792,7 @@ function showQR(url,name){
 // Open the Nova Radar (/scan) page inside an in-panel modal so the operator never leaves the admin.
 function showRadar(token){
   const f=document.getElementById('radarm-frame');
-  if(f) f.src=location.origin+'/scan'+(token?('?token='+encodeURIComponent(token)):'');
+  if(f) f.src=location.origin+'/scan?lang='+encodeURIComponent(lang)+(token?('&token='+encodeURIComponent(token)):'');
   document.getElementById('radarmodal').classList.add('on');
 }
 /* ---- Contextual help / onboarding (the top-bar "?" opens help for the current page) ---- */
