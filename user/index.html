@@ -374,6 +374,46 @@
               renderUsage();
             }
         
+            // ---- Nova Radar: in-browser clean-IP scanner (runs on the user's own device) ----
+            var CF_RANGES=[['104.16.',0,255],['104.17.',0,255],['104.18.',0,255],['104.19.',0,255],['104.20.',0,255],['104.21.',0,255],['104.22.',0,255],['104.24.',0,255],['104.25.',0,255],['104.26.',0,255],['104.27.',0,255],['162.159.',0,255],['172.64.',0,255],['172.66.',0,255],['172.67.',0,255],['188.114.',96,111],['141.101.',64,127]];
+            function randCfIp(){ var r=CF_RANGES[Math.floor(Math.random()*CF_RANGES.length)]; var c=r[1]+Math.floor(Math.random()*(r[2]-r[1]+1)); return r[0]+c+'.'+Math.floor(Math.random()*256); }
+            function pingIp(ip,port,timeout){ return new Promise(function(res){ var t0=performance.now(),done=false,img=new Image(); function fin(ok){ if(done)return; done=true; img.onerror=img.onload=null; res(ok?Math.round(performance.now()-t0):null); } var timer=setTimeout(function(){fin(false);},timeout); img.onerror=function(){clearTimeout(timer);fin(true);}; img.onload=function(){clearTimeout(timer);fin(true);}; img.src='https://'+(port==443?ip:ip+':'+port)+'/cdn-cgi/trace?'+Math.random(); }); }
+            var RTMPL=null, RBEST=[];
+            async function radarTemplate(){ try{ var r=await fetch(subFor('b64')+'&_t='+Date.now()); var txt=await r.text(); var data=txt; try{ var dec=atob(txt.replace(/\s+/g,'')); if(dec.indexOf('://')>0) data=dec; }catch(e){} var lines=data.split(/[\r\n]+/),v=null; for(var i=0;i<lines.length;i++){ if(lines[i].trim().indexOf('vless://')===0){ v=lines[i].trim(); break; } } if(!v)return; var m=v.match(/^vless:\/\/([^@]+)@([^:]+):(\d+)\?([^#]*)/); if(!m)return; RTMPL={uuid:m[1],port:m[3],query:m[4]}; var pc=document.getElementById('radar-ports'); if(pc){ var tp=String(m[3]); if(!pc.querySelector('[data-port="'+tp+'"]')){ var nb=document.createElement('button'); nb.type='button'; nb.className='rpchip'; nb.setAttribute('data-port',tp); nb.textContent=tp; pc.insertBefore(nb,pc.firstChild); } var tc=pc.querySelector('[data-port="'+tp+'"]'); if(tc) tc.classList.add('on'); radarSyncChips(); } }catch(e){} }
+            function radarCfg(ip,port){ if(!RTMPL)return null; port=port||443; return 'vless://'+RTMPL.uuid+'@'+ip+':'+port+'?'+RTMPL.query+'#'+encodeURIComponent('Nova ⚡ '+ip+':'+port); }
+            async function radarRun(){
+              var t=I18N[lang]; var btn=document.getElementById('radar-run'),msg=document.getElementById('radar-msg'),bar=document.getElementById('radar-bar'),fill=document.getElementById('radar-fill');
+              btn.disabled=true; bar.style.display='block'; fill.style.width='0%'; document.getElementById('radar-out').style.display='none'; document.getElementById('radar-results').innerHTML='';
+              (function(){ var _ar=document.getElementById('radar-apply-row'); if(_ar) _ar.style.display='none'; var _am=document.getElementById('radar-apply-msg'); if(_am) _am.textContent=''; })();
+              msg.textContent=t.radar_prep; if(!RTMPL) await radarTemplate();
+              var ports=Array.prototype.map.call(document.querySelectorAll('#radar-ports .rpchip.on'),function(b){return Number(b.getAttribute('data-port'));}).filter(Boolean);
+              if(!ports.length){ ports=[443]; var p443=document.querySelector('#radar-ports [data-port="443"]'); if(p443) p443.classList.add('on'); radarSyncChips(); }
+              var keep=6,timeout=2000,probes=3,conc=12;
+              var maxIps=Math.min(120,Math.max(20,Math.floor(500/ports.length)));
+              var ips=[],seen={}; while(ips.length<maxIps){ var ip=randCfIp(); if(!seen[ip]){ seen[ip]=1; ips.push(ip); } }
+              var pairs=[]; for(var a=0;a<ips.length;a++){ for(var pi=0;pi<ports.length;pi++){ pairs.push({ip:ips[a],port:ports[pi]}); } }
+              var totalN=pairs.length,tested=0,alive=[];
+              async function w(){ while(pairs.length){ var pr=pairs.pop(); var s=[]; for(var i=0;i<probes;i++){ var ms=await pingIp(pr.ip,pr.port,timeout); if(ms!=null)s.push(ms); } tested++;
+                if(s.length){ var avg=Math.round(s.reduce(function(a,b){return a+b;},0)/s.length); var jit=Math.round(Math.max.apply(null,s)-Math.min.apply(null,s)); var loss=Math.round((1-s.length/probes)*100); alive.push({ip:pr.ip,port:pr.port,ms:avg,score:avg+jit*0.5+loss*20}); }
+                fill.style.width=Math.max(3,Math.round(tested/totalN*100))+'%'; msg.textContent=t.radar_testing+tested+'/'+totalN+' ('+alive.length+t.radar_alive+')'; } }
+              var pool=[]; for(var k=0;k<conc;k++) pool.push(w()); await Promise.all(pool);
+              alive.sort(function(a,b){return a.score-b.score;}); RBEST=alive.slice(0,keep);
+              fill.style.width='100%'; setTimeout(function(){bar.style.display='none';},500); btn.disabled=false;
+              if(!RBEST.length){ msg.textContent=t.radar_none; return; }
+              msg.textContent=t.radar_done;
+              if(RBEST.length){ var _ab=document.getElementById('radar-apply'); if(_ab){ _ab.textContent=t.radar_apply; _ab.disabled=false; document.getElementById('radar-apply-row').style.display='block'; } }
+              var rows=''; for(var i=0;i<RBEST.length;i++){ var b=RBEST[i]; rows+='<tr class="'+(i===0?'best':'')+'"><td>'+(i+1)+'</td><td><code>'+b.ip+':'+b.port+'</code></td><td>'+b.ms+' ms</td></tr>'; }
+              document.getElementById('radar-results').innerHTML='<table><thead><tr><th>#</th><th>IP</th><th>'+t.radar_lat+'</th></tr></thead><tbody>'+rows+'</tbody></table>';
+              if(RTMPL){ var cfg=radarCfg(RBEST[0].ip,RBEST[0].port); document.getElementById('radar-cfg').textContent=cfg; document.getElementById('radar-copy').textContent=t.radar_copycfg; document.getElementById('radar-out').style.display='block';
+                var qw=document.getElementById('radar-qr'); qw.innerHTML=''; try{ if(window.QRCode){ var qb=document.createElement('div'); qb.className='qbox'; qw.appendChild(qb); new QRCode(qb,{text:cfg,width:140,height:140,correctLevel:QRCode.CorrectLevel.M}); } }catch(e){} }
+              else{ document.getElementById('radar-out').style.display='none'; msg.textContent=t.radar_notmpl; }
+            }
+            document.getElementById('radar-run').addEventListener('click',radarRun);
+            document.getElementById('radar-ports').addEventListener('click',function(e){ var b=e.target.closest('.rpchip'); if(!b) return; b.classList.toggle('on'); b.setAttribute('aria-pressed', b.classList.contains('on')?'true':'false'); });
+            // Keep every port chip's spoken selected/unselected state (aria-pressed) in sync with its .on class.
+            function radarSyncChips(){ Array.prototype.forEach.call(document.querySelectorAll('#radar-ports .rpchip'),function(b){ b.setAttribute('aria-pressed', b.classList.contains('on')?'true':'false'); }); }
+            document.getElementById('radar-copy').addEventListener('click',function(){ if(RTMPL&&RBEST.length) copy(radarCfg(RBEST[0].ip,RBEST[0].port)); });
+            // One-click apply: save the scanned best IPs to THIS user's own config (server-side, auth by their key).
             function hasUserKey(){ try{ return !!new URL(location.href).searchParams.get('key'); }catch(e){ return false; } }
             function applyUrl(){ var u=new URL(location.href); ['b64','base64','clash','sb','singbox','surge','quanx','loon','target','page','hub','raw'].forEach(function(p){ u.searchParams.delete(p); }); u.pathname=u.pathname.replace(/\/[^/]*$/,'/sub-setip'); if(!u.searchParams.get('sub')){ var uu=u.searchParams.get('u'); if(uu) u.searchParams.set('sub',uu); } return u.toString(); }
             document.getElementById('radar-apply').addEventListener('click',function(){
