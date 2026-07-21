@@ -192,6 +192,27 @@
       <code id="rawsub">…</code>
     </div>
 
+    <section class="radar" id="radar">
+      <div class="radar-h">
+        <span class="radar-ic">📡</span>
+        <div class="radar-tt"><div class="radar-title" id="radar-title"></div><div class="radar-sub" id="radar-sub"></div></div>
+      </div>
+      <div class="radar-ports" id="radar-ports" role="group"><button type="button" class="rpchip on" data-port="443" aria-pressed="true">443</button><button type="button" class="rpchip" data-port="8443" aria-pressed="false">8443</button><button type="button" class="rpchip" data-port="2053" aria-pressed="false">2053</button><button type="button" class="rpchip" data-port="2083" aria-pressed="false">2083</button><button type="button" class="rpchip" data-port="2087" aria-pressed="false">2087</button><button type="button" class="rpchip" data-port="2096" aria-pressed="false">2096</button></div>
+      <button class="btn primary radar-run" id="radar-run"></button>
+      <div class="bar radar-bar" id="radar-bar" style="display:none"><div class="bar-fill" id="radar-fill"></div></div>
+      <div class="radar-msg" id="radar-msg" role="status" aria-live="polite"></div>
+      <div id="radar-results" class="radar-results"></div>
+      <div id="radar-apply-row" style="display:none;margin-top:12px">
+        <button class="btn primary" id="radar-apply" style="width:100%"></button>
+        <div class="radar-msg" id="radar-apply-msg" role="status" aria-live="polite" style="margin-top:6px"></div>
+      </div>
+      <div id="radar-out" class="radar-out" style="display:none">
+        <div class="radar-cfg" id="radar-cfg"></div>
+        <button class="btn primary sm" id="radar-copy" style="width:100%"></button>
+        <div class="radar-qr" id="radar-qr"></div>
+      </div>
+    </section>
+
     <div class="appgrid" id="grid"></div>
 
     <footer class="foot" id="foot"></footer>
